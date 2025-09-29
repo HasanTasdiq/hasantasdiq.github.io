@@ -31,8 +31,6 @@ _Ph.D. Student in Computer Science, Tulane University, LA_
 - [Research](/research/)  
 - [Publications](/publications/)  
 - [Blog](/posts/)  
-- [Contact](/contact/)  
-
 ---
 
 ## Find Me Online
