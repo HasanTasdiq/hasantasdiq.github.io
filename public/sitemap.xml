@@ -18,6 +18,24 @@
   </url><url>
     <loc>http://localhost:1313/landing/social/</loc>
   </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2025-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/demo/</loc>
+    <lastmod>2025-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/sample/</loc>
+    <lastmod>2025-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/sample-post/</loc>
+    <lastmod>2025-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-09-28T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/tags/android/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
@@ -40,9 +58,6 @@
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/fuzzer/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/jetson/</loc>
@@ -75,17 +90,10 @@
     <loc>http://localhost:1313/tags/socioeconomics/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/tags/wi-fi/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/about/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/mutation-testing-intro/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
