@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Correlation Study on S. M. Hasan</title>
+    <link>https://numan947.github.io/tags/correlation-study/</link>
+    <description>Recent content in Correlation Study on S. M. Hasan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/correlation-study/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Socioeconomic Factors and Global Disease Outbreaks</title>
+      <link>https://numan947.github.io/projects/diseaseoutbreaks/</link>
+      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://numan947.github.io/projects/diseaseoutbreaks/</guid>
+      <description>&lt;!-- end-chunk --&gt;
+&lt;!-- begin-chunk data-anchor=&#34;socioeconomic-factors-and-global-disease-outbreaks&#34; --&gt;
+
+&lt;h1 class=&#34;header-anchor-wrapper&#34;&gt;Socioeconomic Factors and Global Disease Outbreaks
+  &lt;a href=&#34;#socioeconomic-factors-and-global-disease-outbreaks&#34; class=&#34;header-anchor-link&#34;&gt;
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    width=&#34;1rem&#34; height=&#34;1rem&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34;
+    stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34;
+    stroke-linejoin=&#34;round&#34;&gt;
+    &lt;line x1=&#34;4&#34; y1=&#34;9&#34; x2=&#34;20&#34; y2=&#34;9&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;4&#34; y1=&#34;15&#34; x2=&#34;20&#34; y2=&#34;15&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;10&#34; y1=&#34;3&#34; x2=&#34;8&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;16&#34; y1=&#34;3&#34; x2=&#34;14&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;
+&lt;/svg&gt;
+
+&lt;/a&gt;
+&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;Paper accepted at the Proceedings of the 5th ACM SIGCAS/SIGCHI Conference on Computing and Sustainable Societies, 2022&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This large-scale study analyzes the relationship between socioeconomic conditions and infectious disease outbreaks worldwide. By examining data from 72 diseases over 23 years, the research identifies significant correlations between 192 socioeconomic indicators and outbreak characteristics. The findings reveal that factors like healthcare access, education levels, employment patterns, and population demographics consistently correlate with specific outbreak types and transmission methods. These insights can enhance disease surveillance systems by incorporating socioeconomic data for more accurate outbreak prediction and targeted public health interventions.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cryptography on S. M. Hasan</title>
+    <link>https://numan947.github.io/tags/cryptography/</link>
+    <description>Recent content in Cryptography on S. M. Hasan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/cryptography/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Evaluating Fuzzers on Cryptographic Protocols</title>
+      <link>https://numan947.github.io/projects/fuzzeval/</link>
+      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://numan947.github.io/projects/fuzzeval/</guid>
+      <description>&lt;!-- end-chunk --&gt;
+&lt;!-- begin-chunk data-anchor=&#34;evaluating-fuzzers-on-cryptographic-protocols&#34; --&gt;
+
+&lt;h1 class=&#34;header-anchor-wrapper&#34;&gt;Evaluating Fuzzers on Cryptographic Protocols
+  &lt;a href=&#34;#evaluating-fuzzers-on-cryptographic-protocols&#34; class=&#34;header-anchor-link&#34;&gt;
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    width=&#34;1rem&#34; height=&#34;1rem&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34;
+    stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34;
+    stroke-linejoin=&#34;round&#34;&gt;
+    &lt;line x1=&#34;4&#34; y1=&#34;9&#34; x2=&#34;20&#34; y2=&#34;9&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;4&#34; y1=&#34;15&#34; x2=&#34;20&#34; y2=&#34;15&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;10&#34; y1=&#34;3&#34; x2=&#34;8&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;16&#34; y1=&#34;3&#34; x2=&#34;14&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;
+&lt;/svg&gt;
+
+&lt;/a&gt;
+&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;Paper accepted at SBFT 2025 Workshop (co-located with ICSE 2025)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://numan947.github.io/projects/fuzzeval/workflow_csfuzz.png&#34; alt=&#34;Workflow&#34;&gt;&lt;/p&gt;
+&lt;p&gt;General-purpose fuzzers often struggle to identify vulnerabilities in cryptographic libraries because they cannot generate inputs that satisfy strict protocol validations. This study evaluates modern fuzzers on their ability to produce &lt;strong&gt;context-sensitive inputs&lt;/strong&gt; for PKCS#1-v1.5 signature verification. Our findings show that &lt;strong&gt;semantic awareness&lt;/strong&gt;—understanding complex relationships between input fields—is more critical than code coverage for testing these security-critical implementations.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
