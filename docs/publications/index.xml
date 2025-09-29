@@ -4,8 +4,7 @@
     <title>Publications on S. M. Hasan</title>
     <link>https://numan947.github.io/publications/</link>
     <description>Recent content in Publications on S. M. Hasan</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <atom:link href="https://numan947.github.io/publications/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://numan947.github.io/publications/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

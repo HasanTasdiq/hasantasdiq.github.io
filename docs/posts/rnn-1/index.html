@@ -1,0 +1,732 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://numan947.github.io/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demystifying RNNs: A Deep Dive into Dimensions and Parameters - S. M. Hasan</title>
+
+    
+
+    
+
+    
+    <meta name="author" content="Your Name" />
+    
+
+    
+        <meta property="og:url" content="https://numan947.github.io/posts/rnn-1/">
+  <meta property="og:site_name" content="S. M. Hasan">
+  <meta property="og:title" content="Demystifying RNNs: A Deep Dive into Dimensions and Parameters">
+  <meta property="og:description" content="Demystifying RNNs: A Deep Dive into Dimensions and Parameters Understanding what really happens inside Recurrent Neural Networks
+When learning about Recurrent Neural Networks (RNNs), many tutorials focus on the high-level concept of “memory” but gloss over the practical details of how they actually work. As someone who struggled with these details, I want to share the insights that finally made RNNs click for me.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-29T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-29T00:00:00+00:00">
+    <meta property="article:tag" content="RNN">
+    <meta property="article:tag" content="Neural Network">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="NLP">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Demystifying RNNs: A Deep Dive into Dimensions and Parameters">
+  <meta name="twitter:description" content="Demystifying RNNs: A Deep Dive into Dimensions and Parameters Understanding what really happens inside Recurrent Neural Networks
+When learning about Recurrent Neural Networks (RNNs), many tutorials focus on the high-level concept of “memory” but gloss over the practical details of how they actually work. As someone who struggled with these details, I want to share the insights that finally made RNNs click for me.">
+
+    <link rel="stylesheet" href="/style.min.ce5f3efd2a92c214ac7eda7a2ac6406bb3f876bf941ee33af45d44bcadd55da1.css" integrity="sha256-zl8&#43;/SqSwhSsftp6KsZAa7P4dr&#43;UHuM69F1EvK3VXaE=">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/theme-switch.7c57075675400a1a12bc3fcfc744dd74e1e417b8db11fdef378d7a7ef1cc9e3f.js" integrity="sha256-fFcHVnVAChoSvD/Px0TddOHkF7jbEf3vN416fvHMnj8="></script>
+
+
+
+    <script defer src="/js/hide-navbar-on-scroll.b5f3414715b82a9bc2c9086fc860ad5d0a63f67251e4dd4fa61e9dfce91ebdb6.js" integrity="sha256-tfNBRxW4KpvCyQhvyGCtXQpj9nJR5N1Pph6d/OkevbY="></script>
+
+
+
+
+
+    <script defer src="/js/zooming.10d718ecdb4a98eab370ed60963ea87f1c612ac225609eadc52f0e536bc1517c.js" integrity="sha256-ENcY7NtKmOqzcO1glj6ofxxhKsIlYJ6txS8OU2vBUXw="></script>
+
+
+
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.a89c7b4e13df953403c75897ad4b6db68fad6534043bb234d29a80015f1ec9d1.js" integrity="sha256-qJx7ThPflTQDx1iXrUttto&#43;tZTQEO7I00pqAAV8eydE="></script>
+        
+    
+
+
+
+
+
+
+
+
+    
+</head>
+<body><header>
+    <div id="header_content">
+        <div id="header_left">
+            <div id="sidebar_btn">
+                <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+                <label id="sidebar_btn_label" for="sidebar_btn_input">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</label>
+                <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                    <div id="sidebar_canvas_overlay"></div>
+                </label>
+                <div id="sidebar">
+                    <ul><li>
+                                <a href="/about/">About</a></li><li>
+                                <a href="/research/">Research</a></li><li>
+                                <a href="/publications/">Publications</a></li><li>
+                                <a href="/posts/">Bits, Bytes &amp; Life</a></li></ul>
+                </div>
+            </div>
+        
+            <div class="brand">
+                <div>
+                    <a href="/">S. M. Hasan</a>
+                </div>
+            </div><nav id="header_navbar" class="pure-menu header-menu">
+    <ul class="pure-menu-list"><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/research/" class="pure-menu-link">Research</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/publications/" class="pure-menu-link">Publications</a>
+                    
+                </li><li class="header-menu-item pure-menu-item insection">
+                    
+                        <a href="/posts/" class="pure-menu-link">Bits, Bytes &amp; Life</a>
+                    
+                </li></ul>
+</nav>
+</div>
+
+        <div id="header_right">
+            
+
+            <div id="theme_tool">
+                <button id="dark_mode_btn" class="header-menu-btn outline-button" title='Switch to dark mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</button>
+                <button id="light_mode_btn" class="header-menu-btn outline-button" title='Switch to light mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</button>
+            </div>
+
+            
+        </div>
+    </div>
+</header><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+<main>
+            <div id="content" class="content-margin">
+                
+    
+    
+        
+        <div class="collapsible-menu-wrapper"><div class="collapsible-menu-type"><span>Table of contents</span></div><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-core-rnn-equations">The Core RNN Equations</a></li>
+    <li><a href="#a-concrete-example">A Concrete Example</a>
+      <ul>
+        <li><a href="#the-vectors-changing-states">The Vectors (Changing States)</a></li>
+        <li><a href="#the-parameters-learned-weights">The Parameters (Learned Weights)</a></li>
+      </ul>
+    </li>
+    <li><a href="#dimensionality-check-why-it-all-works">Dimensionality Check: Why It All Works</a></li>
+    <li><a href="#common-questions-answered">Common Questions Answered</a>
+      <ul>
+        <li><a href="#1-is-h_t-a-vector-or-matrix">1. Is $h_t$ a vector or matrix?</a></li>
+        <li><a href="#2-how-is-h_0-initialized">2. How is $h_0$ initialized?</a></li>
+        <li><a href="#3-whats-actually-being-learned">3. What&rsquo;s actually being &ldquo;learned&rdquo;?</a></li>
+        <li><a href="#4-why-can-rnns-handle-variable-length-sequences">4. Why can RNNs handle variable-length sequences?</a></li>
+      </ul>
+    </li>
+    <li><a href="#parameter-counting">Parameter Counting</a></li>
+    <li><a href="#the-big-picture">The Big Picture</a></li>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+  </ul>
+</nav>
+        
+    </div></div>
+    
+
+
+
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+
+    
+    
+        
+        
+        
+    
+        
+        
+            
+            
+            
+        
+        <section id="demystifying-rnns-a-deep-dive-into-dimensions-and-parameters">
+
+
+<h1 class="header-anchor-wrapper">Demystifying RNNs: A Deep Dive into Dimensions and Parameters
+  <a href="#demystifying-rnns-a-deep-dive-into-dimensions-and-parameters" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+<p><em>Understanding what really happens inside Recurrent Neural Networks</em></p>
+<p>When learning about Recurrent Neural Networks (RNNs), many tutorials focus on the high-level concept of &ldquo;memory&rdquo; but gloss over the practical details of how they actually work. As someone who struggled with these details, I want to share the insights that finally made RNNs click for me.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-core-rnn-equations">
+
+
+<h2 class="header-anchor-wrapper">The Core RNN Equations
+  <a href="#the-core-rnn-equations" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Let&rsquo;s start with the fundamental RNN equations that everyone shows:</p>
+<p>$$
+h_t = tanh(W_{hh} · h_{t-1} + W_{hx} \cdot x_t + b_h)
+\
+y_t = W_{ho} \cdot h_t + b_v
+$$</p>
+<p>These equations look simple enough, but the devil is in the dimensions. Let&rsquo;s break them down with a concrete example.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="a-concrete-example">
+
+
+<h2 class="header-anchor-wrapper">A Concrete Example
+  <a href="#a-concrete-example" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Let&rsquo;s define our dimensions:</p>
+<ul>
+<li><strong>Input dimension</strong> (<code>d_in</code>): 4 (each input is a 4D vector)</li>
+<li><strong>Hidden dimension</strong> (<code>d_h</code>): 3 (the size of our RNN&rsquo;s &ldquo;memory&rdquo;)</li>
+<li><strong>Output dimension</strong> (<code>d_out</code>): 2 (e.g., binary classification)</li>
+</ul>
+<p>Now let&rsquo;s look at what each component actually contains:</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-vectors-changing-states">
+
+
+<h3 class="header-anchor-wrapper">The Vectors (Changing States)
+  <a href="#the-vectors-changing-states" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Shape</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>x_t</code></td>
+          <td><code>(4,)</code></td>
+          <td>Input at time t (e.g., a word embedding)</td>
+      </tr>
+      <tr>
+          <td><code>h_{t-1}</code></td>
+          <td><code>(3,)</code></td>
+          <td>Previous hidden state (the &ldquo;memory&rdquo; so far)</td>
+      </tr>
+      <tr>
+          <td><code>h_t</code></td>
+          <td><code>(3,)</code></td>
+          <td>New hidden state (updated memory)</td>
+      </tr>
+      <tr>
+          <td><code>y_t</code></td>
+          <td><code>(2,)</code></td>
+          <td>Output at time t</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Key Insight</strong>: <code>h_t</code> and <code>x_t</code> do NOT have the same dimension! The hidden dimension is a design choice, while input dimension is determined by your data.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-parameters-learned-weights">
+
+
+<h3 class="header-anchor-wrapper">The Parameters (Learned Weights)
+  <a href="#the-parameters-learned-weights" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Shape</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>W_hx</code></td>
+          <td><code>(3, 4)</code></td>
+          <td>Transforms input to hidden space</td>
+      </tr>
+      <tr>
+          <td><code>W_hh</code></td>
+          <td><code>(3, 3)</code></td>
+          <td>Transforms previous hidden state</td>
+      </tr>
+      <tr>
+          <td><code>b_h</code></td>
+          <td><code>(3,)</code></td>
+          <td>Hidden layer bias</td>
+      </tr>
+      <tr>
+          <td><code>W_ho</code></td>
+          <td><code>(2, 3)</code></td>
+          <td>Transforms hidden state to output</td>
+      </tr>
+      <tr>
+          <td><code>b_v</code></td>
+          <td><code>(2,)</code></td>
+          <td>Output bias</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Key Insight</strong>: The weight matrices are the &ldquo;bridges&rdquo; that make different dimensions compatible. They&rsquo;re the actual parameters learned during training.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="dimensionality-check-why-it-all-works">
+
+
+<h2 class="header-anchor-wrapper">Dimensionality Check: Why It All Works
+  <a href="#dimensionality-check-why-it-all-works" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Let&rsquo;s verify the math works dimensionally:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># All operations are dimensionally compatible:</span>
+</span></span><span style="display:flex;"><span>W_hh <span style="color:#960050;background-color:#1e0010">·</span> h_{t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}    <span style="color:#75715e"># (3,3) · (3,)  → (3,)</span>
+</span></span><span style="display:flex;"><span>W_hx <span style="color:#960050;background-color:#1e0010">·</span> x_t         <span style="color:#75715e"># (3,4) · (4,)  → (3,) </span>
+</span></span><span style="display:flex;"><span>b_h                <span style="color:#75715e"># (3,)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Sum: (3,) + (3,) + (3,) → (3,)</span>
+</span></span><span style="display:flex;"><span>tanh(<span style="color:#f92672">...</span>)          <span style="color:#75715e"># (3,) → (3,)  # h_t is born!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>W_ho <span style="color:#960050;background-color:#1e0010">·</span> h_t         <span style="color:#75715e"># (2,3) · (3,) → (2,)</span>
+</span></span><span style="display:flex;"><span>b_v                <span style="color:#75715e"># (2,)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Sum: (2,) + (2,) → (2,)  # y_t is ready!</span>
+</span></span></code></pre></div></section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="common-questions-answered">
+
+
+<h2 class="header-anchor-wrapper">Common Questions Answered
+  <a href="#common-questions-answered" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="1-is-h_t-a-vector-or-matrix">
+
+
+<h3 class="header-anchor-wrapper">1. Is $h_t$ a vector or matrix?
+  <a href="#1-is-h_t-a-vector-or-matrix" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>In the fundamental formulation, $h_t$ is a vector. However, during batch processing (which we almost always do), it becomes a matrix where each row is the $h_t$ for one sequence in the batch.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="2-how-is-h_0-initialized">
+
+
+<h3 class="header-anchor-wrapper">2. How is $h_0$ initialized?
+  <a href="#2-how-is-h_0-initialized" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Typically with zeros: $h_0 = [0, 0, 0, &hellip;, 0]$. This provides a neutral starting point.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="3-whats-actually-being-learned">
+
+
+<h3 class="header-anchor-wrapper">3. What&rsquo;s actually being &ldquo;learned&rdquo;?
+  <a href="#3-whats-actually-being-learned" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>The weight matrices and biases $(W_{hh}, W_{hx}, W_{ho}, b_h, b_v)$ are the learned parameters. The hidden state $h_t$ is the result of computation, not a parameter.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="4-why-can-rnns-handle-variable-length-sequences">
+
+
+<h3 class="header-anchor-wrapper">4. Why can RNNs handle variable-length sequences?
+  <a href="#4-why-can-rnns-handle-variable-length-sequences" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Because the same parameters (weights) are reused at each time step, and the hidden state dimension remains constant regardless of sequence length.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="parameter-counting">
+
+
+<h2 class="header-anchor-wrapper">Parameter Counting
+  <a href="#parameter-counting" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>In our example:</p>
+<p>$W_{hx}: 3 \times 4 = 12$ parameters</p>
+<p>$W_{hh}: 3 \times 3 = 9$ parameters</p>
+<p>$b_h: 3$ parameters</p>
+<p>$W_{ho}: 2 \times 3 = 6$ parameters</p>
+<p>$b_v: 2$ parameters</p>
+<p>Total: 32 parameters (regardless of sequence length!)</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-big-picture">
+
+
+<h2 class="header-anchor-wrapper">The Big Picture
+  <a href="#the-big-picture" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Think of an RNN as a function: $h_t = f(x_t, h_{t-1})$</p>
+<p>Parameters = The fixed &ldquo;knobs&rdquo; of the function (weights and biases)</p>
+<p>Hidden state = The changing &ldquo;memory&rdquo; that gets passed between function calls</p>
+<p>The magic = The same function f is called repeatedly, each time updating the memory based on new input</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-this-matters">
+
+
+<h2 class="header-anchor-wrapper">Why This Matters
+  <a href="#why-this-matters" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Understanding these dimensional relationships is crucial because:</p>
+<ol>
+<li>It helps debug shape errors when implementing RNNs</li>
+<li>It clarifies what the model is actually learning</li>
+<li>It provides intuition for more advanced architectures (LSTMs, GRUs, Transformers)</li>
+<li>It explains why RNNs can handle sequences of any length</li>
+</ol>
+<p>The next time you see RNN equations, remember: the dimensions tell the real story! The matrices are the bridges that make everything connect, and the hidden state is the messenger carrying information through time.</p>
+</section>
+    
+</article>
+</div>
+
+
+                
+                    
+                
+
+                
+            </div>
+        </main>
+</body>
+</html>

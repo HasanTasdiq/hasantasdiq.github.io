@@ -4,16 +4,35 @@
     <title>QR Codes on S. M. Hasan</title>
     <link>https://numan947.github.io/tags/qr-codes/</link>
     <description>Recent content in QR Codes on S. M. Hasan</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://numan947.github.io/tags/qr-codes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/qr-codes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SeQR: Secure and Simple Enterprise Wi-Fi Configuration</title>
       <link>https://numan947.github.io/projects/seqr/</link>
       <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate>
+      
       <guid>https://numan947.github.io/projects/seqr/</guid>
-      <description>&lt;h1 id=&#34;seqr-secure-and-simple-enterprise-wi-fi-configuration&#34;&gt;SeQR: Secure and Simple Enterprise Wi-Fi Configuration&lt;/h1&gt;&#xA;&lt;p&gt;&lt;em&gt;Paper accepted at ACM Conference on Human Factors in Computing Systems (CHI) 2025&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://numan947.github.io/projects/seqr/seqr_workflow.png&#34; alt=&#34;SeQR Workflow&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Enterprise Wi-Fi configuration remains vulnerable to &amp;ldquo;Evil Twin&amp;rdquo; attacks due to complex client-side setup requirements that often lead to security misconfigurations. This paper introduces SeQR, a new configurator that uses QR codes to fully automate enterprise Wi-Fi setup through existing authenticated channels. By removing insecure configuration options and simplifying certificate validation, SeQR ensures users automatically establish secure connections without technical expertise. User studies demonstrate that SeQR significantly improves usability while eliminating the misconfigurations that enable credential theft attacks.&lt;/p&gt;</description>
+      <description>&lt;!-- end-chunk --&gt;
+&lt;!-- begin-chunk data-anchor=&#34;seqr-secure-and-simple-enterprise-wi-fi-configuration&#34; --&gt;
+
+&lt;h1 class=&#34;header-anchor-wrapper&#34;&gt;SeQR: Secure and Simple Enterprise Wi-Fi Configuration
+  &lt;a href=&#34;#seqr-secure-and-simple-enterprise-wi-fi-configuration&#34; class=&#34;header-anchor-link&#34;&gt;
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    width=&#34;1rem&#34; height=&#34;1rem&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34;
+    stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34;
+    stroke-linejoin=&#34;round&#34;&gt;
+    &lt;line x1=&#34;4&#34; y1=&#34;9&#34; x2=&#34;20&#34; y2=&#34;9&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;4&#34; y1=&#34;15&#34; x2=&#34;20&#34; y2=&#34;15&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;10&#34; y1=&#34;3&#34; x2=&#34;8&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;16&#34; y1=&#34;3&#34; x2=&#34;14&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;
+&lt;/svg&gt;
+
+&lt;/a&gt;
+&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;Paper accepted at ACM Conference on Human Factors in Computing Systems (CHI) 2025&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://numan947.github.io/projects/seqr/seqr_workflow.png&#34; alt=&#34;SeQR Workflow&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Enterprise Wi-Fi configuration remains vulnerable to &amp;ldquo;Evil Twin&amp;rdquo; attacks due to complex client-side setup requirements that often lead to security misconfigurations. This paper introduces SeQR, a new configurator that uses QR codes to fully automate enterprise Wi-Fi setup through existing authenticated channels. By removing insecure configuration options and simplifying certificate validation, SeQR ensures users automatically establish secure connections without technical expertise. User studies demonstrate that SeQR significantly improves usability while eliminating the misconfigurations that enable credential theft attacks.&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

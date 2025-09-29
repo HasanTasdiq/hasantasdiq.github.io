@@ -2,6 +2,7 @@ baseURL = 'https://numan947.github.io/'
 languageCode = 'en-us'
 title = 'S. M. Hasan'
 theme = "hugo-theme-monochrome"
+publishDir = "docs"
 
 [params]
   author = "Your Name"
