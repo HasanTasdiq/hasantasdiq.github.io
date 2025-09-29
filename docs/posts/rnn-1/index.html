@@ -90,6 +90,9 @@ When learning about Recurrent Neural Networks (RNNs), many tutorials focus on th
 
 
 
+    <script src="/js/math.5a8dbbda075325162f7a690e0de21e861a1794248ace5298c0d8479f0ed55ac8.js" integrity="sha256-Wo272gdTJRYvemkODeIehhoXlCSKzlKYwNhHnw7VWsg="></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.3/tex-mml-chtml.js"></script>
+
 
 
 
@@ -238,6 +241,7 @@ When learning about Recurrent Neural Networks (RNNs), many tutorials focus on th
       </ul>
     </li>
     <li><a href="#parameter-counting">Parameter Counting</a></li>
+    <li><a href="#the-achilles-heel-vanishing-and-exploding-gradients">The Achilles&rsquo; Heel: Vanishing and Exploding Gradients</a></li>
     <li><a href="#the-big-picture">The Big Picture</a></li>
     <li><a href="#why-this-matters">Why This Matters</a></li>
   </ul>
@@ -343,9 +347,9 @@ $$</p>
 
 <p>Let&rsquo;s define our dimensions:</p>
 <ul>
-<li><strong>Input dimension</strong> (<code>d_in</code>): 4 (each input is a 4D vector)</li>
-<li><strong>Hidden dimension</strong> (<code>d_h</code>): 3 (the size of our RNN&rsquo;s &ldquo;memory&rdquo;)</li>
-<li><strong>Output dimension</strong> (<code>d_out</code>): 2 (e.g., binary classification)</li>
+<li><strong>Input dimension</strong> (<code>$d_{in}$</code>): 4 (each input is a 4D vector)</li>
+<li><strong>Hidden dimension</strong> (<code>$d_h$</code>): 3 (the size of our RNN&rsquo;s &ldquo;memory&rdquo;)</li>
+<li><strong>Output dimension</strong> (<code>$d_{out}$</code>): 2 (e.g., binary classification)</li>
 </ul>
 <p>Now let&rsquo;s look at what each component actually contains:</p>
 </section>
@@ -382,28 +386,28 @@ $$</p>
   </thead>
   <tbody>
       <tr>
-          <td><code>x_t</code></td>
+          <td><code>$x_t$</code></td>
           <td><code>(4,)</code></td>
           <td>Input at time t (e.g., a word embedding)</td>
       </tr>
       <tr>
-          <td><code>h_{t-1}</code></td>
+          <td><code>$h_{t-1}$</code></td>
           <td><code>(3,)</code></td>
           <td>Previous hidden state (the &ldquo;memory&rdquo; so far)</td>
       </tr>
       <tr>
-          <td><code>h_t</code></td>
+          <td><code>$h_t$</code></td>
           <td><code>(3,)</code></td>
           <td>New hidden state (updated memory)</td>
       </tr>
       <tr>
-          <td><code>y_t</code></td>
+          <td><code>$y_t$</code></td>
           <td><code>(2,)</code></td>
           <td>Output at time t</td>
       </tr>
   </tbody>
 </table>
-<p><strong>Key Insight</strong>: <code>h_t</code> and <code>x_t</code> do NOT have the same dimension! The hidden dimension is a design choice, while input dimension is determined by your data.</p>
+<p><strong>Key Insight</strong>: <code>$h_t$</code> and <code>$x_t$</code> do NOT have the same dimension! The hidden dimension is a design choice, while input dimension is determined by your data.</p>
 </section>
     
         
@@ -438,27 +442,27 @@ $$</p>
   </thead>
   <tbody>
       <tr>
-          <td><code>W_hx</code></td>
+          <td><code>$W_{hx}$</code></td>
           <td><code>(3, 4)</code></td>
           <td>Transforms input to hidden space</td>
       </tr>
       <tr>
-          <td><code>W_hh</code></td>
+          <td><code>$W_{hh}$</code></td>
           <td><code>(3, 3)</code></td>
           <td>Transforms previous hidden state</td>
       </tr>
       <tr>
-          <td><code>b_h</code></td>
+          <td><code>$b_h$</code></td>
           <td><code>(3,)</code></td>
           <td>Hidden layer bias</td>
       </tr>
       <tr>
-          <td><code>W_ho</code></td>
+          <td><code>$W_{ho}$</code></td>
           <td><code>(2, 3)</code></td>
           <td>Transforms hidden state to output</td>
       </tr>
       <tr>
-          <td><code>b_v</code></td>
+          <td><code>$b_v$</code></td>
           <td><code>(2,)</code></td>
           <td>Output bias</td>
       </tr>
@@ -491,13 +495,13 @@ $$</p>
 
 <p>Let&rsquo;s verify the math works dimensionally:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># All operations are dimensionally compatible:</span>
-</span></span><span style="display:flex;"><span>W_hh <span style="color:#960050;background-color:#1e0010">·</span> h_{t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}    <span style="color:#75715e"># (3,3) · (3,)  → (3,)</span>
-</span></span><span style="display:flex;"><span>W_hx <span style="color:#960050;background-color:#1e0010">·</span> x_t         <span style="color:#75715e"># (3,4) · (4,)  → (3,) </span>
+</span></span><span style="display:flex;"><span>W_hh DOT h_{t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>}    <span style="color:#75715e"># (3,3) DOT (3,)  → (3,)</span>
+</span></span><span style="display:flex;"><span>W_hx DOT x_t         <span style="color:#75715e"># (3,4) DOT (4,)  → (3,) </span>
 </span></span><span style="display:flex;"><span>b_h                <span style="color:#75715e"># (3,)</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Sum: (3,) + (3,) + (3,) → (3,)</span>
 </span></span><span style="display:flex;"><span>tanh(<span style="color:#f92672">...</span>)          <span style="color:#75715e"># (3,) → (3,)  # h_t is born!</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>W_ho <span style="color:#960050;background-color:#1e0010">·</span> h_t         <span style="color:#75715e"># (2,3) · (3,) → (2,)</span>
+</span></span><span style="display:flex;"><span>W_ho DOT h_t         <span style="color:#75715e"># (2,3) DOT (3,) → (2,)</span>
 </span></span><span style="display:flex;"><span>b_v                <span style="color:#75715e"># (2,)</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Sum: (2,) + (2,) → (2,)  # y_t is ready!</span>
 </span></span></code></pre></div></section>
@@ -655,6 +659,42 @@ $$</p>
 <p>$W_{ho}: 2 \times 3 = 6$ parameters</p>
 <p>$b_v: 2$ parameters</p>
 <p>Total: 32 parameters (regardless of sequence length!)</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-achilles-heel-vanishing-and-exploding-gradients">
+
+
+<h2 class="header-anchor-wrapper">The Achilles&rsquo; Heel: Vanishing and Exploding Gradients
+  <a href="#the-achilles-heel-vanishing-and-exploding-gradients" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Despite their elegant design, RNNs suffer from a fundamental limitation: they struggle to learn long-term dependencies. This occurs due to the vanishing and exploding gradient problem.</p>
+<p>During training, gradients are calculated and propagated backward through time. At each step, the gradient gets multiplied by the same weight matrix $W_{hh}$. The behavior of this repeated multiplication depends on the eigenvalues of $W_{hh}$.</p>
+<p><strong>What are eigenvalues?</strong> Think of them as the matrix&rsquo;s &ldquo;scaling factors&rdquo; &ndash; they tell you how much a vector gets stretched or compressed when multiplied by the matrix.</p>
+<ul>
+<li>
+<p>If the largest eigenvalue is less than 1: Gradients shrink exponentially as they backpropagate through time, eventually vanishing to near-zero. The network loses its ability to learn from distant time steps.</p>
+</li>
+<li>
+<p>If the largest eigenvalue is greater than 1: Gradients grow exponentially, exploding to enormous values and making training unstable.</p>
+</li>
+</ul>
+<p>This fragility stems from RNNs&rsquo; sequential structure: each hidden state depends solely on its immediate predecessor. The result is a brittle information chain where long-range dependencies vanish, limiting the model&rsquo;s ability to capture context across extended sequences.</p>
 </section>
     
         

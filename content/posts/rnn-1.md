@@ -2,6 +2,7 @@
 title: "Demystifying RNNs: A Deep Dive into Dimensions and Parameters"
 date: 2025-09-29
 tags: ["RNN", "Neural Network", "Machine Learning", "NLP"]
+math: true
 ---
 
 
@@ -27,9 +28,9 @@ These equations look simple enough, but the devil is in the dimensions. Let's br
 ## A Concrete Example
 
 Let's define our dimensions:
-- **Input dimension** (`d_in`): 4 (each input is a 4D vector)
-- **Hidden dimension** (`d_h`): 3 (the size of our RNN's "memory")
-- **Output dimension** (`d_out`): 2 (e.g., binary classification)
+- **Input dimension** (`$d_{in}$`): 4 (each input is a 4D vector)
+- **Hidden dimension** (`$d_h$`): 3 (the size of our RNN's "memory")
+- **Output dimension** (`$d_{out}$`): 2 (e.g., binary classification)
 
 Now let's look at what each component actually contains:
 
@@ -37,23 +38,23 @@ Now let's look at what each component actually contains:
 
 | Component | Shape | Description |
 |-----------|-------|-------------|
-| `x_t` | `(4,)` | Input at time t (e.g., a word embedding) |
-| `h_{t-1}` | `(3,)` | Previous hidden state (the "memory" so far) |
-| `h_t` | `(3,)` | New hidden state (updated memory) |
-| `y_t` | `(2,)` | Output at time t |
+| `$x_t$` | `(4,)` | Input at time t (e.g., a word embedding) |
+| `$h_{t-1}$` | `(3,)` | Previous hidden state (the "memory" so far) |
+| `$h_t$` | `(3,)` | New hidden state (updated memory) |
+| `$y_t$` | `(2,)` | Output at time t |
 
 
-**Key Insight**: `h_t` and `x_t` do NOT have the same dimension! The hidden dimension is a design choice, while input dimension is determined by your data.
+**Key Insight**: `$h_t$` and `$x_t$` do NOT have the same dimension! The hidden dimension is a design choice, while input dimension is determined by your data.
 
 ### The Parameters (Learned Weights)
 
 | Component | Shape | Purpose |
 |-----------|-------|---------|
-| `W_hx` | `(3, 4)` | Transforms input to hidden space |
-| `W_hh` | `(3, 3)` | Transforms previous hidden state |
-| `b_h` | `(3,)` | Hidden layer bias |
-| `W_ho` | `(2, 3)` | Transforms hidden state to output |
-| `b_v` | `(2,)` | Output bias |
+| `$W_{hx}$` | `(3, 4)` | Transforms input to hidden space |
+| `$W_{hh}$` | `(3, 3)` | Transforms previous hidden state |
+| `$b_h$` | `(3,)` | Hidden layer bias |
+| `$W_{ho}$` | `(2, 3)` | Transforms hidden state to output |
+| `$b_v$` | `(2,)` | Output bias |
 
 **Key Insight**: The weight matrices are the "bridges" that make different dimensions compatible. They're the actual parameters learned during training.
 
@@ -63,13 +64,13 @@ Let's verify the math works dimensionally:
 
 ```python
 # All operations are dimensionally compatible:
-W_hh · h_{t-1}    # (3,3) · (3,)  → (3,)
-W_hx · x_t         # (3,4) · (4,)  → (3,) 
+W_hh DOT h_{t-1}    # (3,3) DOT (3,)  → (3,)
+W_hx DOT x_t         # (3,4) DOT (4,)  → (3,) 
 b_h                # (3,)
 # Sum: (3,) + (3,) + (3,) → (3,)
 tanh(...)          # (3,) → (3,)  # h_t is born!
 
-W_ho · h_t         # (2,3) · (3,) → (2,)
+W_ho DOT h_t         # (2,3) DOT (3,) → (2,)
 b_v                # (2,)
 # Sum: (2,) + (2,) → (2,)  # y_t is ready!
 ```
@@ -101,6 +102,21 @@ $W_{ho}: 2 \times 3 = 6$ parameters
 $b_v: 2$ parameters
 
 Total: 32 parameters (regardless of sequence length!)
+
+## The Achilles' Heel: Vanishing and Exploding Gradients
+
+Despite their elegant design, RNNs suffer from a fundamental limitation: they struggle to learn long-term dependencies. This occurs due to the vanishing and exploding gradient problem.
+
+During training, gradients are calculated and propagated backward through time. At each step, the gradient gets multiplied by the same weight matrix $W_{hh}$. The behavior of this repeated multiplication depends on the eigenvalues of $W_{hh}$.
+
+**What are eigenvalues?** Think of them as the matrix's "scaling factors" -- they tell you how much a vector gets stretched or compressed when multiplied by the matrix.
+
+- If the largest eigenvalue is less than 1: Gradients shrink exponentially as they backpropagate through time, eventually vanishing to near-zero. The network loses its ability to learn from distant time steps.
+
+- If the largest eigenvalue is greater than 1: Gradients grow exponentially, exploding to enormous values and making training unstable.
+
+This fragility stems from RNNs' sequential structure: each hidden state depends solely on its immediate predecessor. The result is a brittle information chain where long-range dependencies vanish, limiting the model's ability to capture context across extended sequences.
+
 
 ## The Big Picture
 Think of an RNN as a function: $h_t = f(x_t, h_{t-1})$

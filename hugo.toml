@@ -4,6 +4,7 @@ title = 'S. M. Hasan'
 theme = "hugo-theme-monochrome"
 publishDir = "docs"
 
+
 [params]
   author = "Your Name"
   description = "A brief description of your site"
@@ -11,7 +12,7 @@ publishDir = "docs"
   dateFormat = "January 2, 2006"
   enableComments = true
   enable_site_search = false
-  
+  math = true  
 
 
 [menu]
