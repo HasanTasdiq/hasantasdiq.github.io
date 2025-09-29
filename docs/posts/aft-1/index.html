@@ -1,0 +1,730 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://numan947.github.io/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attention-Free Transformer: Escaping the Quadratic Bottleneck - S. M. Hasan</title>
+
+    
+
+    
+
+    
+    <meta name="author" content="Your Name" />
+    
+
+    
+        <meta property="og:url" content="https://numan947.github.io/posts/aft-1/">
+  <meta property="og:site_name" content="S. M. Hasan">
+  <meta property="og:title" content="Attention-Free Transformer: Escaping the Quadratic Bottleneck">
+  <meta property="og:description" content="Attention-Free Transformer: Escaping the Quadratic Bottleneck How AFT rethinks attention to achieve linear complexity while preserving performance
+The Transformer architecture revolutionized AI, but its self-attention mechanism comes with a fundamental limitation: quadratic complexity $\mathcal{O}(n^2)$ with sequence length. This makes processing long sequences computationally prohibitive. The Attention-Free Transformer (AFT) emerges as an elegant solution that maintains strong performance while achieving linear complexity.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-28T00:00:00+00:00">
+    <meta property="article:tag" content="Transformer">
+    <meta property="article:tag" content="Neural Network">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="NLP">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Attention-Free Transformer: Escaping the Quadratic Bottleneck">
+  <meta name="twitter:description" content="Attention-Free Transformer: Escaping the Quadratic Bottleneck How AFT rethinks attention to achieve linear complexity while preserving performance
+The Transformer architecture revolutionized AI, but its self-attention mechanism comes with a fundamental limitation: quadratic complexity $\mathcal{O}(n^2)$ with sequence length. This makes processing long sequences computationally prohibitive. The Attention-Free Transformer (AFT) emerges as an elegant solution that maintains strong performance while achieving linear complexity.">
+
+    <link rel="stylesheet" href="/style.min.ce5f3efd2a92c214ac7eda7a2ac6406bb3f876bf941ee33af45d44bcadd55da1.css" integrity="sha256-zl8&#43;/SqSwhSsftp6KsZAa7P4dr&#43;UHuM69F1EvK3VXaE=">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/theme-switch.7c57075675400a1a12bc3fcfc744dd74e1e417b8db11fdef378d7a7ef1cc9e3f.js" integrity="sha256-fFcHVnVAChoSvD/Px0TddOHkF7jbEf3vN416fvHMnj8="></script>
+
+
+
+    <script defer src="/js/hide-navbar-on-scroll.b5f3414715b82a9bc2c9086fc860ad5d0a63f67251e4dd4fa61e9dfce91ebdb6.js" integrity="sha256-tfNBRxW4KpvCyQhvyGCtXQpj9nJR5N1Pph6d/OkevbY="></script>
+
+
+
+
+
+    <script defer src="/js/zooming.10d718ecdb4a98eab370ed60963ea87f1c612ac225609eadc52f0e536bc1517c.js" integrity="sha256-ENcY7NtKmOqzcO1glj6ofxxhKsIlYJ6txS8OU2vBUXw="></script>
+
+
+
+
+    <script src="/js/math.5a8dbbda075325162f7a690e0de21e861a1794248ace5298c0d8479f0ed55ac8.js" integrity="sha256-Wo272gdTJRYvemkODeIehhoXlCSKzlKYwNhHnw7VWsg="></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.3/tex-mml-chtml.js"></script>
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.a89c7b4e13df953403c75897ad4b6db68fad6534043bb234d29a80015f1ec9d1.js" integrity="sha256-qJx7ThPflTQDx1iXrUttto&#43;tZTQEO7I00pqAAV8eydE="></script>
+        
+    
+
+
+
+
+
+
+
+
+    
+</head>
+<body><header>
+    <div id="header_content">
+        <div id="header_left">
+            <div id="sidebar_btn">
+                <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+                <label id="sidebar_btn_label" for="sidebar_btn_input">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</label>
+                <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                    <div id="sidebar_canvas_overlay"></div>
+                </label>
+                <div id="sidebar">
+                    <ul><li>
+                                <a href="/about/">About</a></li><li>
+                                <a href="/research/">Research</a></li><li>
+                                <a href="/publications/">Publications</a></li><li>
+                                <a href="/posts/">Bits, Bytes &amp; Life</a></li></ul>
+                </div>
+            </div>
+        
+            <div class="brand">
+                <div>
+                    <a href="/">S. M. Hasan</a>
+                </div>
+            </div><nav id="header_navbar" class="pure-menu header-menu">
+    <ul class="pure-menu-list"><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/research/" class="pure-menu-link">Research</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/publications/" class="pure-menu-link">Publications</a>
+                    
+                </li><li class="header-menu-item pure-menu-item insection">
+                    
+                        <a href="/posts/" class="pure-menu-link">Bits, Bytes &amp; Life</a>
+                    
+                </li></ul>
+</nav>
+</div>
+
+        <div id="header_right">
+            
+
+            <div id="theme_tool">
+                <button id="dark_mode_btn" class="header-menu-btn outline-button" title='Switch to dark mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</button>
+                <button id="light_mode_btn" class="header-menu-btn outline-button" title='Switch to light mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</button>
+            </div>
+
+            
+        </div>
+    </div>
+</header><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+<main>
+            <div id="content" class="content-margin">
+                
+    
+    
+        
+        <div class="collapsible-menu-wrapper"><div class="collapsible-menu-type"><span>Table of contents</span></div><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-we-need-attention-free-transformers">Why We Need Attention-Free Transformers</a></li>
+    <li><a href="#the-core-aft-innovation">The Core AFT Innovation</a>
+      <ul>
+        <li><a href="#mathematical-foundation">Mathematical Foundation</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-complete-aft-equation">The Complete AFT Equation</a></li>
+    <li><a href="#what-exactly-are-positional-biases-doing">What Exactly Are Positional Biases Doing?</a></li>
+    <li><a href="#implementation-pseudocode">Implementation Pseudocode</a></li>
+    <li><a href="#aft-local-handling-long-sequences">AFT-local: Handling Long Sequences</a></li>
+    <li><a href="#complexity-analysis">Complexity Analysis</a></li>
+    <li><a href="#why-aft-matters">Why AFT Matters</a></li>
+  </ul>
+</nav>
+        
+    </div></div>
+    
+
+
+
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+
+    
+    
+        
+        
+        
+    
+        
+        
+            
+            
+            
+        
+        <section id="attention-free-transformer-escaping-the-quadratic-bottleneck">
+
+
+<h1 class="header-anchor-wrapper">Attention-Free Transformer: Escaping the Quadratic Bottleneck
+  <a href="#attention-free-transformer-escaping-the-quadratic-bottleneck" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+<p><em>How AFT rethinks attention to achieve linear complexity while preserving performance</em></p>
+<p>The Transformer architecture revolutionized AI, but its self-attention mechanism comes with a fundamental limitation: quadratic complexity $\mathcal{O}(n^2)$ with sequence length. This makes processing long sequences computationally prohibitive. The Attention-Free Transformer (AFT) emerges as an elegant solution that maintains strong performance while achieving linear complexity.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-we-need-attention-free-transformers">
+
+
+<h2 class="header-anchor-wrapper">Why We Need Attention-Free Transformers
+  <a href="#why-we-need-attention-free-transformers" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Traditional self-attention requires computing attention scores between every pair of tokens in a sequence. For a sequence of length n, this means:</p>
+<ul>
+<li>
+<p>$n \times n$ attention score matrix</p>
+</li>
+<li>
+<p>$\mathcal{O}(n^2)$ memory and computation</p>
+</li>
+<li>
+<p>Becomes infeasible for long sequences (documents, high-resolution images, genomic data)</p>
+</li>
+</ul>
+<p>AFT addresses this by reformulating attention without the expensive $QK^{T}$ product.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-core-aft-innovation">
+
+
+<h2 class="header-anchor-wrapper">The Core AFT Innovation
+  <a href="#the-core-aft-innovation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>AFT replaces the dynamic attention computation with a static, position-based weighting scheme combined with element-wise operations.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="mathematical-foundation">
+
+
+<h3 class="header-anchor-wrapper">Mathematical Foundation
+  <a href="#mathematical-foundation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Let&rsquo;s walk through AFT-full with a concrete example:</p>
+<p>Input: 3-word sequence:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.4</span>],   <span style="color:#75715e"># Word 1</span>
+</span></span><span style="display:flex;"><span>     [<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.1</span>],   <span style="color:#75715e"># Word 2  </span>
+</span></span><span style="display:flex;"><span>     [<span style="color:#f92672">-</span><span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>]]   <span style="color:#75715e"># Word 3</span>
+</span></span></code></pre></div><p><strong>Step 1: Compute Q, K, V (Same as Transformer)</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>W_q <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.3</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.4</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.6</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">1.2</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>W_k <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.4</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.6</span>, <span style="color:#ae81ff">0.7</span>], 
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">1.3</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>W_v <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.4</span>, <span style="color:#ae81ff">0.5</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.6</span>, <span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">1.4</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Q <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_q <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">1.5</span>, <span style="color:#ae81ff">1.7</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>K <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_k <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.5</span>, <span style="color:#ae81ff">1.7</span>, <span style="color:#ae81ff">1.9</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>V <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_v <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.7</span>, <span style="color:#ae81ff">1.9</span>, <span style="color:#ae81ff">2.1</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">1.2</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>]]
+</span></span></code></pre></div><p><strong>Step 2: Positional Bias - The Key Innovation</strong>
+AFT introduces learnable positional biases <code>$w$</code> that capture relative position relationships:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Learnable positional bias matrix w (shape: T × T, T is max sequence length)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># w[i,j] represents the bias between position i and j</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># and captures the relationships between these positions</span>
+</span></span><span style="display:flex;"><span>w <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.3</span>],   <span style="color:#75715e"># Position 1&#39;s relationship to positions 1,2,3</span>
+</span></span><span style="display:flex;"><span>     [<span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.4</span>],   <span style="color:#75715e"># Position 2&#39;s relationship to positions 1,2,3  </span>
+</span></span><span style="display:flex;"><span>     [<span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.4</span>, <span style="color:#ae81ff">0.2</span>]]   <span style="color:#75715e"># Position 3&#39;s relationship to positions 1,2,3</span>
+</span></span></code></pre></div><p><strong>Step 3: Compute Weighted Keys</strong></p>
+<p>Instead of $QK^T$, AFT computes position-weighted keys:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># For each position t, compute weighted sum of keys with positional bias</span>
+</span></span><span style="display:flex;"><span>weighted_K <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):  <span style="color:#75715e"># For each target position</span>
+</span></span><span style="display:flex;"><span>    numerator <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    denominator <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> t_prime <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):  <span style="color:#75715e"># For each source position</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Key + positional bias, then exponentiate</span>
+</span></span><span style="display:flex;"><span>        exp_term <span style="color:#f92672">=</span> exp(K[t_prime] <span style="color:#f92672">+</span> w[t, t_prime])
+</span></span><span style="display:flex;"><span>        numerator <span style="color:#f92672">+=</span> exp_term <span style="color:#f92672">*</span> V[t_prime]
+</span></span><span style="display:flex;"><span>        denominator <span style="color:#f92672">+=</span> exp_term
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    weighted_K<span style="color:#f92672">.</span>append(numerator <span style="color:#f92672">/</span> denominator)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Resulting weighted_K has shape (3, 3) - same as input</span>
+</span></span><span style="display:flex;"><span>weighted_K <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.25</span>, <span style="color:#ae81ff">1.39</span>, <span style="color:#ae81ff">1.53</span>],
+</span></span><span style="display:flex;"><span>              [<span style="color:#ae81ff">1.18</span>, <span style="color:#ae81ff">1.31</span>, <span style="color:#ae81ff">1.44</span>],
+</span></span><span style="display:flex;"><span>              [<span style="color:#ae81ff">1.15</span>, <span style="color:#ae81ff">1.28</span>, <span style="color:#ae81ff">1.41</span>]]
+</span></span></code></pre></div></section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-complete-aft-equation">
+
+
+<h2 class="header-anchor-wrapper">The Complete AFT Equation
+  <a href="#the-complete-aft-equation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>The mathematical formulation from the paper:
+$$
+Y_t = \sigma_Q(Q_t) \odot
+\frac{\displaystyle \sum_{t&rsquo;=1}^T \exp\big(K_{t&rsquo;} + w_{t,t&rsquo;}\big) \odot V_{t&rsquo;}}
+{\displaystyle \sum_{t&rsquo;=1}^T \exp\big(K_{t&rsquo;} + w_{t,t&rsquo;})}
+$$</p>
+<p>Where:</p>
+<ul>
+<li>
+<p>$σ_Q$ is sigmoid activation</p>
+</li>
+<li>
+<p>$\odot$ is element-wise multiplication</p>
+</li>
+<li>
+<p>$w$ is the learnable positional bias matrix</p>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="what-exactly-are-positional-biases-doing">
+
+
+<h2 class="header-anchor-wrapper">What Exactly Are Positional Biases Doing?
+  <a href="#what-exactly-are-positional-biases-doing" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p><strong>Traditional Positional Encodings (like Rotary, Sinusoidal):</strong></p>
+<ul>
+<li>Add absolute position information to token embeddings</li>
+<li>Help model understand &ldquo;where&rdquo; tokens are</li>
+<li>Static or have fixed patterns</li>
+</ul>
+<p><strong>AFT Positional Biases:</strong></p>
+<ul>
+<li>
+<p>Learn relative position relationships directly</p>
+</li>
+<li>
+<p>Capture &ldquo;how much attention&rdquo; should flow between positions</p>
+</li>
+<li>
+<p>Are learnable parameters that adapt during training</p>
+</li>
+<li>
+<p>Explicitly model position-to-position affinities</p>
+</li>
+</ul>
+<p><strong>Key Difference:</strong> Positional encodings tell the model &ldquo;this token is at position 5.&rdquo; AFT positional biases tell the model &ldquo;the relationship between position 2 and position 5 should have strength 0.8.&rdquo;</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="implementation-pseudocode">
+
+
+<h2 class="header-anchor-wrapper">Implementation Pseudocode
+  <a href="#implementation-pseudocode" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AttentionFreeTransformer</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, dim, seq_len):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>W_q <span style="color:#f92672">=</span> Linear(dim, dim)  <span style="color:#75715e"># Query projection</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>W_k <span style="color:#f92672">=</span> Linear(dim, dim)  <span style="color:#75715e"># Key projection  </span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>W_v <span style="color:#f92672">=</span> Linear(dim, dim)  <span style="color:#75715e"># Value projection</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>w <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>randn(seq_len, seq_len))  <span style="color:#75715e"># Positional biases</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        T, d <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>shape  <span style="color:#75715e"># Sequence length, hidden dimension</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Project to Q, K, V</span>
+</span></span><span style="display:flex;"><span>        Q <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>W_q(x)  <span style="color:#75715e"># (T, d)</span>
+</span></span><span style="display:flex;"><span>        K <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>W_k(x)  <span style="color:#75715e"># (T, d)</span>
+</span></span><span style="display:flex;"><span>        V <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>W_v(x)  <span style="color:#75715e"># (T, d)</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Initialize output</span>
+</span></span><span style="display:flex;"><span>        Y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros_like(x)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># AFT computation</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(T):  <span style="color:#75715e"># For each target position</span>
+</span></span><span style="display:flex;"><span>            numerator <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(d)
+</span></span><span style="display:flex;"><span>            denominator <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(d)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> t_prime <span style="color:#f92672">in</span> range(T):  <span style="color:#75715e"># For each source position</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># Key + positional bias, then exponentiate</span>
+</span></span><span style="display:flex;"><span>                k_bias <span style="color:#f92672">=</span> K[t_prime] <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>w[t, t_prime]
+</span></span><span style="display:flex;"><span>                exp_term <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>exp(k_bias)
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>                numerator <span style="color:#f92672">+=</span> exp_term <span style="color:#f92672">*</span> V[t_prime]
+</span></span><span style="display:flex;"><span>                denominator <span style="color:#f92672">+=</span> exp_term
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Weighted average and element-wise with sigmoid(Q)</span>
+</span></span><span style="display:flex;"><span>            weighted_K <span style="color:#f92672">=</span> numerator <span style="color:#f92672">/</span> denominator
+</span></span><span style="display:flex;"><span>            Y[t] <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(Q[t]) <span style="color:#f92672">*</span> weighted_K
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Y
+</span></span></code></pre></div></section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="aft-local-handling-long-sequences">
+
+
+<h2 class="header-anchor-wrapper">AFT-local: Handling Long Sequences
+  <a href="#aft-local-handling-long-sequences" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>For very long sequences, AFT-local restricts the positional bias to a local window:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Only consider positions within window s</span>
+</span></span><span style="display:flex;"><span>s <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>  <span style="color:#75715e"># Local window size</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(T):
+</span></span><span style="display:flex;"><span>    numerator <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(d)
+</span></span><span style="display:flex;"><span>    denominator <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(d)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    start <span style="color:#f92672">=</span> max(<span style="color:#ae81ff">0</span>, t <span style="color:#f92672">-</span> s)
+</span></span><span style="display:flex;"><span>    end <span style="color:#f92672">=</span> min(T, t <span style="color:#f92672">+</span> s <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> t_prime <span style="color:#f92672">in</span> range(start, end):  <span style="color:#75715e"># Only local positions</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> abs(t <span style="color:#f92672">-</span> t_prime) <span style="color:#f92672">&lt;=</span> s:
+</span></span><span style="display:flex;"><span>            k_bias <span style="color:#f92672">=</span> K[t_prime] <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>w[t, t_prime]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            k_bias <span style="color:#f92672">=</span> K[t_prime]  <span style="color:#75715e"># No positional bias outside window</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        exp_term <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>exp(k_bias)
+</span></span><span style="display:flex;"><span>        numerator <span style="color:#f92672">+=</span> exp_term <span style="color:#f92672">*</span> V[t_prime]
+</span></span><span style="display:flex;"><span>        denominator <span style="color:#f92672">+=</span> exp_term
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    weighted_K <span style="color:#f92672">=</span> numerator <span style="color:#f92672">/</span> denominator
+</span></span><span style="display:flex;"><span>    Y[t] <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(Q[t]) <span style="color:#f92672">*</span> weighted_K
+</span></span></code></pre></div></section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="complexity-analysis">
+
+
+<h2 class="header-anchor-wrapper">Complexity Analysis
+  <a href="#complexity-analysis" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Method</th>
+          <th>Time Complexity</th>
+          <th>Space Complexity</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Transformer</td>
+          <td>$\mathcal{O}(T^{2}d)$</td>
+          <td>$\mathcal{O}(T^{2} + Td)$</td>
+      </tr>
+      <tr>
+          <td>AFT-full</td>
+          <td>$\mathcal{O}(T^{2}d)$</td>
+          <td>$\mathcal{O}(Td)$</td>
+      </tr>
+      <tr>
+          <td>AFT-local</td>
+          <td>$\mathcal{O}(Tsd)$</td>
+          <td>$\mathcal{O}(Td)$</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Key Insight:</strong> While AFT-full has the same time complexity as Transformers, it achieves significantly better memory efficiency ($\mathcal{O}(Td)$ vs. $\mathcal{O}(T^2 + Td)$). AFT-local achieves true linear time complexity ($\mathcal{O}(Ts)$) when the window size $s$ is fixed.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-aft-matters">
+
+
+<h2 class="header-anchor-wrapper">Why AFT Matters
+  <a href="#why-aft-matters" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ol>
+<li>
+<p><strong>Memory Efficiency</strong>: No need to store massive attention matrices</p>
+</li>
+<li>
+<p><strong>Parallelizability</strong>: Element-wise operations are highly parallelizable</p>
+</li>
+<li>
+<p><strong>Long Sequence Handling</strong>: AFT-local can process extremely long sequences</p>
+</li>
+<li>
+<p><strong>Strong Performance</strong>: Maintains competitive results on standard benchmarks</p>
+</li>
+</ol>
+<p>AFT demonstrates that we can rethink attention mechanisms fundamentally while preserving their expressive power. It serves as a bridge between the full attention of Transformers and the linear attention approaches that would follow, like <em>RWKV</em>.</p>
+</section>
+    
+</article>
+</div>
+
+
+                
+                    
+                
+
+                
+            </div>
+        </main>
+</body>
+</html>

@@ -6,7 +6,33 @@
     <description>Recent content in Machine Learning on S. M. Hasan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Attention-Free Transformer: Escaping the Quadratic Bottleneck</title>
+      <link>https://numan947.github.io/posts/aft-1/</link>
+      <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://numan947.github.io/posts/aft-1/</guid>
+      <description>&lt;!-- end-chunk --&gt;
+&lt;!-- begin-chunk data-anchor=&#34;attention-free-transformer-escaping-the-quadratic-bottleneck&#34; --&gt;
+
+&lt;h1 class=&#34;header-anchor-wrapper&#34;&gt;Attention-Free Transformer: Escaping the Quadratic Bottleneck
+  &lt;a href=&#34;#attention-free-transformer-escaping-the-quadratic-bottleneck&#34; class=&#34;header-anchor-link&#34;&gt;
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    width=&#34;1rem&#34; height=&#34;1rem&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34;
+    stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34;
+    stroke-linejoin=&#34;round&#34;&gt;
+    &lt;line x1=&#34;4&#34; y1=&#34;9&#34; x2=&#34;20&#34; y2=&#34;9&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;4&#34; y1=&#34;15&#34; x2=&#34;20&#34; y2=&#34;15&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;10&#34; y1=&#34;3&#34; x2=&#34;8&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;16&#34; y1=&#34;3&#34; x2=&#34;14&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;
+&lt;/svg&gt;
+
+&lt;/a&gt;
+&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;How AFT rethinks attention to achieve linear complexity while preserving performance&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The Transformer architecture revolutionized AI, but its self-attention mechanism comes with a fundamental limitation: quadratic complexity $\mathcal{O}(n^2)$ with sequence length. This makes processing long sequences computationally prohibitive. The Attention-Free Transformer (AFT) emerges as an elegant solution that maintains strong performance while achieving linear complexity.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Demystifying RNNs: A Deep Dive into Dimensions and Parameters</title>
       <link>https://numan947.github.io/posts/rnn-1/</link>
