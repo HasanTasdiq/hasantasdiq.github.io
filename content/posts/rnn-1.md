@@ -1,6 +1,6 @@
 ---
 title: "Demystifying RNNs: A Deep Dive into Dimensions and Parameters"
-date: 2025-09-29
+date: 2025-09-26
 tags: ["RNN", "Neural Network", "Machine Learning", "NLP"]
 math: true
 ---

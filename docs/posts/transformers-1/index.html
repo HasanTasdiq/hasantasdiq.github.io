@@ -1,0 +1,749 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://numan947.github.io/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution - S. M. Hasan</title>
+
+    
+
+    
+
+    
+    <meta name="author" content="Your Name" />
+    
+
+    
+        <meta property="og:url" content="https://numan947.github.io/posts/transformers-1/">
+  <meta property="og:site_name" content="S. M. Hasan">
+  <meta property="og:title" content="Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution">
+  <meta property="og:description" content="Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution From single head to multi-head attention - understanding the architectural breakthrough that changed AI forever
+The Transformer architecture, introduced in the seminal “Attention Is All You Need” paper, revolutionized natural language processing by replacing recurrent networks with a purely attention-based approach. At its heart lies the self-attention mechanism - a powerful way for models to understand relationships between all words in a sequence simultaneously.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-27T00:00:00+00:00">
+    <meta property="article:tag" content="Transformers">
+    <meta property="article:tag" content="Attention">
+    <meta property="article:tag" content="NLP">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution">
+  <meta name="twitter:description" content="Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution From single head to multi-head attention - understanding the architectural breakthrough that changed AI forever
+The Transformer architecture, introduced in the seminal “Attention Is All You Need” paper, revolutionized natural language processing by replacing recurrent networks with a purely attention-based approach. At its heart lies the self-attention mechanism - a powerful way for models to understand relationships between all words in a sequence simultaneously.">
+
+    <link rel="stylesheet" href="/style.min.ce5f3efd2a92c214ac7eda7a2ac6406bb3f876bf941ee33af45d44bcadd55da1.css" integrity="sha256-zl8&#43;/SqSwhSsftp6KsZAa7P4dr&#43;UHuM69F1EvK3VXaE=">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/theme-switch.7c57075675400a1a12bc3fcfc744dd74e1e417b8db11fdef378d7a7ef1cc9e3f.js" integrity="sha256-fFcHVnVAChoSvD/Px0TddOHkF7jbEf3vN416fvHMnj8="></script>
+
+
+
+    <script defer src="/js/hide-navbar-on-scroll.b5f3414715b82a9bc2c9086fc860ad5d0a63f67251e4dd4fa61e9dfce91ebdb6.js" integrity="sha256-tfNBRxW4KpvCyQhvyGCtXQpj9nJR5N1Pph6d/OkevbY="></script>
+
+
+
+
+
+    <script defer src="/js/zooming.10d718ecdb4a98eab370ed60963ea87f1c612ac225609eadc52f0e536bc1517c.js" integrity="sha256-ENcY7NtKmOqzcO1glj6ofxxhKsIlYJ6txS8OU2vBUXw="></script>
+
+
+
+
+    <script src="/js/math.5a8dbbda075325162f7a690e0de21e861a1794248ace5298c0d8479f0ed55ac8.js" integrity="sha256-Wo272gdTJRYvemkODeIehhoXlCSKzlKYwNhHnw7VWsg="></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.3/tex-mml-chtml.js"></script>
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.a89c7b4e13df953403c75897ad4b6db68fad6534043bb234d29a80015f1ec9d1.js" integrity="sha256-qJx7ThPflTQDx1iXrUttto&#43;tZTQEO7I00pqAAV8eydE="></script>
+        
+    
+
+
+
+
+
+
+
+
+    
+</head>
+<body><header>
+    <div id="header_content">
+        <div id="header_left">
+            <div id="sidebar_btn">
+                <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+                <label id="sidebar_btn_label" for="sidebar_btn_input">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</label>
+                <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                    <div id="sidebar_canvas_overlay"></div>
+                </label>
+                <div id="sidebar">
+                    <ul><li>
+                                <a href="/about/">About</a></li><li>
+                                <a href="/research/">Research</a></li><li>
+                                <a href="/publications/">Publications</a></li><li>
+                                <a href="/posts/">Bits, Bytes &amp; Life</a></li></ul>
+                </div>
+            </div>
+        
+            <div class="brand">
+                <div>
+                    <a href="/">S. M. Hasan</a>
+                </div>
+            </div><nav id="header_navbar" class="pure-menu header-menu">
+    <ul class="pure-menu-list"><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/research/" class="pure-menu-link">Research</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/publications/" class="pure-menu-link">Publications</a>
+                    
+                </li><li class="header-menu-item pure-menu-item insection">
+                    
+                        <a href="/posts/" class="pure-menu-link">Bits, Bytes &amp; Life</a>
+                    
+                </li></ul>
+</nav>
+</div>
+
+        <div id="header_right">
+            
+
+            <div id="theme_tool">
+                <button id="dark_mode_btn" class="header-menu-btn outline-button" title='Switch to dark mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</button>
+                <button id="light_mode_btn" class="header-menu-btn outline-button" title='Switch to light mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</button>
+            </div>
+
+            
+        </div>
+    </div>
+</header><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+<main>
+            <div id="content" class="content-margin">
+                
+    
+    
+        
+        <div class="collapsible-menu-wrapper"><div class="collapsible-menu-type"><span>Table of contents</span></div><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-core-idea-self-attention">The Core Idea: Self-Attention</a>
+      <ul>
+        <li><a href="#the-mathematical-foundation">The Mathematical Foundation</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-limitation-single-head-attention">The Limitation: Single-Head Attention</a></li>
+    <li><a href="#multi-head-attention-multiple-perspectives">Multi-Head Attention: Multiple Perspectives</a>
+      <ul>
+        <li><a href="#why-we-need-multiple-heads">Why We Need Multiple Heads</a></li>
+      </ul>
+    </li>
+    <li><a href="#implementation-two-approaches">Implementation: Two Approaches</a>
+      <ul>
+        <li><a href="#approach-1-split-large-matrices-most-common">Approach 1: Split Large Matrices (Most Common)</a></li>
+        <li><a href="#approach-2-separate-matrices-for-each-head">Approach 2: Separate Matrices for Each Head</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-complete-multi-head-attention-formula">The Complete Multi-Head Attention Formula</a></li>
+    <li><a href="#why-this-architecture-works-so-well">Why This Architecture Works So Well</a></li>
+    <li><a href="#the-trade-off-computational-cost">The Trade-off: Computational Cost</a></li>
+  </ul>
+</nav>
+        
+    </div></div>
+    
+
+
+
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+
+    
+    
+        
+        
+        
+    
+        
+        
+            
+            
+            
+        
+        <section id="demystifying-transformers-attention-multi-head-magic-and-the-math-behind-the-revolution">
+
+
+<h1 class="header-anchor-wrapper">Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution
+  <a href="#demystifying-transformers-attention-multi-head-magic-and-the-math-behind-the-revolution" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+<p><em>From single head to multi-head attention - understanding the architectural breakthrough that changed AI forever</em></p>
+<p>The Transformer architecture, introduced in the seminal &ldquo;Attention Is All You Need&rdquo; paper, revolutionized natural language processing by replacing recurrent networks with a purely attention-based approach. At its heart lies the self-attention mechanism - a powerful way for models to understand relationships between all words in a sequence simultaneously.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-core-idea-self-attention">
+
+
+<h2 class="header-anchor-wrapper">The Core Idea: Self-Attention
+  <a href="#the-core-idea-self-attention" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Self-attention allows each position in a sequence to &lsquo;attend&rsquo; to all other positions, computing a weighted sum of values where the weights are determined by &lsquo;compatibility&rsquo; between queries and keys.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-mathematical-foundation">
+
+
+<h3 class="header-anchor-wrapper">The Mathematical Foundation
+  <a href="#the-mathematical-foundation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Let&rsquo;s break down the self-attention mechanism with concrete numbers:</p>
+<p><strong>Input</strong>: A sequence of 3 words, each represented as 4-dimensional vectors:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0.2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.4</span>], <span style="color:#75715e"># Word 1</span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.1</span>], <span style="color:#75715e"># Word 2</span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#f92672">-</span><span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>] <span style="color:#75715e"># Word 3</span>
+</span></span><span style="display:flex;"><span>    ] 
+</span></span></code></pre></div><p><strong>Step 1: Create Query, Key, Value Matrices</strong></p>
+<p>We learn three weight matrices to transform our input:</p>
+<ul>
+<li><code>$W_q$</code> (Query weights): (4, 3) - transforms input to query space</li>
+<li><code>$W_k$</code> (Key weights): (4, 3) - transforms input to key space</li>
+<li><code>$W_v$</code> (Value weights): (4, 3) - transforms input to value space</li>
+</ul>
+<p>Let&rsquo;s use example weights:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>W_q <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.3</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.4</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.6</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">1.2</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>W_k <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.4</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.6</span>, <span style="color:#ae81ff">0.7</span>], 
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">1.3</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>W_v <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.4</span>, <span style="color:#ae81ff">0.5</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.6</span>, <span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">1.4</span>]]
+</span></span></code></pre></div><p>Now compute Q, K, V:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Q <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_q <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">1.5</span>, <span style="color:#ae81ff">1.7</span>],   <span style="color:#75715e"># Queries for each word</span>
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>K <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_k <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.5</span>, <span style="color:#ae81ff">1.7</span>, <span style="color:#ae81ff">1.9</span>],   <span style="color:#75715e"># Keys for each word</span>
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.8</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>V <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_v <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.7</span>, <span style="color:#ae81ff">1.9</span>, <span style="color:#ae81ff">2.1</span>],   <span style="color:#75715e"># Values for each word</span>
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">1.2</span>],
+</span></span><span style="display:flex;"><span>               [<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.1</span>]]
+</span></span></code></pre></div><p><strong>Step 2: Compute Attention Scores</strong></p>
+<p>We calculate how much each word should attend to every other word:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> Q <span style="color:#f92672">@</span> K<span style="color:#f92672">.</span>T <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.3</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1.5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1.5</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1.7</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1.7</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1.9</span>, <span style="color:#f92672">...</span>],
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">...</span>]
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Result:</span>
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">7.73</span>, <span style="color:#ae81ff">4.53</span>, <span style="color:#ae81ff">4.13</span>],
+</span></span><span style="display:flex;"><span>          [<span style="color:#ae81ff">4.53</span>, <span style="color:#ae81ff">2.66</span>, <span style="color:#ae81ff">2.42</span>], 
+</span></span><span style="display:flex;"><span>          [<span style="color:#ae81ff">4.13</span>, <span style="color:#ae81ff">2.42</span>, <span style="color:#ae81ff">2.20</span>]]
+</span></span></code></pre></div><p><strong>Step 3: Scale and Softmax</strong></p>
+<p>Scale by $\sqrt{d_k} (\sqrt{3} \approx 1.732)$ and apply softmax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>scaled_scores <span style="color:#f92672">=</span> scores <span style="color:#f92672">/</span> <span style="color:#ae81ff">1.732</span> <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">4.46</span>, <span style="color:#ae81ff">2.62</span>, <span style="color:#ae81ff">2.38</span>],
+</span></span><span style="display:flex;"><span>                                 [<span style="color:#ae81ff">2.62</span>, <span style="color:#ae81ff">1.54</span>, <span style="color:#ae81ff">1.40</span>],
+</span></span><span style="display:flex;"><span>                                 [<span style="color:#ae81ff">2.38</span>, <span style="color:#ae81ff">1.40</span>, <span style="color:#ae81ff">1.27</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>attention_weights <span style="color:#f92672">=</span> softmax(scaled_scores, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.70</span>, <span style="color:#ae81ff">0.18</span>, <span style="color:#ae81ff">0.12</span>],
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.52</span>, <span style="color:#ae81ff">0.28</span>, <span style="color:#ae81ff">0.20</span>], 
+</span></span><span style="display:flex;"><span>       [<span style="color:#ae81ff">0.50</span>, <span style="color:#ae81ff">0.29</span>, <span style="color:#ae81ff">0.21</span>]
+</span></span><span style="display:flex;"><span>      ]
+</span></span></code></pre></div><p><strong>Step 4: Weighted Sum of Values</strong></p>
+<p>Finally, compute the output by weighting values with attention weights:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>output <span style="color:#f92672">=</span> attention_weights <span style="color:#f92672">@</span> V
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0.70</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1.7</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.18</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1.0</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.12</span><span style="color:#f92672">*</span><span style="color:#ae81ff">0.9</span>, <span style="color:#f92672">...</span>],
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">...</span>]
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1.43</span>, <span style="color:#ae81ff">1.59</span>, <span style="color:#ae81ff">1.75</span>],
+</span></span><span style="display:flex;"><span>   [<span style="color:#ae81ff">1.30</span>, <span style="color:#ae81ff">1.44</span>, <span style="color:#ae81ff">1.58</span>],
+</span></span><span style="display:flex;"><span>   [<span style="color:#ae81ff">1.28</span>, <span style="color:#ae81ff">1.42</span>, <span style="color:#ae81ff">1.56</span>]]
+</span></span></code></pre></div><p>This output becomes the new representation where each word now contains information about all other relevant words in the sequence!</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-limitation-single-head-attention">
+
+
+<h2 class="header-anchor-wrapper">The Limitation: Single-Head Attention
+  <a href="#the-limitation-single-head-attention" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Single-head attention has a fundamental limitation - it can only learn one type of relationship pattern. Think of it like having only one perspective when analyzing a sentence.</p>
+<p>For example, in the sentence &ldquo;The bank of the river had money in it&rdquo;, a single attention head might struggle to capture both:</p>
+<ul>
+<li>
+<p>Syntactic relationships: &ldquo;bank&rdquo; is connected to &ldquo;river&rdquo; (geographical feature)</p>
+</li>
+<li>
+<p>Semantic relationships: &ldquo;bank&rdquo; is connected to &ldquo;money&rdquo; (financial institution)</p>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="multi-head-attention-multiple-perspectives">
+
+
+<h2 class="header-anchor-wrapper">Multi-Head Attention: Multiple Perspectives
+  <a href="#multi-head-attention-multiple-perspectives" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Multi-head attention solves this by running multiple attention mechanisms in parallel, each learning different types of relationships.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-we-need-multiple-heads">
+
+
+<h3 class="header-anchor-wrapper">Why We Need Multiple Heads
+  <a href="#why-we-need-multiple-heads" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Each attention head can specialize in different aspects. For example:</p>
+<ul>
+<li>
+<p>Head 1: Focus on syntactic relationships (subject-verb, adjective-noun)</p>
+</li>
+<li>
+<p>Head 2: Focus on semantic relationships (synonyms, related concepts)</p>
+</li>
+<li>
+<p>Head 3: Focus on long-range dependencies</p>
+</li>
+<li>
+<p>Head 4: Focus on positional patterns</p>
+</li>
+</ul>
+<p>This is analogous to how humans analyze text from multiple angles simultaneously.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="implementation-two-approaches">
+
+
+<h2 class="header-anchor-wrapper">Implementation: Two Approaches
+  <a href="#implementation-two-approaches" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>There are two common ways to implement multi-head attention:</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="approach-1-split-large-matrices-most-common">
+
+
+<h3 class="header-anchor-wrapper">Approach 1: Split Large Matrices (Most Common)
+  <a href="#approach-1-split-large-matrices-most-common" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>We create larger Q, K, V matrices and split them into heads:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># For 2 heads with hidden_dim=4, each head gets 2 dimensions</span>
+</span></span><span style="display:flex;"><span>W_q <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>)  <span style="color:#75715e"># Instead of (4, 3) for single head</span>
+</span></span><span style="display:flex;"><span>Q <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_q <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">8</span>)  <span style="color:#75715e"># [word1, word2, word3] × 8 dimensions</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Split into 2 heads, each with 4 dimensions</span>
+</span></span><span style="display:flex;"><span>Q_heads <span style="color:#f92672">=</span> split(Q, <span style="color:#ae81ff">2</span>)  <span style="color:#75715e"># Two (3, 4) matrices</span>
+</span></span><span style="display:flex;"><span>K_heads <span style="color:#f92672">=</span> split(K, <span style="color:#ae81ff">2</span>)  <span style="color:#75715e"># Two (3, 4) matrices  </span>
+</span></span><span style="display:flex;"><span>V_heads <span style="color:#f92672">=</span> split(V, <span style="color:#ae81ff">2</span>)  <span style="color:#75715e"># Two (3, 4) matrices</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute attention for each head</span>
+</span></span><span style="display:flex;"><span>head1 <span style="color:#f92672">=</span> attention(Q_heads[<span style="color:#ae81ff">0</span>], K_heads[<span style="color:#ae81ff">0</span>], V_heads[<span style="color:#ae81ff">0</span>])  <span style="color:#75715e"># (3, 4)</span>
+</span></span><span style="display:flex;"><span>head2 <span style="color:#f92672">=</span> attention(Q_heads[<span style="color:#ae81ff">1</span>], K_heads[<span style="color:#ae81ff">1</span>], V_heads[<span style="color:#ae81ff">1</span>])  <span style="color:#75715e"># (3, 4)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Concatenate and project</span>
+</span></span><span style="display:flex;"><span>multi_head_output <span style="color:#f92672">=</span> concat([head1, head2]) <span style="color:#f92672">@</span> W_o  <span style="color:#75715e"># (3, 8) → (3, 4)</span>
+</span></span></code></pre></div></section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="approach-2-separate-matrices-for-each-head">
+
+
+<h3 class="header-anchor-wrapper">Approach 2: Separate Matrices for Each Head
+  <a href="#approach-2-separate-matrices-for-each-head" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>We can also use completely separate weight matrices for each head:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Separate weights for each head</span>
+</span></span><span style="display:flex;"><span>W_q1, W_q2 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>), (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>)  <span style="color:#75715e"># Two separate query matrices</span>
+</span></span><span style="display:flex;"><span>W_k1, W_k2 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>), (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>)  <span style="color:#75715e"># Two separate key matrices</span>
+</span></span><span style="display:flex;"><span>W_v1, W_v2 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>), (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>)  <span style="color:#75715e"># Two separate value matrices</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute queries, keys, values for each head</span>
+</span></span><span style="display:flex;"><span>Q1 <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_q1  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>Q2 <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_q2  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>K1 <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_k1  <span style="color:#75715e"># (3, 3)  </span>
+</span></span><span style="display:flex;"><span>K2 <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_k2  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>V1 <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_v1  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>V2 <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_v2  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute attention for each head</span>
+</span></span><span style="display:flex;"><span>head1 <span style="color:#f92672">=</span> attention(Q1, K1, V1)  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>head2 <span style="color:#f92672">=</span> attention(Q2, K2, V2)  <span style="color:#75715e"># (3, 3)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Concatenate and project back to original dimension</span>
+</span></span><span style="display:flex;"><span>concat_heads <span style="color:#f92672">=</span> concat([head1, head2])  <span style="color:#75715e"># (3, 6)</span>
+</span></span><span style="display:flex;"><span>W_o <span style="color:#f92672">=</span> (<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">4</span>)  <span style="color:#75715e"># Projection matrix</span>
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">=</span> concat_heads <span style="color:#f92672">@</span> W_o  <span style="color:#75715e"># (3, 4)</span>
+</span></span></code></pre></div><p><strong>Which approach is better?</strong> Approach 1 (splitting) is more parameter-efficient and is used in most implementations. Approach 2 (separate matrices) gives each head more independence but uses more parameters.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-complete-multi-head-attention-formula">
+
+
+<h2 class="header-anchor-wrapper">The Complete Multi-Head Attention Formula
+  <a href="#the-complete-multi-head-attention-formula" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">multi_head_attention</span>(x, num_heads<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Project to higher dimension for splitting</span>
+</span></span><span style="display:flex;"><span>    Q <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_q  <span style="color:#75715e"># (seq_len, hidden_dim * num_heads)  </span>
+</span></span><span style="display:flex;"><span>    K <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_k  <span style="color:#75715e"># (seq_len, hidden_dim * num_heads)</span>
+</span></span><span style="display:flex;"><span>    V <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> W_v  <span style="color:#75715e"># (seq_len, hidden_dim * num_heads)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Split into multiple heads</span>
+</span></span><span style="display:flex;"><span>    Q_heads <span style="color:#f92672">=</span> split(Q, num_heads)  <span style="color:#75715e"># list of (seq_len, hidden_dim)</span>
+</span></span><span style="display:flex;"><span>    K_heads <span style="color:#f92672">=</span> split(K, num_heads)  
+</span></span><span style="display:flex;"><span>    V_heads <span style="color:#f92672">=</span> split(V, num_heads)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Compute attention for each head</span>
+</span></span><span style="display:flex;"><span>    heads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_heads):
+</span></span><span style="display:flex;"><span>        head <span style="color:#f92672">=</span> attention(Q_heads[i], K_heads[i], V_heads[i])
+</span></span><span style="display:flex;"><span>        heads<span style="color:#f92672">.</span>append(head)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Concatenate all heads</span>
+</span></span><span style="display:flex;"><span>    concat_heads <span style="color:#f92672">=</span> concatenate(heads)  <span style="color:#75715e"># (seq_len, hidden_dim * num_heads)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Project back to original dimension</span>
+</span></span><span style="display:flex;"><span>    output <span style="color:#f92672">=</span> concat_heads <span style="color:#f92672">@</span> W_o  <span style="color:#75715e"># (seq_len, hidden_dim)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> output
+</span></span></code></pre></div></section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-this-architecture-works-so-well">
+
+
+<h2 class="header-anchor-wrapper">Why This Architecture Works So Well
+  <a href="#why-this-architecture-works-so-well" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ol>
+<li>
+<p><strong>Parallelization</strong>: Unlike RNNs, all attention calculations can happen simultaneously</p>
+</li>
+<li>
+<p><strong>Global Context</strong>: Each word can directly attend to every other word</p>
+</li>
+<li>
+<p><strong>Specialization</strong>: Different heads learn different relationship types</p>
+</li>
+<li>
+<p><strong>Interpretability</strong>: We can analyze what each attention head is learning</p>
+</li>
+</ol>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-trade-off-computational-cost">
+
+
+<h2 class="header-anchor-wrapper">The Trade-off: Computational Cost
+  <a href="#the-trade-off-computational-cost" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>The power of multi-head attention comes at a cost - the self-attention mechanism has $O(n^2)$ complexity where n is sequence length. This is why handling very long sequences remains challenging, motivating research into efficient attention variants.</p>
+<p>The multi-head attention mechanism demonstrates the power of learning multiple specialized perspectives - a principle that extends beyond transformers to how we might approach complex problems in general.</p>
+</section>
+    
+</article>
+</div>
+
+
+                
+                    
+                
+
+                
+            </div>
+        </main>
+</body>
+</html>
