@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Research on TITLE SAMPLE</title>
+    <link>http://localhost:1313/tags/research/</link>
+    <description>Recent content in Research on TITLE SAMPLE</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Sep 2025 10:00:00 -0500</lastBuildDate><atom:link href="http://localhost:1313/tags/research/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Research update — Sept 2025</title>
+      <link>http://localhost:1313/posts/2025-09-28-first-post/</link>
+      <pubDate>Sun, 28 Sep 2025 10:00:00 -0500</pubDate>
+      
+      <guid>http://localhost:1313/posts/2025-09-28-first-post/</guid>
+      <description>&lt;p&gt;Post body&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

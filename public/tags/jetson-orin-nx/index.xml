@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jetson Orin NX on S. M. Hasan</title>
+    <link>http://localhost:1313/tags/jetson-orin-nx/</link>
+    <description>Recent content in Jetson Orin NX on S. M. Hasan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/jetson-orin-nx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exploring LLMs on Jetson Orin NX</title>
+      <link>http://localhost:1313/posts/post1/</link>
+      <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/post1/</guid>
+      <description>&lt;p&gt;Running Large Language Models (LLMs) on edge devices has always fascinated me. Recently, I got my hands on the &lt;strong&gt;Jetson Orin NX&lt;/strong&gt;, and I wanted to see how far I could push it.&lt;/p&gt;
+&lt;!-- end-chunk --&gt;
+&lt;!-- begin-chunk data-anchor=&#34;getting-started&#34; --&gt;
+
+&lt;h2 class=&#34;header-anchor-wrapper&#34;&gt;Getting Started
+  &lt;a href=&#34;#getting-started&#34; class=&#34;header-anchor-link&#34;&gt;
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    width=&#34;1rem&#34; height=&#34;1rem&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34;
+    stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34;
+    stroke-linejoin=&#34;round&#34;&gt;
+    &lt;line x1=&#34;4&#34; y1=&#34;9&#34; x2=&#34;20&#34; y2=&#34;9&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;4&#34; y1=&#34;15&#34; x2=&#34;20&#34; y2=&#34;15&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;10&#34; y1=&#34;3&#34; x2=&#34;8&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;16&#34; y1=&#34;3&#34; x2=&#34;14&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;
+&lt;/svg&gt;
+
+&lt;/a&gt;
+&lt;/h2&gt;
+
+&lt;p&gt;I started by setting up the environment with NVIDIA’s JetPack SDK. The installation was smooth, but memory management became tricky when running larger models. This is where optimization and pruning techniques come in handy.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
