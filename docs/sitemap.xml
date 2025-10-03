@@ -2,123 +2,123 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/landing/welcome/</loc>
+    <loc>https://numan947.github.io/landing/welcome/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/bio/</loc>
+    <loc>https://numan947.github.io/about/bio/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/education/</loc>
+    <loc>https://numan947.github.io/about/education/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/news/</loc>
+    <loc>https://numan947.github.io/landing/news/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/awards/</loc>
+    <loc>https://numan947.github.io/about/awards/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/quicklinks/</loc>
+    <loc>https://numan947.github.io/landing/quicklinks/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/contact/</loc>
+    <loc>https://numan947.github.io/about/contact/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/social/</loc>
+    <loc>https://numan947.github.io/landing/social/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/aft-1/</loc>
+    <loc>https://numan947.github.io/posts/aft-1/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://numan947.github.io/posts/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://numan947.github.io/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/machine-learning/</loc>
+    <loc>https://numan947.github.io/tags/machine-learning/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/neural-network/</loc>
+    <loc>https://numan947.github.io/tags/neural-network/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/nlp/</loc>
+    <loc>https://numan947.github.io/tags/nlp/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://numan947.github.io/tags/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/transformer/</loc>
+    <loc>https://numan947.github.io/tags/transformer/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/attention/</loc>
+    <loc>https://numan947.github.io/tags/attention/</loc>
     <lastmod>2025-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/transformers-1/</loc>
+    <loc>https://numan947.github.io/posts/transformers-1/</loc>
     <lastmod>2025-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/transformers/</loc>
+    <loc>https://numan947.github.io/tags/transformers/</loc>
     <lastmod>2025-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/rnn-1/</loc>
+    <loc>https://numan947.github.io/posts/rnn-1/</loc>
     <lastmod>2025-09-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rnn/</loc>
+    <loc>https://numan947.github.io/tags/rnn/</loc>
     <lastmod>2025-09-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/android/</loc>
+    <loc>https://numan947.github.io/tags/android/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/correlation-study/</loc>
+    <loc>https://numan947.github.io/tags/correlation-study/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/cryptography/</loc>
+    <loc>https://numan947.github.io/tags/cryptography/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/data-analysis/</loc>
+    <loc>https://numan947.github.io/tags/data-analysis/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/edgeai/</loc>
+    <loc>https://numan947.github.io/tags/edgeai/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/effe/</loc>
+    <loc>https://numan947.github.io/projects/effe/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/fuzzeval/</loc>
+    <loc>https://numan947.github.io/projects/fuzzeval/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/fuzzer/</loc>
+    <loc>https://numan947.github.io/tags/fuzzer/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/jetson/</loc>
+    <loc>https://numan947.github.io/tags/jetson/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/llm/</loc>
+    <loc>https://numan947.github.io/tags/llm/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/</loc>
+    <loc>https://numan947.github.io/projects/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/public-health/</loc>
+    <loc>https://numan947.github.io/tags/public-health/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/qr-codes/</loc>
+    <loc>https://numan947.github.io/tags/qr-codes/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/security/</loc>
+    <loc>https://numan947.github.io/tags/security/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/seqr/</loc>
+    <loc>https://numan947.github.io/projects/seqr/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/diseaseoutbreaks/</loc>
+    <loc>https://numan947.github.io/projects/diseaseoutbreaks/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/socioeconomics/</loc>
+    <loc>https://numan947.github.io/tags/socioeconomics/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/wi-fi/</loc>
+    <loc>https://numan947.github.io/tags/wi-fi/</loc>
     <lastmod>2025-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://numan947.github.io/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://numan947.github.io/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/</loc>
+    <loc>https://numan947.github.io/landing/</loc>
   </url><url>
-    <loc>http://localhost:1313/publications/</loc>
+    <loc>https://numan947.github.io/publications/</loc>
   </url><url>
-    <loc>http://localhost:1313/research/</loc>
+    <loc>https://numan947.github.io/research/</loc>
   </url>
 </urlset>
