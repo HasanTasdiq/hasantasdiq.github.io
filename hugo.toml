@@ -14,6 +14,8 @@ publishDir = "docs"
   enable_site_search = false
   math = true  
 
+markup.goldmark.parser.attribute.block = true
+markup.goldmark.parser.wrapStandAloneImageWithinParagraph = true
 
 [menu]
   [[menu.navbar]]

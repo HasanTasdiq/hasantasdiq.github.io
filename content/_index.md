@@ -1,7 +1,12 @@
 ---
 title: "Home"
-type: 'blank'
+type: 'custom-home'
+balloon_img_src: 'headshot.jpg'
+balloon_img_src_dark: 'headshot.jpg'
+balloon_circle: true
 draft: false
+imgTitle: 'S Mahmudul Hasan'
+imgSubtitle: 'HELLO WORLD'
 ---
 # S Mahmudul Hasan
 _Ph.D. Student in Computer Science, Tulane University, LA_
