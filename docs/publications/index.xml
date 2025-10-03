@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publications on S. M. Hasan</title>
-    <link>https://numan947.github.io/publications/</link>
+    <link>http://localhost:1313/publications/</link>
     <description>Recent content in Publications on S. M. Hasan</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://numan947.github.io/publications/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://localhost:1313/publications/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

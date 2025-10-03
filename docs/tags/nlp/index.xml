@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>NLP on S. M. Hasan</title>
-    <link>https://numan947.github.io/tags/nlp/</link>
+    <link>http://localhost:1313/tags/nlp/</link>
     <description>Recent content in NLP on S. M. Hasan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Attention-Free Transformer: Escaping the Quadratic Bottleneck</title>
-      <link>https://numan947.github.io/posts/aft-1/</link>
+      <link>http://localhost:1313/posts/aft-1/</link>
       <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://numan947.github.io/posts/aft-1/</guid>
+      <guid>http://localhost:1313/posts/aft-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;attention-free-transformer-escaping-the-quadratic-bottleneck&#34; --&gt;
 
@@ -35,10 +35,10 @@
     
     <item>
       <title>Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution</title>
-      <link>https://numan947.github.io/posts/transformers-1/</link>
+      <link>http://localhost:1313/posts/transformers-1/</link>
       <pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://numan947.github.io/posts/transformers-1/</guid>
+      <guid>http://localhost:1313/posts/transformers-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;demystifying-transformers-attention-multi-head-magic-and-the-math-behind-the-revolution&#34; --&gt;
 
@@ -61,10 +61,10 @@
     
     <item>
       <title>Demystifying RNNs: A Deep Dive into Dimensions and Parameters</title>
-      <link>https://numan947.github.io/posts/rnn-1/</link>
+      <link>http://localhost:1313/posts/rnn-1/</link>
       <pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://numan947.github.io/posts/rnn-1/</guid>
+      <guid>http://localhost:1313/posts/rnn-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;demystifying-rnns-a-deep-dive-into-dimensions-and-parameters&#34; --&gt;
 
@@ -87,10 +87,10 @@
     
     <item>
       <title>Efficient Multilingual Feature Extraction for Edge NLP</title>
-      <link>https://numan947.github.io/projects/effe/</link>
+      <link>http://localhost:1313/projects/effe/</link>
       <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://numan947.github.io/projects/effe/</guid>
+      <guid>http://localhost:1313/projects/effe/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;llm-powered-feature-extraction-for-edge&#34; --&gt;
 
@@ -108,7 +108,7 @@
 &lt;/h1&gt;
 
 &lt;p&gt;&lt;em&gt;Paper under review&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://numan947.github.io/projects/effe/eval_effe.png&#34; alt=&#34;Pareto Frontier&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/projects/effe/eval_effe.png&#34; alt=&#34;Pareto Frontier&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This research introduces a novel approach for deploying multilingual NLP on edge devices by rethinking the role of large language models. Instead of running full LLM inference, the framework leverages them as static feature repositories, bypassing the computationally expensive transformer stack.&lt;/p&gt;</description>
     </item>
     
