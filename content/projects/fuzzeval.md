@@ -16,7 +16,7 @@ General-purpose fuzzers often struggle to identify vulnerabilities in cryptograp
 
 **Paper:** [FuzzEval: Assessing Fuzzers on Generating Context-Sensitive Inputs](https://arxiv.org/abs/2409.12331)  
 
-🏆 Submitted as a short paper, it **received the Best Paper Award** at the [SBFT 2025 Workshop](https://sbft25.github.io/), co-located with ICSE 2025.
+🏆 Submitted as a [short paper](/projects/fuzzeval/csfuzz-sbft2025.pdf), it **received the [Best Paper Award](/projects/fuzzeval/sbft2025-award.pdf)** at the [SBFT 2025 Workshop](https://sbft25.github.io/), co-located with ICSE 2025.
 
 **BibTeX:**
 ```bibtex
