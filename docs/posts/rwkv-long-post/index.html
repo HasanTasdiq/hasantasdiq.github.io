@@ -1,0 +1,2833 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='http://localhost:1313/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RWKV: The Revolutionary Architecture Bridging RNNs and Transformers - S. M. Hasan</title>
+
+    
+
+    
+
+    
+    <meta name="author" content="Your Name" />
+    
+
+    
+        <meta property="og:url" content="http://localhost:1313/posts/rwkv-long-post/">
+  <meta property="og:site_name" content="S. M. Hasan">
+  <meta property="og:title" content="RWKV: The Revolutionary Architecture Bridging RNNs and Transformers">
+  <meta property="og:description" content="RWKV: The Revolutionary Architecture Bridging RNNs and Transformers How RWKV combines the best of both worlds to achieve linear complexity without sacrificing performance
+Part I — Foundations Why RWKV Matters The Receptance Weighted Key Value (RWKV) architecture rethinks sequence modeling. It fuses the parallel-training power of Transformers with the streaming efficiency of RNNs–solving a long-standing trade-off:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-30T00:00:00+00:00">
+    <meta property="article:tag" content="Transformer">
+    <meta property="article:tag" content="Neural Network">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="NLP">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RWKV: The Revolutionary Architecture Bridging RNNs and Transformers">
+  <meta name="twitter:description" content="RWKV: The Revolutionary Architecture Bridging RNNs and Transformers How RWKV combines the best of both worlds to achieve linear complexity without sacrificing performance
+Part I — Foundations Why RWKV Matters The Receptance Weighted Key Value (RWKV) architecture rethinks sequence modeling. It fuses the parallel-training power of Transformers with the streaming efficiency of RNNs–solving a long-standing trade-off:">
+
+    <link rel="stylesheet" href="/style.css" integrity="">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/theme-switch.js" integrity=""></script>
+
+
+
+    <script defer src="/js/hide-navbar-on-scroll.js" integrity=""></script>
+
+
+
+
+
+    <script defer src="/js/zooming.js" integrity=""></script>
+
+
+
+
+    <script src="/js/math.js" integrity=""></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.3/tex-mml-chtml.js"></script>
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.js" integrity=""></script>
+        
+    
+
+
+
+
+
+
+
+
+    
+</head>
+<body><header>
+    <div id="header_content">
+        <div id="header_left">
+            <div id="sidebar_btn">
+                <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+                <label id="sidebar_btn_label" for="sidebar_btn_input">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</label>
+                <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                    <div id="sidebar_canvas_overlay"></div>
+                </label>
+                <div id="sidebar">
+                    <ul><li>
+                                <a href="/about/">About Me</a></li><li>
+                                <a href="/research/">Research</a></li><li>
+                                <a href="/publications/">Publications</a></li><li>
+                                <a href="/posts/">Bits, Bytes &amp; Life</a></li></ul>
+                </div>
+            </div>
+        
+            <div class="brand">
+                <div>
+                    <a href="/">S. M. Hasan</a>
+                </div>
+            </div><nav id="header_navbar" class="pure-menu header-menu">
+    <ul class="pure-menu-list"><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About Me</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/research/" class="pure-menu-link">Research</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/publications/" class="pure-menu-link">Publications</a>
+                    
+                </li><li class="header-menu-item pure-menu-item insection">
+                    
+                        <a href="/posts/" class="pure-menu-link">Bits, Bytes &amp; Life</a>
+                    
+                </li></ul>
+</nav>
+</div>
+
+        <div id="header_right">
+            
+
+            <div id="theme_tool">
+                <button id="dark_mode_btn" class="header-menu-btn outline-button" title='Switch to dark mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</button>
+                <button id="light_mode_btn" class="header-menu-btn outline-button" title='Switch to light mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</button>
+            </div>
+
+            
+        </div>
+    </div>
+</header><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+<main>
+            <div id="content" class="content-margin">
+                
+    
+    
+        
+        <div class="collapsible-menu-wrapper"><div class="collapsible-menu-type"><span>Table of contents</span></div><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#part-i--foundations">Part I — Foundations</a>
+      <ul>
+        <li><a href="#why-rwkv-matters">Why RWKV Matters</a></li>
+        <li><a href="#the-fundamental-insight">The Fundamental Insight</a></li>
+        <li><a href="#anatomy-of-rwkv-rwkv-4">Anatomy of RWKV (RWKV-4)</a></li>
+        <li><a href="#the-four-fundamental-symbols">The Four Fundamental Symbols</a></li>
+        <li><a href="#time-mixing--the-heart-of-rwkv-4">Time-Mixing — The Heart of RWKV-4</a></li>
+        <li><a href="#weighted-keyvalue-aggregation">Weighted Key&ndash;Value Aggregation</a></li>
+        <li><a href="#receptance-and-output-projection">Receptance and Output Projection</a></li>
+        <li><a href="#channel-mixing--intra-token-processing">Channel-Mixing — Intra-Token Processing</a></li>
+        <li><a href="#mini-numeric-example">Mini Numeric Example</a></li>
+        <li><a href="#complexity-check">Complexity Check</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#why-rwkv-5-was-born">Why RWKV-5 Was Born</a></li>
+    <li><a href="#linear-interpolation-lerp--token-shift-revisited">Linear Interpolation (<code>lerp</code>) – Token Shift Revisited</a>
+      <ul>
+        <li><a href="#transformer-analogy-3">Transformer Analogy</a></li>
+        <li><a href="#rnn-analogy-3">RNN Analogy</a></li>
+      </ul>
+    </li>
+    <li><a href="#matrix-valued-keyvalue-accumulation">Matrix-Valued Key–Value Accumulation</a>
+      <ul>
+        <li><a href="#key-benefits">Key Benefits</a></li>
+        <li><a href="#transformer-comparison-1">Transformer Comparison</a></li>
+        <li><a href="#rnn-comparison-1">RNN Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#output-and-gating">Output and Gating</a>
+      <ul>
+        <li><a href="#concrete-mini-example">Concrete Mini Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-eagle-bridges-to-transformers">How Eagle Bridges to Transformers</a>
+      <ul>
+        <li><a href="#attention-viewpoint">Attention Viewpoint</a></li>
+        <li><a href="#efficiency">Efficiency</a></li>
+      </ul>
+    </li>
+    <li><a href="#training--prefill">Training &amp; Prefill</a></li>
+    <li><a href="#summary-table--rwkv-4-vs-rwkv-5">Summary Table – RWKV-4 vs RWKV-5</a></li>
+    <li><a href="#how-eagle-differs-from-multi-head-attention-mechanically">How Eagle Differs from Multi-Head Attention Mechanically</a></li>
+    <li><a href="#take-away">Take-Away</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#-rwkv-6-finch-data-dependent-dynamics">🪶 RWKV-6 (Finch): Data-Dependent Dynamics</a>
+      <ul>
+        <li><a href="#1-problem-motivation">1️⃣ Problem Motivation</a></li>
+        <li><a href="#2-data-dependent-interpolation-equation-18">2️⃣ Data-Dependent Interpolation (Equation 18)</a></li>
+        <li><a href="#-transformer-comparison">⚖️ Transformer Comparison</a></li>
+        <li><a href="#-rnn-comparison">🔁 RNN Comparison</a></li>
+        <li><a href="#3-dynamic-decay-equation-19">3️⃣ Dynamic Decay (Equation 19)</a></li>
+        <li><a href="#-intuition">💡 Intuition</a></li>
+        <li><a href="#-mini-example">🔢 Mini Example</a></li>
+        <li><a href="#-practical-result">🧮 Practical Result</a></li>
+      </ul>
+    </li>
+    <li><a href="#-rwkv-7-goose-advanced-state-management">🪶 RWKV-7 (Goose): Advanced State Management</a>
+      <ul>
+        <li><a href="#1-core-equation-equation-20">1️⃣ Core Equation (Equation 20)</a></li>
+        <li><a href="#-term-by-term-meaning">🧩 Term-by-Term Meaning</a></li>
+        <li><a href="#2-generating-parameters-equation-21">2️⃣ Generating Parameters (Equation 21)</a></li>
+        <li><a href="#3-reading-and-output-equation-23">3️⃣ Reading and Output (Equation 23)</a></li>
+        <li><a href="#-transformer-comparison-1">⚖️ Transformer Comparison</a></li>
+        <li><a href="#-rnn-comparison-1">🔁 RNN Comparison</a></li>
+        <li><a href="#-intuitive-story-example">🧠 Intuitive Story Example</a></li>
+        <li><a href="#4-mathematical-perspective">4️⃣ Mathematical Perspective</a></li>
+        <li><a href="#5-computational-view">5️⃣ Computational View</a></li>
+        <li><a href="#6-why-goose-matters">6️⃣ Why Goose Matters</a></li>
+        <li><a href="#-empirical-summary">🧮 Empirical Summary</a></li>
+        <li><a href="#7-visual-placeholder">7️⃣ Visual Placeholder</a></li>
+        <li><a href="#-rwkv-7-vs-transformer-conceptual-bridge">🧩 RWKV-7 vs Transformer (Conceptual Bridge)</a></li>
+        <li><a href="#8-rwkv-7-vs-rnnlstm">8️⃣ RWKV-7 vs RNN/LSTM</a></li>
+        <li><a href="#-key-takeaways--rwkv-6--rwkv-7">🔚 Key Takeaways — RWKV-6 &amp; RWKV-7</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        
+    </div></div>
+    
+
+
+
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+
+    
+    
+        
+        
+        
+    
+        
+        
+            
+            
+            
+        
+        <section id="rwkv-the-revolutionary-architecture-bridging-rnns-and-transformers">
+
+
+<h1 class="header-anchor-wrapper">RWKV: The Revolutionary Architecture Bridging RNNs and Transformers
+  <a href="#rwkv-the-revolutionary-architecture-bridging-rnns-and-transformers" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+<p><em>How RWKV combines the best of both worlds to achieve linear complexity without sacrificing performance</em></p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="part-i--foundations">
+
+
+<h2 class="header-anchor-wrapper">Part I — Foundations
+  <a href="#part-i--foundations" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-rwkv-matters">
+
+
+<h3 class="header-anchor-wrapper">Why RWKV Matters
+  <a href="#why-rwkv-matters" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>The <strong>Receptance Weighted Key Value (RWKV)</strong> architecture rethinks sequence modeling.
+It fuses the <strong>parallel-training power of Transformers</strong> with the <strong>streaming efficiency of RNNs</strong>&ndash;solving a long-standing trade-off:</p>
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Architecture</th>
+          <th>Training</th>
+          <th>Inference</th>
+          <th>Long Sequences</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>RNN / LSTM</strong></td>
+          <td>Sequential (slow)</td>
+          <td>Fast $\mathcal{O}(T)$</td>
+          <td>Stable</td>
+      </tr>
+      <tr>
+          <td><strong>Transformer</strong></td>
+          <td>Parallel (fast)</td>
+          <td>Slow $\mathcal{O}(T^2)$</td>
+          <td>Memory-heavy</td>
+      </tr>
+      <tr>
+          <td><strong>RWKV</strong></td>
+          <td>Parallel (fast)</td>
+          <td>Fast $\mathcal{O}(T)$</td>
+          <td>Excellent</td>
+      </tr>
+  </tbody>
+</table>
+<p>RWKV can train in parallel like a Transformer but infer step-by-step like an RNN, while retaining Transformer-level quality on large corpora.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-fundamental-insight">
+
+
+<h3 class="header-anchor-wrapper">The Fundamental Insight
+  <a href="#the-fundamental-insight" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Instead of computing <em>pairwise attention scores</em> between every pair of tokens, RWKV keeps a <strong>compact state</strong> summarizing the past via exponentially decayed key&ndash;value statistics.</p>
+<p>Think of it as turning the attention matrix  </p>
+$$A_{ij}=\mathrm{softmax}(Q_iK_j^\top)V_j$$<p>, into a <em>recurrent update</em>:
+</p>
+$$state_t = \lambda \cdot state_{t-1} + f(K_t,V_t)$$<p> where $\lambda$ is a learned decay.</p>
+<p>This simple shift brings <strong>linear complexity</strong> and <strong>constant-memory inference</strong>.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="anatomy-of-rwkv-rwkv-4">
+
+
+<h3 class="header-anchor-wrapper">Anatomy of RWKV (RWKV-4)
+  <a href="#anatomy-of-rwkv-rwkv-4" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>RWKV uses two cooperating sub-blocks per layer:</p>
+<ol>
+<li>
+<p><strong>Time-Mixing</strong> &ndash; captures relationships <em>across time</em> (sequence order).
+Analogous to the Transformer&rsquo;s <strong>self-attention</strong>.</p>
+</li>
+<li>
+<p><strong>Channel-Mixing</strong> &ndash; processes information <em>within</em> each token&rsquo;s embedding.
+Analogous to the Transformer&rsquo;s <strong>feed-forward network (FFN)</strong>.</p>
+</li>
+</ol>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-four-fundamental-symbols">
+
+
+<h3 class="header-anchor-wrapper">The Four Fundamental Symbols
+  <a href="#the-four-fundamental-symbols" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Symbol</th>
+          <th>Meaning</th>
+          <th>Analogy</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>R (Receptance)</strong></td>
+          <td>Gate deciding how much of the aggregated context to use</td>
+          <td>LSTM&rsquo;s input gate / attention query</td>
+      </tr>
+      <tr>
+          <td><strong>W (Weight / Decay)</strong></td>
+          <td>Exponential time-decay controlling memory span</td>
+          <td>Positional bias / forget gate</td>
+      </tr>
+      <tr>
+          <td><strong>K (Key)</strong></td>
+          <td>Determines how much each past token contributes</td>
+          <td>Transformer key</td>
+      </tr>
+      <tr>
+          <td><strong>V (Value)</strong></td>
+          <td>Information carried forward</td>
+          <td>Transformer value</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="time-mixing--the-heart-of-rwkv-4">
+
+
+<h3 class="header-anchor-wrapper">Time-Mixing — The Heart of RWKV-4
+  <a href="#time-mixing--the-heart-of-rwkv-4" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>For token $t$, with embedding $x_t$ and previous token embedding $x_{t-1}$, we compute:</p>
+$$
+r_t = W_r(\mu_r\odot x_t + (1-\mu_r)\odot x_{t-1})\\
+$$<p>
+</p>
+$$
+k_t = W_k(\mu_k\odot x_t + (1-\mu_k)\odot x_{t-1})\\
+\tag{Eq 1--3}
+$$<p>
+</p>
+$$
+v_t = W_v(\mu_v\odot x_t + (1-\mu_v)\odot x_{t-1})\\
+$$<ul>
+<li>The learned vector $\mu$ mixes current and previous token &ndash; <strong>a smooth token shift</strong> improving gradient flow. Size: $(d,)$ where d is the embedding dimension.</li>
+<li>($W_r,W_k,W_v$) are projection matrices, i.e. linear layers in $\texttt{PyTorch}$ with bias disabled.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="transformer-analogy">
+
+
+<h4 class="header-anchor-wrapper">Transformer analogy
+  <a href="#transformer-analogy" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>This blending plays the role of <strong>query/key/value projection plus positional encoding</strong> in attention layers &ndash; but implemented as a local interpolation instead of explicit position embeddings.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="rnn-analogy">
+
+
+<h4 class="header-anchor-wrapper">RNN analogy
+  <a href="#rnn-analogy" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Equivalent to feeding the previous hidden state into the next computation, but through a <strong>learned linear interpolation</strong> rather than additive recurrence.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="weighted-keyvalue-aggregation">
+
+
+<h3 class="header-anchor-wrapper">Weighted Key&ndash;Value Aggregation
+  <a href="#weighted-keyvalue-aggregation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>RWKV replaces the attention softmax with a <strong>decayed weighted average</strong>:</p>
+$$
+wkv_t =
+\frac{
+\sum_{i=1}^{t-1} e^{-(t-1-i)w + k_i}\odot v_i + e^{u+k_t}\odot v_t
+}{
+\sum_{i=1}^{t-1} e^{-(t-1-i)w + k_i} + e^{u+k_t}
+}
+\tag{Eq 4}
+$$<ul>
+<li>$w$ &ndash; learned decay (per channel)</li>
+<li>$u$ &ndash; bias emphasizing the current token</li>
+<li>$e^{k_i}$ — importance weight</li>
+</ul>
+<p>Essentially, each channel maintains its own <strong>softmax-like moving average</strong> over time.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="example-intuition">
+
+
+<h4 class="header-anchor-wrapper">Example (Intuition)
+  <a href="#example-intuition" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Imagine processing a sentence:</p>
+<blockquote>
+<p>“The cat sat on the mat.”</p></blockquote>
+<p>Older words fade with ($e^{-w \Delta t}$).
+If $w = 0.2$, a word 5 steps ago keeps $e^{-1}=0.37$ of its influence.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="transformer-comparison">
+
+
+<h4 class="header-anchor-wrapper">Transformer comparison
+  <a href="#transformer-comparison" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Softmax attention computes explicit pairwise weights: $\mathcal{O}(T^2)$.
+RWKV&rsquo;s exponential decay acts like <strong>continuous-time softmax attention</strong>, but updated recursively &ndash; $\mathcal{O}(T)$.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="rnn-comparison">
+
+
+<h4 class="header-anchor-wrapper">RNN comparison
+  <a href="#rnn-comparison" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>An RNN&rsquo;s hidden state mixes past info via nonlinear recurrent matrices.
+RWKV&rsquo;s accumulation is <em>linear in $v$</em> and controlled via <em>learned decays</em>, giving more stable gradients.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="receptance-and-output-projection">
+
+
+<h3 class="header-anchor-wrapper">Receptance and Output Projection
+  <a href="#receptance-and-output-projection" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+$$
+o_t = W_o\big(\sigma(r_t) \odot wkv_t\big)
+\tag{Eq 5}
+$$<ul>
+<li>($\sigma(r_t)$) is a sigmoid gate (0&ndash;1) deciding how much contextual info to output.</li>
+<li>($W_o$) projects back to the hidden dimension.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="transformer-analogy-1">
+
+
+<h4 class="header-anchor-wrapper">Transformer analogy
+  <a href="#transformer-analogy-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Comparable to attention&rsquo;s output projection ($W_O(QK^\top V)$), but gating occurs <em>per channel</em> rather than <em>per token pair</em>.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="rnn-analogy-1">
+
+
+<h4 class="header-anchor-wrapper">RNN analogy
+  <a href="#rnn-analogy-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Like the LSTM&rsquo;s <strong>output gate</strong>, but data-driven through <em>$r_t$</em> rather than hidden-state recursion.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="channel-mixing--intra-token-processing">
+
+
+<h3 class="header-anchor-wrapper">Channel-Mixing — Intra-Token Processing
+  <a href="#channel-mixing--intra-token-processing" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>After time-mixing, each token&rsquo;s features are refined:</p>
+$$
+r'_t = W'_r\left((\mu'_r \odot x_t) + (1 - \mu'_r) \odot x_{t-1}\right)
+$$<p>
+</p>
+$$
+k'_t = W'_k\left((\mu'_k \odot x_t) + (1 - \mu'_k) \odot x_{t-1}\right)
+\tag{Eq 6 -- 8}
+$$<p>
+</p>
+$$
+o'_t = \sigma(r'_t) \odot \big(W'_v(\max(k'_t,0))^2\big)
+$$<ul>
+<li>Squared ReLU $((\max(k&rsquo;_t,0))^2)$ acts like a lightweight MLP non-linearity.</li>
+<li>Receptance again gates the output.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="transformer-analogy-2">
+
+
+<h4 class="header-anchor-wrapper">Transformer analogy
+  <a href="#transformer-analogy-2" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Direct counterpart of the <strong>FFN (two linear layers + GELU)</strong> inside each Transformer block.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="rnn-analogy-2">
+
+
+<h4 class="header-anchor-wrapper">RNN analogy
+  <a href="#rnn-analogy-2" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<p>Acts like the <strong>nonlinear state transformation</strong> between recurrent steps, separated from temporal recursion.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="mini-numeric-example">
+
+
+<h3 class="header-anchor-wrapper">Mini Numeric Example
+  <a href="#mini-numeric-example" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Let&rsquo;s collapse everything to 1-D for clarity.</p>
+<ul>
+<li>($x_1$ = 1.0, $x_2$ = 2.0)</li>
+<li>($\mu$ = 0.6, $W$ = 1, $w$ = 0.3, $u$ = 0.0)</li>
+<li>($k_1$ = 0.1, $k_2$ = 0.2, $v_1$ = 0.5, $v_2$ = 0.6)
+Compute for $t$ = 2:</li>
+</ul>
+$$
+r_2 = \mu x_2+(1-\mu)x_1 = 1.6\
+$$$$
+\text{numerator} = e^{k_1}v_1 + e^{u+k_2}v_2
+= 1.105(0.5)+1.221(0.6)=1.285\
+$$$$
+\text{denominator} = e^{k_1}+e^{u+k_2}=2.326\
+$$$$
+wkv_2 = 1.285/2.326=0.553
+$$<p>Then ($o_2 = \sigma(r_2),wkv_2\approx0.832 × 0.553 \approx 0.46$).</p>
+<p><em>Interpretation:</em> the model blends the previous token&rsquo;s value (weighted 0.55) and the current one (0.73) &ndash; a smooth, exponentially decayed attention in 1-D form.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="complexity-check">
+
+
+<h3 class="header-anchor-wrapper">Complexity Check
+  <a href="#complexity-check" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Model</th>
+          <th>Time Complexity</th>
+          <th>Memory per token</th>
+          <th>Parallel Training</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Transformer</td>
+          <td>$\mathcal{O} (T^2)$</td>
+          <td>$\mathcal{O} (T^2)$</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td>RWKV</td>
+          <td>$\mathcal{O} (T)$</td>
+          <td>$\mathcal{O} (1)$ (at inference)</td>
+          <td>✅ (prefill)</td>
+      </tr>
+      <tr>
+          <td>RNN</td>
+          <td>$\mathcal{O} (T)$</td>
+          <td>$\mathcal{O} (1)$</td>
+          <td>❌ (sequential)</td>
+      </tr>
+  </tbody>
+</table>
+<p>RWKV combines the best of both worlds: <em>parallelizable training</em>, <em>streaming inference</em>, and <em>long-context retention</em>.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-part-ii--rwkv-5-eagle">
+
+
+<h1 class="header-anchor-wrapper">🦅 Part II &ndash; RWKV-5 (Eagle)
+  <a href="#-part-ii--rwkv-5-eagle" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+<p><em>Multi-Head Matrix States and Expressive Decay</em></p>
+<p>RWKV-5, code-named <strong>Eagle</strong>, builds directly upon RWKV-4&rsquo;s success.
+Its design question:</p>
+<blockquote>
+<p>“Can we give RWKV the representational power of <em>multi-head attention</em>
+without losing its RNN-like efficiency?”</p></blockquote>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="why-rwkv-5-was-born">
+
+
+<h2 class="header-anchor-wrapper">Why RWKV-5 Was Born
+  <a href="#why-rwkv-5-was-born" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>RWKV-4&rsquo;s channel-wise scalar state works well but can only store <strong>one mixture of history</strong> per feature dimension.
+Transformers, in contrast, use <strong>multiple heads</strong>, each learning a different pattern of attention (syntax, semantics, position, etc.).</p>
+<p>So Eagle extends RWKV by introducing:</p>
+<ul>
+<li><strong>Matrix-valued states</strong> instead of single vectors</li>
+<li><strong>Per-head decays</strong></li>
+<li><strong>Smarter token-mix interpolation (<code>lerp</code>)</strong></li>
+<li><strong>Stability tricks</strong> (contraction-bounded decays, SiLU, GroupNorm)</li>
+</ul>
+<p>The result:
+A model that behaves <em>mathematically like a recurrent Transformer with multi-head attention</em>, but runs in linear time.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="linear-interpolation-lerp--token-shift-revisited">
+
+
+<h2 class="header-anchor-wrapper">Linear Interpolation (<code>lerp</code>) – Token Shift Revisited
+  <a href="#linear-interpolation-lerp--token-shift-revisited" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>RWKV-4 used
+</p>
+\[
+\mu_\square\odot x_t + (1-\mu_\square)\odot x_{t-1}.
+\]<p>Eagle rewrites this as a cleaner <strong>linear interpolation</strong>:</p>
+\[
+\operatorname{lerp}_\square(a,b)
+= a + (b-a)\odot\mu_\square
+\tag{Eq 9}
+\]<p>where each \(\mu_\square\) is a learnable vector in $\mathbb{R}^D$.</p>
+<p>So for every projection (r, k, v, g):</p>
+\[
+\square_t = \operatorname{lerp}_\square(x_t, x_{t-1}) W_\square.
+\tag{Eq 10}
+\]<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="transformer-analogy-3">
+
+
+<h3 class="header-anchor-wrapper">Transformer Analogy
+  <a href="#transformer-analogy-3" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>In Transformers, <em>relative position encodings</em> and <em>rotary embeddings</em> softly mix information from adjacent tokens.
+<code>lerp</code> serves a similar role, but it&rsquo;s <strong>learned</strong> and <strong>per-channel</strong>, allowing continuous token shifts&ndash;no sinusoidal tables.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="rnn-analogy-3">
+
+
+<h3 class="header-anchor-wrapper">RNN Analogy
+  <a href="#rnn-analogy-3" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>This interpolation behaves like a <em>skip connection</em> from $x_{t-1}$ into $x_t$, providing the same gradient-stabilizing effect as residual recurrences in gated RNNs.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="matrix-valued-keyvalue-accumulation">
+
+
+<h2 class="header-anchor-wrapper">Matrix-Valued Key–Value Accumulation
+  <a href="#matrix-valued-keyvalue-accumulation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Eagle&rsquo;s key equation:
+</p>
+$$w = e^{-e^{\omega}}, \qquad 0 < w < 1$$$$
+\mathcal{WKV}_t = \operatorname{diag}(u) \, k_t^{\top} v_t + \sum_{i=1}^{t-1} \operatorname{diag}(w)^{t-1-i} \, k_i^{\top} v_i
+\tag{Eq 11}
+$$<p>Each head h maintains its own w vector and u bias.</p>
+<p><strong>Interpretation</strong></p>
+<ul>
+<li>($k_t^{\top}v_t$) → outer product forming a small matrix ($D_h × D_h$).</li>
+<li>The geometric decay ($\operatorname{diag}(w)^{t-1-i}$) discounts older contributions.</li>
+<li>The sum therefore stores <em>multiple decayed correlation patterns</em> &ndash; exactly what attention heads learn in Transformers.</li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="key-benefits">
+
+
+<h3 class="header-anchor-wrapper">Key Benefits
+  <a href="#key-benefits" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ol>
+<li>
+<p><strong>Multi-Head Expressivity</strong>
+Each head&rsquo;s matrix state models distinct dependencies &ndash; akin to multi-head attention.</p>
+</li>
+<li>
+<p><strong>Guaranteed Stability</strong>
+The nested exp ensures $0 &lt; w &lt; 1$, preventing exploding/vanishing states.</p>
+</li>
+<li>
+<p><strong>Constant-Time Update</strong>
+The recurrence
+</p>
+\[
+   S_t = \operatorname{diag}(u)S_{t-1} + k_t^{\top}v_t
+   \]<p>
+allows $\mathcal{O}(1)$ state updates per token.</p>
+</li>
+</ol>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="transformer-comparison-1">
+
+
+<h3 class="header-anchor-wrapper">Transformer Comparison
+  <a href="#transformer-comparison-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Transformer (Self-Attention)</th>
+          <th>RWKV-5 (Eagle)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Computes $QK^\top$ for every token pair $\mathcal{O}(T^2)$</td>
+          <td>Maintains decayed sum of $K^\top V$ ($\mathcal{O}(T)$)</td>
+      </tr>
+      <tr>
+          <td>Attention weights via softmax (normalized across sequence)</td>
+          <td>Exponential decay per channel (normalized locally)</td>
+      </tr>
+      <tr>
+          <td>Multi-head parallel attention matrices</td>
+          <td>Multi-head matrix states</td>
+      </tr>
+      <tr>
+          <td>Requires full context window to compute</td>
+          <td>Uses recurrent update (state only)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="rnn-comparison-1">
+
+
+<h3 class="header-anchor-wrapper">RNN Comparison
+  <a href="#rnn-comparison-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>RNNs store a <em>single hidden vector</em> $h_t$.
+Eagle&rsquo;s $\mathcal{WKV}_t$ acts as a structured, richer hidden state &ndash; effectively a <em>learned covariance</em> of past inputs.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="output-and-gating">
+
+
+<h2 class="header-anchor-wrapper">Output and Gating
+  <a href="#output-and-gating" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Eagle&rsquo;s output step refines the RWKV-4 formulation:</p>
+\[
+o_t =
+\operatorname{concat}\big(
+\operatorname{SiLU}(g_t)
+\odot
+\operatorname{LayerNorm}(r_t ,\mathcal{WKV}_t)
+\big)W_o
+\tag{Eq 12}
+\]<p><strong>Changes vs RWKV-4</strong></p>
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>RWKV-4</th>
+          <th>RWKV-5 (Eagle)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Sigmoid gate</td>
+          <td>SiLU (smoother, differentiable through zero)</td>
+      </tr>
+      <tr>
+          <td>Single vector state</td>
+          <td>Matrix state per head</td>
+      </tr>
+      <tr>
+          <td>Shared LayerNorm</td>
+          <td>Head-wise GroupNorm / LayerNorm</td>
+      </tr>
+      <tr>
+          <td>$σ(r_t)$ gating only</td>
+          <td>Separate learned gate ($g_t$) for each head</td>
+      </tr>
+  </tbody>
+</table>
+<p>These tweaks greatly improve numerical stability in deep stacks (&gt; 24 layers).</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="concrete-mini-example">
+
+
+<h3 class="header-anchor-wrapper">Concrete Mini Example
+  <a href="#concrete-mini-example" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Assume two heads, head size $D_h = 2$.</p>
+<p>At $t = 3$:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Head 1:
+</span></span><span style="display:flex;"><span>  k₁ = [0.2, 0.1], v₁ = [0.5, 0.7]
+</span></span><span style="display:flex;"><span>  k₂ = [0.3, 0.1], v₂ = [0.6, 0.9]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Compute:
+</span></span><span style="display:flex;"><span>  k₁ᵀv₁ = [[0.10, 0.14],
+</span></span><span style="display:flex;"><span>             [0.05, 0.07]]
+</span></span><span style="display:flex;"><span>  k₂ᵀv₂ = [[0.18, 0.27],
+</span></span><span style="display:flex;"><span>             [0.06, 0.09]]
+</span></span><span style="display:flex;"><span>  decay w = 0.8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Accumulated matrix:
+</span></span><span style="display:flex;"><span>  S₃ = 0.8·S₂ + k₃ᵀv₃ ≈ 2×2 matrix per head.
+</span></span></code></pre></div><p>Each head maintains its own $2 \times 2$ matrix capturing different patterns (e.g., entity vs relation).</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="how-eagle-bridges-to-transformers">
+
+
+<h2 class="header-anchor-wrapper">How Eagle Bridges to Transformers
+  <a href="#how-eagle-bridges-to-transformers" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="attention-viewpoint">
+
+
+<h3 class="header-anchor-wrapper">Attention Viewpoint
+  <a href="#attention-viewpoint" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>In a Transformer, for head $h$:
+</p>
+\[
+\text{context}_t^{(h)} =
+\sum_i \frac{e^{q_t^{(h)}·k_i^{(h)}/\sqrt{d_h}}}{Z_t},v_i^{(h)}.
+\]<p>Eagle approximates this by replacing the softmax kernel with an <strong>exponential decay kernel</strong> and accumulating $k_i^{\top}v_i$ over time.
+Hence the matrix state $\approx$ low-rank approximation to the attention Gram matrix.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="efficiency">
+
+
+<h3 class="header-anchor-wrapper">Efficiency
+  <a href="#efficiency" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Because Eagle&rsquo;s recurrence doesn&rsquo;t require quadratic storage, it yields <strong>$10&ndash;30\times$ less memory</strong> during inference than Transformers of equal hidden size.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="training--prefill">
+
+
+<h2 class="header-anchor-wrapper">Training &amp; Prefill
+  <a href="#training--prefill" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Like RWKV-4, Eagle allows parallel &ldquo;prefill&rdquo;:</p>
+<p>during training you compute per-token r,k,v,g in parallel, then simulate the recurrence via efficient kernel operations (cumulative sums in log-space).
+This keeps training speed comparable to Transformers.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="summary-table--rwkv-4-vs-rwkv-5">
+
+
+<h2 class="header-anchor-wrapper">Summary Table – RWKV-4 vs RWKV-5
+  <a href="#summary-table--rwkv-4-vs-rwkv-5" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>RWKV-4</th>
+          <th>RWKV-5 (Eagle)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>State type</td>
+          <td>Vector per channel</td>
+          <td>Matrix per head</td>
+      </tr>
+      <tr>
+          <td>Decay</td>
+          <td>Scalar per channel</td>
+          <td>Vector per head</td>
+      </tr>
+      <tr>
+          <td>Token mixing</td>
+          <td>$\mu$-based shift</td>
+          <td><code>lerp</code> function</td>
+      </tr>
+      <tr>
+          <td>Activation</td>
+          <td>Sigmoid</td>
+          <td>SiLU + Gate $g_t$</td>
+      </tr>
+      <tr>
+          <td>Normalization</td>
+          <td>LayerNorm</td>
+          <td>GroupNorm / HeadNorm</td>
+      </tr>
+      <tr>
+          <td>Complexity</td>
+          <td>$\mathcal{O}(T D)$</td>
+          <td>$\mathcal{O}(T D)$ (same order)</td>
+      </tr>
+      <tr>
+          <td>Expressiveness</td>
+          <td>Moderate</td>
+          <td>High (multivariate state)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="how-eagle-differs-from-multi-head-attention-mechanically">
+
+
+<h2 class="header-anchor-wrapper">How Eagle Differs from Multi-Head Attention Mechanically
+  <a href="#how-eagle-differs-from-multi-head-attention-mechanically" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Aspect</th>
+          <th>Transformer Multi-Head</th>
+          <th>RWKV-5 Eagle</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><em>Computation</em></td>
+          <td>$(QK^\top V)$ per token pair</td>
+          <td>Cumulative $(K^\top V)$ state update</td>
+      </tr>
+      <tr>
+          <td><em>Cost</em></td>
+          <td>$\mathcal{O} (T^2 d)$</td>
+          <td>$\mathcal{O} (T d)$</td>
+      </tr>
+      <tr>
+          <td><em>Normalization</em></td>
+          <td>Softmax over tokens</td>
+          <td>Exponential decay per step</td>
+      </tr>
+      <tr>
+          <td><em>Context window</em></td>
+          <td>Fixed (T)</td>
+          <td>Potentially infinite (while state fits)</td>
+      </tr>
+      <tr>
+          <td><em>Memory size</em></td>
+          <td>$T \times d$</td>
+          <td>Constant per head</td>
+      </tr>
+      <tr>
+          <td><em>Parallel training</em></td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td><em>Streaming inference</em></td>
+          <td>No</td>
+          <td>Yes</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="take-away">
+
+
+<h2 class="header-anchor-wrapper">Take-Away
+  <a href="#take-away" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Eagle elevates RWKV from <em>a linear-time Transformer</em> to a <em>multi-head recurrent Transformer</em>.
+It captures diverse dependencies like attention while remaining constant-memory at inference&ndash;an enormous win for edge and streaming models.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-part-iii--rwkv-6-finch-and-rwkv-7-goose">
+
+
+<h1 class="header-anchor-wrapper">🪶 Part III — RWKV-6 (Finch) and RWKV-7 (Goose)
+  <a href="#-part-iii--rwkv-6-finch-and-rwkv-7-goose" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+<p>RWKV-6 (<em>Finch</em>) and RWKV-7 (<em>Goose</em>) are the most advanced forms of the RWKV family described in the survey  .
+They introduce <strong>data-dependent dynamics</strong> and <strong>generalized state updates</strong>, pushing RWKV from “efficient Transformer alternative” to “dynamic memory system.”</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-rwkv-6-finch-data-dependent-dynamics">
+
+
+<h2 class="header-anchor-wrapper">🪶 RWKV-6 (Finch): Data-Dependent Dynamics
+  <a href="#-rwkv-6-finch-data-dependent-dynamics" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="1-problem-motivation">
+
+
+<h3 class="header-anchor-wrapper">1️⃣ Problem Motivation
+  <a href="#1-problem-motivation" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Eagle’s decays (w) and interpolations (\mu) are <strong>fixed learned parameters</strong>—identical for every token.
+In long or context-rich sequences, the model needs <strong>adaptive memory</strong>: sometimes remember longer, sometimes forget faster.</p>
+<p>Finch introduces <em>data-dependent lerp</em> (<strong>ddlerp</strong>) using <strong>LoRA-style low-rank adapters</strong>.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="2-data-dependent-interpolation-equation-18">
+
+
+<h3 class="header-anchor-wrapper">2️⃣ Data-Dependent Interpolation (Equation 18)
+  <a href="#2-data-dependent-interpolation-equation-18" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>[
+\begin{aligned}
+\operatorname{lora}<em>\square(x)
+&amp;= \lambda</em>\square + \tanh(xA_\square)B_\square,<br>
+\operatorname{ddlerp}<em>\square(a,b)
+&amp;= a + (b-a)\odot \operatorname{lora}</em>\square(a + (b-a)\odot\mu_\square).
+\end{aligned}
+\tag{Eq 13–14}
+]</p>
+<ul>
+<li>(A_\square,B_\square) are low-rank LoRA matrices.</li>
+<li>(\lambda_\square) is a learned bias ensuring output ≈ 1 when input is small.</li>
+<li>The <strong>tanh</strong> introduces nonlinearity so interpolation changes <em>with content</em>.</li>
+</ul>
+<p>So for each projection (r,k,v,g):</p>
+<p>[
+\square_t = \operatorname{ddlerp}<em>\square(x_t,x</em>{t-1})W_\square.
+\tag{Eq 15}
+]</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-transformer-comparison">
+
+
+<h3 class="header-anchor-wrapper">⚖️ Transformer Comparison
+  <a href="#-transformer-comparison" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>In Transformers, attention weights vary with input content ((q_tk_i)).
+RWKV-5’s fixed decays couldn’t; Finch’s ddlerp adds this <strong>content sensitivity</strong>, making decay and mixing depend on the current token—like <strong>dynamic attention without explicit QK scores</strong>.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-rnn-comparison">
+
+
+<h3 class="header-anchor-wrapper">🔁 RNN Comparison
+  <a href="#-rnn-comparison" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>This is analogous to an LSTM’s <strong>input gate = σ(Wxₜ + Uhₜ₋₁)</strong>—adaptive based on current input and state—but Finch achieves it linearly with LoRA adapters, keeping inference cheap.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="3-dynamic-decay-equation-19">
+
+
+<h3 class="header-anchor-wrapper">3️⃣ Dynamic Decay (Equation 19)
+  <a href="#3-dynamic-decay-equation-19" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Finch replaces the constant w with a dynamic vector wₜ computed from data:</p>
+<p>[
+\begin{aligned}
+d_t &amp;= \operatorname{lora}_d(\operatorname{ddlerp}<em>d(x_t,x</em>{t-1})),<br>
+w_t &amp;= \exp(-\exp(d_t)),[4pt]
+\mathcal{WKV}_t
+&amp;= \operatorname{diag}(u)k_t^\top v_t</p>
+<ul>
+<li>\sum_{i=1}^{t-1}
+\operatorname{diag}!\Big(!\sum_{j=i+1}^{t-1}w_j!\Big)
+k_i^\top v_i.
+\end{aligned}
+\tag{Eq 16}
+]</li>
+</ul>
+<p>Now the decay rate itself <em>depends on the token sequence</em>.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-intuition">
+
+
+<h3 class="header-anchor-wrapper">💡 Intuition
+  <a href="#-intuition" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Imagine reading:</p>
+<blockquote>
+<p>“John went to the park. He met Sarah. They played together.”</p></blockquote>
+<p>Finch can adapt:</p>
+<ul>
+<li>High decay for filler tokens (“to the park”)</li>
+<li>Low decay for entity tokens (“John”, “He”, “Sarah”)
+→ maintains relevant entities longer.</li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-mini-example">
+
+
+<h3 class="header-anchor-wrapper">🔢 Mini Example
+  <a href="#-mini-example" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Let the model output:
+[
+w_1=0.8,; w_2=0.95,; w_3=0.6.
+]
+At t = 4, earlier tokens get cumulative decay:
+[
+\text{weight(token 1)}=0.8\times0.95\times0.6=0.456.
+]
+So token 1 retains 45 % of its effect—stronger than a static global 0.6 decay.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-practical-result">
+
+
+<h3 class="header-anchor-wrapper">🧮 Practical Result
+  <a href="#-practical-result" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Finch learns <em>when</em> to remember and <em>when</em> to forget, enabling better long-context recall (e.g., PG-19 and BookSum datasets).
+Empirically, the survey reports ≈ 10 % improvement in long-context F1 over Eagle .</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-rwkv-7-goose-advanced-state-management">
+
+
+<h2 class="header-anchor-wrapper">🪶 RWKV-7 (Goose): Advanced State Management
+  <a href="#-rwkv-7-goose-advanced-state-management" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>Goose overhauls the recurrence itself.
+Its question:</p>
+<blockquote>
+<p>“Can we teach RWKV to <strong>edit its own memory</strong>, not just decay it?”</p></blockquote>
+<p>It answers with the <strong>generalized delta rule</strong>, bringing selective removal, insertion, and per-dimension learning rates.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="1-core-equation-equation-20">
+
+
+<h3 class="header-anchor-wrapper">1️⃣ Core Equation (Equation 20)
+  <a href="#1-core-equation-equation-20" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>[
+S_t
+= S_{t-1}!\left(
+\operatorname{diag}(w_t)</p>
+<ul>
+<li>\hat{\kappa}_t^\top(a_t\odot \hat{\kappa}_t)
+\right)</li>
+</ul>
+<ul>
+<li>v_t^\top \tilde{\kappa}_t.
+\tag{Eq 17}
+]</li>
+</ul>
+<p>where</p>
+<ul>
+<li>(S_t): matrix state per head,</li>
+<li>(w_t): vector decay (0–1 per channel),</li>
+<li>(a_t): in-context learning rate (0–1 per channel),</li>
+<li>(\hat{\kappa}_t): <em>removal</em> key,</li>
+<li>(\tilde{\kappa}_t): <em>replacement</em> key,</li>
+<li>(v_t): value vector.</li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-term-by-term-meaning">
+
+
+<h3 class="header-anchor-wrapper">🧩 Term-by-Term Meaning
+  <a href="#-term-by-term-meaning" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Term</th>
+          <th>Role</th>
+          <th>Analogy</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>(S_{t-1}\operatorname{diag}(w_t))</td>
+          <td>Decay of previous memory</td>
+          <td>RNN forget gate</td>
+      </tr>
+      <tr>
+          <td>(S_{t-1}\hat{\kappa}_t^\top(a_t\odot\hat{\kappa}_t))</td>
+          <td>Targeted <em>removal</em> of memory</td>
+          <td>Attention-based erasure</td>
+      </tr>
+      <tr>
+          <td>(v_t^\top\tilde{\kappa}_t)</td>
+          <td>Insert new info</td>
+          <td>Key-Value write operation</td>
+      </tr>
+  </tbody>
+</table>
+<p>Thus Goose performs a full <strong>erase-and-write</strong> per token.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="2-generating-parameters-equation-21">
+
+
+<h3 class="header-anchor-wrapper">2️⃣ Generating Parameters (Equation 21)
+  <a href="#2-generating-parameters-equation-21" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>[
+\begin{aligned}
+a_t &amp;= \sigma(\operatorname{loramlp}_a(x_t)),<br>
+w_t &amp;= \exp(-e^{-0.5,\sigma(d_t)}),<br>
+\hat{\kappa}_t &amp;= k_t\odot\xi,<br>
+\tilde{\kappa}_t &amp;= k_t\odot(1-a_t\odot\alpha).
+\end{aligned}
+\tag{Eq 18}
+]</p>
+<ul>
+<li>(\operatorname{loramlp}): small LoRA-MLP generating dynamic gates.</li>
+<li>(\xi,\alpha): learned scaling constants.</li>
+</ul>
+<p>This gives per-token, per-channel control of memory editing.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="3-reading-and-output-equation-23">
+
+
+<h3 class="header-anchor-wrapper">3️⃣ Reading and Output (Equation 23)
+  <a href="#3-reading-and-output-equation-23" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>[
+\begin{aligned}
+wkv_t &amp;= wkv_{t-1}G_t + v_t^\top\tilde{\kappa}_t,<br>
+u_t &amp;= (r_t!(\rho!\odot!\tilde{\kappa}_t)^\top)v_t,<br>
+p_t &amp;= \operatorname{LayerNorm}(r_t wkv_t^\top) + u_t,<br>
+o_t &amp;= (g_t!\odot!p_t)W_o.
+\end{aligned}
+\tag{Eq 19}
+]</p>
+<p>Goose thus separates:</p>
+<ul>
+<li><strong>memory update</strong> ((wkv_t)),</li>
+<li><strong>contextual read</strong> ((r_t)),</li>
+<li><strong>output gate</strong> ((g_t)).</li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-transformer-comparison-1">
+
+
+<h3 class="header-anchor-wrapper">⚖️ Transformer Comparison
+  <a href="#-transformer-comparison-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Transformer</th>
+          <th>RWKV-7 Goose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Attention = weighted sum of values</td>
+          <td>State update = erase + add per dimension</td>
+      </tr>
+      <tr>
+          <td>KV-cache must store all tokens</td>
+          <td>Compact matrix state</td>
+      </tr>
+      <tr>
+          <td>No explicit removal mechanism</td>
+          <td>Explicit remove/add keys</td>
+      </tr>
+      <tr>
+          <td>One learning rate (global)</td>
+          <td>Per-dimension adaptive rate (a_t)</td>
+      </tr>
+  </tbody>
+</table>
+<p>So Goose behaves like a <strong>memory-editing Transformer</strong>—efficient and expressive.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-rnn-comparison-1">
+
+
+<h3 class="header-anchor-wrapper">🔁 RNN Comparison
+  <a href="#-rnn-comparison-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>LSTM Gate</th>
+          <th>Goose Equivalent</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Forget gate fₜ</td>
+          <td>(w_t)</td>
+      </tr>
+      <tr>
+          <td>Input gate iₜ</td>
+          <td>(a_t)</td>
+      </tr>
+      <tr>
+          <td>Cell update</td>
+          <td>(v_t^\top\tilde{\kappa}_t)</td>
+      </tr>
+      <tr>
+          <td>Output gate oₜ</td>
+          <td>(g_t)</td>
+      </tr>
+  </tbody>
+</table>
+<p>But Goose’s formulation is <strong>matrix-valued and content-adaptive</strong>, far richer than scalar LSTM gates.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-intuitive-story-example">
+
+
+<h3 class="header-anchor-wrapper">🧠 Intuitive Story Example
+  <a href="#-intuitive-story-example" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>“John entered the room. He saw Mary.”</p>
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Token</th>
+          <th>Goose Behavior</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>John</strong></td>
+          <td>create memory entry (entities = {John})</td>
+      </tr>
+      <tr>
+          <td><strong>entered</strong></td>
+          <td>add action state; low decay</td>
+      </tr>
+      <tr>
+          <td><strong>room</strong></td>
+          <td>add location; decay moderate</td>
+      </tr>
+      <tr>
+          <td><strong>He</strong></td>
+          <td>recall ‘John’; reinforce entity link</td>
+      </tr>
+      <tr>
+          <td><strong>Mary</strong></td>
+          <td>new entity → removal of focus on room, add ‘Mary’ state</td>
+      </tr>
+  </tbody>
+</table>
+<p>Through (a_t,w_t,\hat{\kappa}_t,\tilde{\kappa}_t), Goose explicitly removes and inserts contextual traces—something Transformers only approximate via attention redistribution.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="4-mathematical-perspective">
+
+
+<h3 class="header-anchor-wrapper">4️⃣ Mathematical Perspective
+  <a href="#4-mathematical-perspective" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p>Goose’s update resembles the <strong>delta rule</strong> from adaptive filtering:
+[
+S_t = S_{t-1} + \eta_t (v_t^\top k_t - S_{t-1}).
+]
+But instead of a scalar ηₜ, Goose uses vector (a_t) and (w_t), making it a <strong>learnable stochastic update rule</strong> inside a neural net.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="5-computational-view">
+
+
+<h3 class="header-anchor-wrapper">5️⃣ Computational View
+  <a href="#5-computational-view" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Operation</th>
+          <th>Cost</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>State update ((S_{t-1}\to S_t))</td>
+          <td>O (Dₕ²) per head (but tiny matrices)</td>
+      </tr>
+      <tr>
+          <td>Read / write projections</td>
+          <td>O (D)</td>
+      </tr>
+      <tr>
+          <td>Overall inference complexity</td>
+          <td>O (T D) (total, linear in sequence)</td>
+      </tr>
+  </tbody>
+</table>
+<p>Goose adds ≈ 5–10 % compute over Eagle but brings significant accuracy gains on reasoning and long-context tasks .</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="6-why-goose-matters">
+
+
+<h3 class="header-anchor-wrapper">6️⃣ Why Goose Matters
+  <a href="#6-why-goose-matters" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ol>
+<li><strong>Dynamic Memory Editing</strong> → explicit forgetting and replacement.</li>
+<li><strong>Per-Feature Learning Rates</strong> → better gradient conditioning.</li>
+<li><strong>Expressive Theoretical Power</strong> → shown to simulate non-trivial automata classes (NC¹ tasks).</li>
+<li><strong>Long-Context Scaling</strong> → handles 35 k + tokens without KV cache explosion.</li>
+</ol>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-empirical-summary">
+
+
+<h3 class="header-anchor-wrapper">🧮 Empirical Summary
+  <a href="#-empirical-summary" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Benchmark</th>
+          <th>RWKV-5 (Eagle)</th>
+          <th>RWKV-6 (Finch)</th>
+          <th>RWKV-7 (Goose)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>PG-19 (long text)</td>
+          <td>+ –</td>
+          <td>+10 %</td>
+          <td>+17 %</td>
+      </tr>
+      <tr>
+          <td>LAMBADA (coherence)</td>
+          <td>Baseline</td>
+          <td>+4 %</td>
+          <td>+9 %</td>
+      </tr>
+      <tr>
+          <td>Code completion</td>
+          <td>Baseline</td>
+          <td>+6 %</td>
+          <td>+11 %</td>
+      </tr>
+      <tr>
+          <td>Throughput</td>
+          <td>1.0 ×</td>
+          <td>0.97 ×</td>
+          <td>0.9 ×</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="7-visual-placeholder">
+
+
+<h3 class="header-anchor-wrapper">7️⃣ Visual Placeholder
+  <a href="#7-visual-placeholder" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<pre tabindex="0"><code>[Diagram: Goose State Editing]
+Memory S_{t-1} → (decay w_t) → (erase via κ̂_t,a_t) → (add via v_t,κ̃_t) → S_t
+</code></pre><hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-rwkv-7-vs-transformer-conceptual-bridge">
+
+
+<h3 class="header-anchor-wrapper">🧩 RWKV-7 vs Transformer (Conceptual Bridge)
+  <a href="#-rwkv-7-vs-transformer-conceptual-bridge" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Mechanism</th>
+          <th>Transformer</th>
+          <th>RWKV-7 (Goose)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><em>Attention Matrix</em></td>
+          <td>dense QKᵀ softmax</td>
+          <td>implicit through matrix state Sₜ</td>
+      </tr>
+      <tr>
+          <td><em>Context Update</em></td>
+          <td>recomputed each token</td>
+          <td>recurrent state update</td>
+      </tr>
+      <tr>
+          <td><em>Forgetting</em></td>
+          <td>none (softmax renormalization only)</td>
+          <td>explicit via (w_t,\hat{\kappa}_t)</td>
+      </tr>
+      <tr>
+          <td><em>Memory Write</em></td>
+          <td>new attention weights</td>
+          <td>additive (v_t^\top \tilde{\kappa}_t)</td>
+      </tr>
+      <tr>
+          <td><em>Training</em></td>
+          <td>fully parallel</td>
+          <td>prefill parallel + recurrent streaming</td>
+      </tr>
+      <tr>
+          <td><em>Inference Memory</em></td>
+          <td>O (T d)</td>
+          <td>O (d² / #heads)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="8-rwkv-7-vs-rnnlstm">
+
+
+<h3 class="header-anchor-wrapper">8️⃣ RWKV-7 vs RNN/LSTM
+  <a href="#8-rwkv-7-vs-rnnlstm" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>LSTM</th>
+          <th>Goose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hidden state</td>
+          <td>vector</td>
+          <td>matrix per head</td>
+      </tr>
+      <tr>
+          <td>Gates</td>
+          <td>input, forget, output</td>
+          <td>(a_t,w_t,g_t)</td>
+      </tr>
+      <tr>
+          <td>Nonlinearity</td>
+          <td>tanh/σ</td>
+          <td>LoRA-MLP + LayerNorm</td>
+      </tr>
+      <tr>
+          <td>Parallel training</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td>Expressivity</td>
+          <td>low</td>
+          <td>high (state editing)</td>
+      </tr>
+      <tr>
+          <td>Gradient flow</td>
+          <td>limited</td>
+          <td>stable (learned rates)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="-key-takeaways--rwkv-6--rwkv-7">
+
+
+<h3 class="header-anchor-wrapper">🔚 Key Takeaways — RWKV-6 &amp; RWKV-7
+  <a href="#-key-takeaways--rwkv-6--rwkv-7" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Property</th>
+          <th>Finch</th>
+          <th>Goose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><em>Token mixing</em></td>
+          <td>Data-dependent ddlerp (LoRA)</td>
+          <td>ddlerp + generalized delta rule</td>
+      </tr>
+      <tr>
+          <td><em>Decay</em></td>
+          <td>Dynamic scalar wₜ</td>
+          <td>Vector wₜ</td>
+      </tr>
+      <tr>
+          <td><em>Memory update</em></td>
+          <td>Additive decay</td>
+          <td>Erase + Add (delta rule)</td>
+      </tr>
+      <tr>
+          <td><em>Adaptivity</em></td>
+          <td>Content dependent</td>
+          <td>Content &amp; state dependent</td>
+      </tr>
+      <tr>
+          <td><em>Expressiveness</em></td>
+          <td>High</td>
+          <td>Very High (theoretical NC¹ proof)</td>
+      </tr>
+      <tr>
+          <td><em>Inference cost</em></td>
+          <td>≈ Eagle</td>
+          <td>≈ 1.1 × Eagle</td>
+      </tr>
+  </tbody>
+</table>
+<p>Finch and Goose complete the RWKV journey from a “linear attention model” to a full-fledged “neural memory system” capable of dynamic reasoning.</p>
+<hr>
+<p><strong>Up next → Part IV:</strong>
+🧠 Specialized RWKV variants (Diffusion-RWKV, Vision-RWKV, GoldFinch etc.), global comparisons with Transformers and RNNs, and your “Cheat Sheet Summary.”</p>
+<p>Say <strong>“Continue.”</strong> to get the final part.</p>
+</section>
+    
+</article>
+</div>
+
+
+                
+                    
+                
+
+                
+            </div>
+        </main>
+</body>
+</html>

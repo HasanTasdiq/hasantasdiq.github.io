@@ -454,12 +454,12 @@ AFT introduces learnable positional biases <code>$w$</code> that capture relativ
 </h2>
 
 <p>The mathematical formulation from the paper:
+</p>
 $$
-Y_t = \sigma_Q(Q_t) \odot
-\frac{\displaystyle \sum_{t&rsquo;=1}^T \exp\big(K_{t&rsquo;} + w_{t,t&rsquo;}\big) \odot V_{t&rsquo;}}
-{\displaystyle \sum_{t&rsquo;=1}^T \exp\big(K_{t&rsquo;} + w_{t,t&rsquo;})}
-$$</p>
-<p>Where:</p>
+Y_t = \sigma_Q(Q_t) \odot 
+\frac{\displaystyle \sum_{t'=1}^T \exp\big(K_{t'} + w_{t,t'}\big) \odot V_{t'}}
+     {\displaystyle \sum_{t'=1}^T \exp\big(K_{t'} + w_{t,t'})}
+$$<p>Where:</p>
 <ul>
 <li>
 <p>$σ_Q$ is sigmoid activation</p>
