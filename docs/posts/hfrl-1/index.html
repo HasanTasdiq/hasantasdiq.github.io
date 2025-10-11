@@ -1,0 +1,547 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://numan947.github.io/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RL Notes: Huggin Face RL Course - S. M. Hasan</title>
+
+    
+
+    
+
+    
+    <meta name="author" content="Your Name" />
+    
+
+    
+        <meta property="og:url" content="https://numan947.github.io/posts/hfrl-1/">
+  <meta property="og:site_name" content="S. M. Hasan">
+  <meta property="og:title" content="RL Notes: Huggin Face RL Course">
+  <meta property="og:description" content="HFRL Unit-1 Summary Reinforcement Learning is a method where an agent learns by interacting with its environment, using trial and error and feedback from rewards.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-10-10T00:00:00+00:00">
+    <meta property="article:tag" content="RL">
+    <meta property="article:tag" content="Neural Network">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Hugging Face">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RL Notes: Huggin Face RL Course">
+  <meta name="twitter:description" content="HFRL Unit-1 Summary Reinforcement Learning is a method where an agent learns by interacting with its environment, using trial and error and feedback from rewards.">
+
+    <link rel="stylesheet" href="/style.min.75a70fdd4c8502cf61b8e7faea82276e016de6c2be066b92fa16bdae1c1f873d.css" integrity="sha256-dacP3UyFAs9huOf66oInbgFt5sK&#43;BmuS&#43;ha9rhwfhz0=">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/theme-switch.7c57075675400a1a12bc3fcfc744dd74e1e417b8db11fdef378d7a7ef1cc9e3f.js" integrity="sha256-fFcHVnVAChoSvD/Px0TddOHkF7jbEf3vN416fvHMnj8="></script>
+
+
+
+    <script defer src="/js/hide-navbar-on-scroll.b5f3414715b82a9bc2c9086fc860ad5d0a63f67251e4dd4fa61e9dfce91ebdb6.js" integrity="sha256-tfNBRxW4KpvCyQhvyGCtXQpj9nJR5N1Pph6d/OkevbY="></script>
+
+
+
+
+
+    <script defer src="/js/zooming.10d718ecdb4a98eab370ed60963ea87f1c612ac225609eadc52f0e536bc1517c.js" integrity="sha256-ENcY7NtKmOqzcO1glj6ofxxhKsIlYJ6txS8OU2vBUXw="></script>
+
+
+
+
+    <script src="/js/math.5a8dbbda075325162f7a690e0de21e861a1794248ace5298c0d8479f0ed55ac8.js" integrity="sha256-Wo272gdTJRYvemkODeIehhoXlCSKzlKYwNhHnw7VWsg="></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.3/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body><header>
+    <div id="header_content">
+        <div id="header_left">
+            <div id="sidebar_btn">
+                <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+                <label id="sidebar_btn_label" for="sidebar_btn_input">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</label>
+                <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                    <div id="sidebar_canvas_overlay"></div>
+                </label>
+                <div id="sidebar">
+                    <ul><li>
+                                <a href="/about/">About Me</a></li><li>
+                                <a href="/research/">Research</a></li><li>
+                                <a href="/publications/">Publications</a></li><li>
+                                <a href="/posts/">Bits, Bytes &amp; Life</a></li></ul>
+                </div>
+            </div>
+        
+            <div class="brand">
+                <div>
+                    <a href="/">S. M. Hasan</a>
+                </div>
+            </div><nav id="header_navbar" class="pure-menu header-menu">
+    <ul class="pure-menu-list"><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About Me</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/research/" class="pure-menu-link">Research</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/publications/" class="pure-menu-link">Publications</a>
+                    
+                </li><li class="header-menu-item pure-menu-item insection">
+                    
+                        <a href="/posts/" class="pure-menu-link">Bits, Bytes &amp; Life</a>
+                    
+                </li></ul>
+</nav>
+</div>
+
+        <div id="header_right">
+            
+
+            <div id="theme_tool">
+                <button id="dark_mode_btn" class="header-menu-btn outline-button" title='Switch to dark mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</button>
+                <button id="light_mode_btn" class="header-menu-btn outline-button" title='Switch to light mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</button>
+            </div>
+
+            
+        </div>
+    </div>
+</header><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+<main>
+            <div id="content" class="content-margin">
+                
+    
+    
+        
+        <div class="collapsible-menu-wrapper"><div class="collapsible-menu-type"><span>Table of contents</span></div><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#two-ways-to-find-optimal-policy">Two ways to find Optimal Policy</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#value-based-methods">Value-based methods</a>
+      <ul>
+        <li><a href="#what-does-it-mean-to-follow-a-policy">What does it mean to &ldquo;follow a policy&rdquo;?</a></li>
+        <li><a href="#the-difference-between-value-based-and-policy-based-methods">The Difference between Value-based and Policy-based methods</a></li>
+        <li><a href="#two-types-of-value-functions">Two types of Value Functions</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        
+    </div></div>
+    
+
+
+
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+
+    
+    
+        
+        
+        
+    
+        
+        
+            
+            
+            
+        
+        <section id="hfrl-unit-1">
+
+
+<h1 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit1">HFRL Unit-1</a>
+  <a href="#hfrl-unit-1" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="summary">
+
+
+<h2 class="header-anchor-wrapper">Summary
+  <a href="#summary" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>
+<p>Reinforcement Learning is a method where an agent learns by interacting with its environment, using trial and error and feedback from rewards.</p>
+</li>
+<li>
+<p>The goal of an RL agent is to maximize its expected cumulative reward, based on the idea that all goals can be framed as maximizing this reward.</p>
+</li>
+<li>
+<p>The RL process is a loop that outputs a sequence of state, action, reward, and next state.</p>
+</li>
+<li>
+<p>Expected cumulative reward is calculated by discounting future rewards, giving more weight to immediate rewards since they are more predictable than long-term ones.</p>
+</li>
+<li>
+<p>To solve an RL problem, we find an optimal policy, the AI&rsquo;s &ldquo;brain&rdquo; that decides the best action for each state to maximize expected return.</p>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="two-ways-to-find-optimal-policy">
+
+
+<h2 class="header-anchor-wrapper">Two ways to find Optimal Policy
+  <a href="#two-ways-to-find-optimal-policy" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ol>
+<li><strong>Policy-based</strong> methods directly optimize the policy by adjusting its parameters to maximize expected return.</li>
+<li><strong>Value-based</strong> methods train a value function that estimates the expected return for each state and use it to define the policy.</li>
+</ol>
+<p>Deep RL is &ldquo;Deep&rdquo; because it uses deep neural networks to estimate the action to take (policy-based) or to estimate the value of a state (value-based).</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="hfrl-unit-2">
+
+
+<h1 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit2">HFRL Unit-2</a>
+  <a href="#hfrl-unit-2" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h1>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="value-based-methods">
+
+
+<h2 class="header-anchor-wrapper">Value-based methods
+  <a href="#value-based-methods" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>
+<p>Value-based methods estimate the value of each state (or state-action pair) and derive the policy from these values.</p>
+</li>
+<li>
+<p>We learn a value function that maps a state to the expected value of being at that state.
+<img src="/static/blogs/tutorials/vbm-1.jpg" alt="Value Function"></p>
+</li>
+<li>
+<p>The value of a state is the expected discounted return obtained by following the policy from that state.</p>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="what-does-it-mean-to-follow-a-policy">
+
+
+<h3 class="header-anchor-wrapper">What does it mean to &ldquo;follow a policy&rdquo;?
+  <a href="#what-does-it-mean-to-follow-a-policy" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>The goal of an RL agent is to have an optimal policy $\pi^*$ that maximizes the expected return from any state.
+<ul>
+<li>Policy-based methods $\rightarrow$ directly train the policy to select what action to take given a state $\rightarrow \pi(a|s) \rightarrow$ We do not need to learn a value function.
+<ul>
+<li>Policy takes the current state as input and outputs an action or a distribution over possible actions.</li>
+<li>We don&rsquo;t define the policy explicitly; instead, we learn it through interactions with the environment.
+<img src="/static/blogs/tutorials/two-approaches-2.jpg" alt="Policy-based"></li>
+</ul>
+</li>
+<li>Value-based methods $\rightarrow$ trains the policy indirectly by learning a value function $\rightarrow V(s) \rightarrow$ We do not need to learn the policy explicitly.
+<ul>
+<li>The value function takes the current state as input and outputs the expected return (value) of that state.</li>
+<li>The policy is not trained or learned directly $\rightarrow$ it is derived from the value function given specific rules.</li>
+<li>For example, a common rule is to select the action that leads to the state with the highest value (greedy policy).
+<img src="/static/blogs/tutorials/two-approaches-3.jpg" alt="Value-based"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-difference-between-value-based-and-policy-based-methods">
+
+
+<h3 class="header-anchor-wrapper">The Difference between Value-based and Policy-based methods
+  <a href="#the-difference-between-value-based-and-policy-based-methods" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>In policy-based methods, the policy is learned directly by training a neural network to output actions based on states.
+<ul>
+<li>Optimal policy $\pi^*$ is learned directly.</li>
+</ul>
+</li>
+<li>In value-based methods, the policy is derived from a learned value function, which estimates the expected return of states.
+<ul>
+<li>Optimal policy $\pi^<em>$ is derived from the optimal value function $V^</em>(s)$ or the action-value function $Q^*(s, a)$.
+<img src="/static/blogs/tutorials/link-value-policy.jpg" alt="Link"></li>
+</ul>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="two-types-of-value-functions">
+
+
+<h3 class="header-anchor-wrapper">Two types of Value Functions
+  <a href="#two-types-of-value-functions" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ol>
+<li><strong>State-Value Function</strong> $V_\pi(s)$: Estimates the expected return starting from state $s$ and following policy $\pi$.
+<ul>
+<li>It gives the value of being in a particular state.</li>
+<li>Formula:
+$$V_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s]$$</li>
+<li>Where $G_t$ is the return (cumulative discounted reward) from time step $t$.
+<img src="/static/blogs/tutorials/state-value-function-1.jpg" alt="State-Value Function"></li>
+</ul>
+</li>
+<li><strong>Action-Value Function</strong> $Q_\pi(s, a)$: Estimates the expected return starting from state $s$, taking action $a$, and following policy $\pi$ thereafter.
+<ul>
+<li>It gives the value of taking a particular action in a particular state.</li>
+<li>Formula:
+$$Q_\pi(s, a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a]$$
+<img src="/static/blogs/tutorials/action-state-value-function-1.jpg" alt="Action-Value Function"></li>
+</ul>
+</li>
+</ol>
+<p><strong>Difference</strong>: The state-value function evaluates the value of being in a state, while the action-value function evaluates the value of taking a specific action in a state.</p>
+<p><strong>Both</strong> case are used to derive the optimal policy $\pi^*$ by selecting actions that maximize the expected return.</p>
+<p><strong>Problem</strong>: To calculate the value of a state or state-action pair, we need to know the expected return $G_t$, which depends on future rewards and the policy $\pi$. This can be computationally expensive and complex, especially in environments with many states and actions. Bellman equations provide a recursive way to compute these values efficiently.</p>
+</section>
+    
+</article>
+</div>
+
+
+                
+                    
+                
+
+                
+            </div>
+        </main>
+</body>
+</html>

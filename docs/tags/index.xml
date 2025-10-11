@@ -6,11 +6,29 @@
     <description>Recent content in Tags on S. M. Hasan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://numan947.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI</title>
+      <link>https://numan947.github.io/tags/ai/</link>
+      <pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://numan947.github.io/tags/ai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hugging Face</title>
+      <link>https://numan947.github.io/tags/hugging-face/</link>
+      <pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://numan947.github.io/tags/hugging-face/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Machine Learning</title>
       <link>https://numan947.github.io/tags/machine-learning/</link>
-      <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate>
       
       <guid>https://numan947.github.io/tags/machine-learning/</guid>
       <description></description>
@@ -19,9 +37,18 @@
     <item>
       <title>Neural Network</title>
       <link>https://numan947.github.io/tags/neural-network/</link>
-      <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate>
       
       <guid>https://numan947.github.io/tags/neural-network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RL</title>
+      <link>https://numan947.github.io/tags/rl/</link>
+      <pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://numan947.github.io/tags/rl/</guid>
       <description></description>
     </item>
     
