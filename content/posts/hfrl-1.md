@@ -1,7 +1,7 @@
 ---
-title: "RL Notes: HFRL Unit-1"
+title: "RL Notes: Huggin Face RL Course"
 date: 2025-10-10
-tags: ["RNN", "Neural Network", "Machine Learning", "NLP"]
+tags: ["RL", "Neural Network", "Machine Learning", "AI", "Hugging Face"]
 math: true
 draft: false
 ---
