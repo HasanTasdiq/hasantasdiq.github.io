@@ -52,3 +52,26 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
 - In value-based methods, the policy is derived from a learned value function, which estimates the expected return of states.
     - Optimal policy $\pi^*$ is derived from the optimal value function $V^*(s)$ or the action-value function $Q^*(s, a)$.
     ![Link](/static/blogs/tutorials/link-value-policy.jpg)
+
+
+### Two types of Value Functions
+1. **State-Value Function** $V_\pi(s)$: Estimates the expected return starting from state $s$ and following policy $\pi$.
+    - It gives the value of being in a particular state.
+    - Formula:
+    $$V_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s]$$
+    - Where $G_t$ is the return (cumulative discounted reward) from time step $t$.
+    ![State-Value Function](/static/blogs/tutorials/state-value-function-1.jpg)
+2. **Action-Value Function** $Q_\pi(s, a)$: Estimates the expected return starting from state $s$, taking action $a$, and following policy $\pi$ thereafter.
+    - It gives the value of taking a particular action in a particular state.
+    - Formula:
+    $$Q_\pi(s, a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a]$$
+    ![Action-Value Function](/static/blogs/tutorials/action-state-value-function-1.jpg)
+
+**Difference**: The state-value function evaluates the value of being in a state, while the action-value function evaluates the value of taking a specific action in a state.
+
+**Both** case are used to derive the optimal policy $\pi^*$ by selecting actions that maximize the expected return.
+
+**Problem**: To calculate the value of a state or state-action pair, we need to know the expected return $G_t$, which depends on future rewards and the policy $\pi$. This can be computationally expensive and complex, especially in environments with many states and actions. Bellman equations provide a recursive way to compute these values efficiently.
+
+<!-- 
+### Bellman Equations -->
