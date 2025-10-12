@@ -141,3 +141,59 @@ $$\text{TD Target} = R_{t+1} + \gamma V(S_{t+1})$$
 - Q-Learning is an off-policy value-based method that uses a TD approach to train its action-value function $Q(s, a)$.
 - Approximate the optimal action-value function $Q^*(s, a)$, which gives the maximum expected return for taking action $a$ in state $s$ and following the optimal policy thereafter.
 ![Q-Learning](/blogs/tutorials/huggingfaceRL/Q-function.jpg)
+
+- The value of a state, or a state-action pair is the expected cumulative reward our agent gets if it starts at this state (or state-action pair) and then acts accordingly to its policy.
+- The reward is the feedback the agent gets from the environment after taking an action.
+- Q-function is encoded in a table called Q-table:
+| State | Action 1 | Action 2 | Action 3 |
+|-------|----------|----------|----------|
+| S1    | Q(S1,A1) | Q(S1,A2) | Q(S1,A3) |
+| S2    | Q(S2,A1) | Q(S2,A2) | Q(S2,A3) |
+| S3    | Q(S3,A1) | Q(S3,A2) | Q(S3,A3) |
+- The agent selects actions based on the Q-values in the table, typically choosing the action with the highest Q-value for the current state (greedy policy).
+- The Q-values are updated using the Q-learning update rule:
+$$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)]$$
+- Where $\alpha$ is the learning rate, $R_{t+1}$ is the immediate reward, $\gamma$ is the discount factor, and $\max_a Q(S_{t+1}, a)$ is the maximum estimated Q-value for the next state $S_{t+1}$ over all possible actions $a$.
+- The term $R_{t+1} + \gamma \max_a Q(S_{t+1}, a)$ is known as the TD target in Q-learning.
+- The agent updates the Q-value for the current state-action pair based on the immediate reward and the maximum estimated Q-value for the next state.
+- This update is done at each time step, allowing the agent to learn from each interaction with the environment.
+- Q-function returns the expected cumulative reward for taking action $a$ in state $s$ and following the optimal policy thereafter.
+
+### Summary of Q-learning
+- Trains Q-function $Q(s, a)$ $\rightarrow$ action-value function $\rightarrow$ internally uses Q-table that maps state-action pairs to values.
+- Given a state and an action, Q-function returns the expected cumulative reward for taking that action in that state and following the optimal policy thereafter.
+- After training, the optimal policy $\pi^*$ can be derived by selecting the action with the highest Q-value for each state:
+$$\pi^*(s) = \arg\max_a Q^*(s, a)$$
+- Q-learning is an off-policy method because it learns the optimal policy independently of the
+
+### Q-learning Algorithm
+![Q-learning Algorithm](/blogs/tutorials/huggingfaceRL/Q-learning-2.jpg)
+- Step 1: Initialize the Q-table with arbitrary values (e.g., all zeros) for all state-action pairs.
+- Step 2: Choose an action using the epsilon-greedy strategy
+    ![Epsilon-Greedy Strategy](/blogs/tutorials/huggingfaceRL/Q-learning-4.jpg)
+    - With probability $\epsilon$, select a random action (exploration).
+    - With probability $1 - \epsilon$, select the action with the highest Q-value for the current state (exploitation).
+    - As training progresses, $\epsilon$ is typically decayed to reduce exploration and increase exploitation.
+    ![Epsilon Decay](/blogs/tutorials/huggingfaceRL/Q-learning-5.jpg)
+- Step 3: Take the action, observe the reward and the next state, $A_t, R_{t+1}, S_{t+1}$.
+- Step 4: Update the Q-value for the current state-action pair using the Q-learning update rule.
+    - Use the update formula to adjust the Q-value based on the observed reward and the maximum estimated Q-value for the next state.
+    - To produce the TD target, we use the immediate reward $R_{t+1}$ and the maximum estimated discounted Q-value for the next state $S_{t+1}$ over all possible actions. This is called bootstrapping because we are using our current estimate to improve itself incrementally.
+    ![Bootstrapping](/blogs/tutorials/huggingfaceRL/Q-learning-7.jpg)
+    ![Bootstrapping-2](/blogs/tutorials/huggingfaceRL/Q-learning-8.jpg)
+    - To get the TD target, we use:
+        - We obtain the reward $R_{t+1}$ from the environment after taking action $A_t$ in state $S_t$.
+        - To get the best state-action pair value for the next state $S_{t+1}$, we look at all possible actions $a$ in that state and select the one with the highest Q-value: $\max_a Q(S_{t+1}, a)$ $\rightarrow$ Note that this is not $\epsilon$-greedy; this is always taking the maximum value.
+        - We multiply this maximum Q-value by the discount factor $\gamma$ to account for the time value of future rewards.
+        - Finally, we add the immediate reward $R_{t+1}$ to the discounted maximum Q-value to get the TD target:
+        $$\text{TD Target} = R_{t+1} + \gamma \max_a Q(S_{t+1}, a)$$
+        - Then when the update of this Q-value is done, we start in a new state and select another action using the $\epsilon$-greedy strategy.
+        - This is why Q-learning is considered an **off-policy method** because the action used to update the Q-value (the one that maximizes the Q-value for the next state) is not necessarily the action that was actually taken (which could have been a random action due to exploration).
+
+### Off-policy vs On-policy
+- Off-policy: using a different policy for acting (inference) and learning (training).
+    - Example: Q-learning $\rightarrow$ uses $\epsilon$-greedy for acting and greedy (max) for learning.
+- On-policy: using the same policy for acting and learning.
+    - Example: SARSA $\rightarrow$ uses $\epsilon$-greedy for both acting and learning.
+
+![Off-policy vs On-policy](/blogs/tutorials/huggingfaceRL/off-on-4.jpg)

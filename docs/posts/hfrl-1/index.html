@@ -236,7 +236,13 @@
       </ul>
     </li>
     <li><a href="#on-policy-vs-off-policy-learning">On-policy vs Off-policy Learning</a></li>
-    <li><a href="#q-learning">Q-learning</a></li>
+    <li><a href="#q-learning">Q-learning</a>
+      <ul>
+        <li><a href="#summary-of-q-learning">Summary of Q-learning</a></li>
+        <li><a href="#q-learning-algorithm">Q-learning Algorithm</a></li>
+        <li><a href="#off-policy-vs-on-policy">Off-policy vs On-policy</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
         
@@ -785,10 +791,200 @@ $$\text{TD Target} = R_{t+1} + \gamma V(S_{t+1})$$</li>
 </h2>
 
 <ul>
-<li>Q-Learning is an off-policy value-based method that uses a TD approach to train its action-value function $Q(s, a)$.</li>
-<li>Approximate the optimal action-value function $Q^*(s, a)$, which gives the maximum expected return for taking action $a$ in state $s$ and following the optimal policy thereafter.
-<img src="/blogs/tutorials/huggingfaceRL/Q-function.jpg" alt="Q-Learning"></li>
+<li>
+<p>Q-Learning is an off-policy value-based method that uses a TD approach to train its action-value function $Q(s, a)$.</p>
+</li>
+<li>
+<p>Approximate the optimal action-value function $Q^*(s, a)$, which gives the maximum expected return for taking action $a$ in state $s$ and following the optimal policy thereafter.
+<img src="/blogs/tutorials/huggingfaceRL/Q-function.jpg" alt="Q-Learning"></p>
+</li>
+<li>
+<p>The value of a state, or a state-action pair is the expected cumulative reward our agent gets if it starts at this state (or state-action pair) and then acts accordingly to its policy.</p>
+</li>
+<li>
+<p>The reward is the feedback the agent gets from the environment after taking an action.</p>
+</li>
+<li>
+<p>Q-function is encoded in a table called Q-table:</p>
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>State</th>
+          <th>Action 1</th>
+          <th>Action 2</th>
+          <th>Action 3</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>S1</td>
+          <td>Q(S1,A1)</td>
+          <td>Q(S1,A2)</td>
+          <td>Q(S1,A3)</td>
+      </tr>
+      <tr>
+          <td>S2</td>
+          <td>Q(S2,A1)</td>
+          <td>Q(S2,A2)</td>
+          <td>Q(S2,A3)</td>
+      </tr>
+      <tr>
+          <td>S3</td>
+          <td>Q(S3,A1)</td>
+          <td>Q(S3,A2)</td>
+          <td>Q(S3,A3)</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+<li>
+<p>The agent selects actions based on the Q-values in the table, typically choosing the action with the highest Q-value for the current state (greedy policy).</p>
+</li>
+<li>
+<p>The Q-values are updated using the Q-learning update rule:
+</p>
+$$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)]$$</li>
+<li>
+<p>Where $\alpha$ is the learning rate, $R_{t+1}$ is the immediate reward, $\gamma$ is the discount factor, and $\max_a Q(S_{t+1}, a)$ is the maximum estimated Q-value for the next state $S_{t+1}$ over all possible actions $a$.</p>
+</li>
+<li>
+<p>The term $R_{t+1} + \gamma \max_a Q(S_{t+1}, a)$ is known as the TD target in Q-learning.</p>
+</li>
+<li>
+<p>The agent updates the Q-value for the current state-action pair based on the immediate reward and the maximum estimated Q-value for the next state.</p>
+</li>
+<li>
+<p>This update is done at each time step, allowing the agent to learn from each interaction with the environment.</p>
+</li>
+<li>
+<p>Q-function returns the expected cumulative reward for taking action $a$ in state $s$ and following the optimal policy thereafter.</p>
+</li>
 </ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="summary-of-q-learning">
+
+
+<h3 class="header-anchor-wrapper">Summary of Q-learning
+  <a href="#summary-of-q-learning" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>Trains Q-function $Q(s, a)$ $\rightarrow$ action-value function $\rightarrow$ internally uses Q-table that maps state-action pairs to values.</li>
+<li>Given a state and an action, Q-function returns the expected cumulative reward for taking that action in that state and following the optimal policy thereafter.</li>
+<li>After training, the optimal policy $\pi^*$ can be derived by selecting the action with the highest Q-value for each state:
+$$\pi^*(s) = \arg\max_a Q^*(s, a)$$</li>
+<li>Q-learning is an off-policy method because it learns the optimal policy independently of the</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="q-learning-algorithm">
+
+
+<h3 class="header-anchor-wrapper">Q-learning Algorithm
+  <a href="#q-learning-algorithm" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<p><img src="/blogs/tutorials/huggingfaceRL/Q-learning-2.jpg" alt="Q-learning Algorithm"></p>
+<ul>
+<li>Step 1: Initialize the Q-table with arbitrary values (e.g., all zeros) for all state-action pairs.</li>
+<li>Step 2: Choose an action using the epsilon-greedy strategy
+<img src="/blogs/tutorials/huggingfaceRL/Q-learning-4.jpg" alt="Epsilon-Greedy Strategy">
+<ul>
+<li>With probability $\epsilon$, select a random action (exploration).</li>
+<li>With probability $1 - \epsilon$, select the action with the highest Q-value for the current state (exploitation).</li>
+<li>As training progresses, $\epsilon$ is typically decayed to reduce exploration and increase exploitation.
+<img src="/blogs/tutorials/huggingfaceRL/Q-learning-5.jpg" alt="Epsilon Decay"></li>
+</ul>
+</li>
+<li>Step 3: Take the action, observe the reward and the next state, $A_t, R_{t+1}, S_{t+1}$.</li>
+<li>Step 4: Update the Q-value for the current state-action pair using the Q-learning update rule.
+<ul>
+<li>Use the update formula to adjust the Q-value based on the observed reward and the maximum estimated Q-value for the next state.</li>
+<li>To produce the TD target, we use the immediate reward $R_{t+1}$ and the maximum estimated discounted Q-value for the next state $S_{t+1}$ over all possible actions. This is called bootstrapping because we are using our current estimate to improve itself incrementally.
+<img src="/blogs/tutorials/huggingfaceRL/Q-learning-7.jpg" alt="Bootstrapping">
+<img src="/blogs/tutorials/huggingfaceRL/Q-learning-8.jpg" alt="Bootstrapping-2"></li>
+<li>To get the TD target, we use:
+<ul>
+<li>We obtain the reward $R_{t+1}$ from the environment after taking action $A_t$ in state $S_t$.</li>
+<li>To get the best state-action pair value for the next state $S_{t+1}$, we look at all possible actions $a$ in that state and select the one with the highest Q-value: $\max_a Q(S_{t+1}, a)$ $\rightarrow$ Note that this is not $\epsilon$-greedy; this is always taking the maximum value.</li>
+<li>We multiply this maximum Q-value by the discount factor $\gamma$ to account for the time value of future rewards.</li>
+<li>Finally, we add the immediate reward $R_{t+1}$ to the discounted maximum Q-value to get the TD target:
+$$\text{TD Target} = R_{t+1} + \gamma \max_a Q(S_{t+1}, a)$$</li>
+<li>Then when the update of this Q-value is done, we start in a new state and select another action using the $\epsilon$-greedy strategy.</li>
+<li>This is why Q-learning is considered an <strong>off-policy method</strong> because the action used to update the Q-value (the one that maximizes the Q-value for the next state) is not necessarily the action that was actually taken (which could have been a random action due to exploration).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="off-policy-vs-on-policy">
+
+
+<h3 class="header-anchor-wrapper">Off-policy vs On-policy
+  <a href="#off-policy-vs-on-policy" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>Off-policy: using a different policy for acting (inference) and learning (training).
+<ul>
+<li>Example: Q-learning $\rightarrow$ uses $\epsilon$-greedy for acting and greedy (max) for learning.</li>
+</ul>
+</li>
+<li>On-policy: using the same policy for acting and learning.
+<ul>
+<li>Example: SARSA $\rightarrow$ uses $\epsilon$-greedy for both acting and learning.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/blogs/tutorials/huggingfaceRL/off-on-4.jpg" alt="Off-policy vs On-policy"></p>
 </section>
     
 </article>
