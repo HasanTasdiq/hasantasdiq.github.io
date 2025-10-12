@@ -85,7 +85,18 @@
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;demystifying-transformers-attention-multi-head-magic-and-the-math-behind-the-revolution&#34; --&gt;
 
-&lt;h1&gt;Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution&lt;/h1&gt;
+&lt;h1 class=&#34;header-anchor-wrapper&#34;&gt;Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution
+  &lt;a href=&#34;#demystifying-transformers-attention-multi-head-magic-and-the-math-behind-the-revolution&#34; class=&#34;header-anchor-link&#34;&gt;
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    width=&#34;1rem&#34; height=&#34;1rem&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34;
+    stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34;
+    stroke-linejoin=&#34;round&#34;&gt;
+    &lt;line x1=&#34;4&#34; y1=&#34;9&#34; x2=&#34;20&#34; y2=&#34;9&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;4&#34; y1=&#34;15&#34; x2=&#34;20&#34; y2=&#34;15&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;10&#34; y1=&#34;3&#34; x2=&#34;8&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;16&#34; y1=&#34;3&#34; x2=&#34;14&#34; y2=&#34;21&#34;&gt;&lt;/line&gt;
+&lt;/svg&gt;
+
+&lt;/a&gt;
+&lt;/h1&gt;
 
 &lt;p&gt;&lt;em&gt;From single head to multi-head attention - understanding the architectural breakthrough that changed AI forever&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;The Transformer architecture, introduced in the seminal &amp;ldquo;Attention Is All You Need&amp;rdquo; paper, revolutionized natural language processing by replacing recurrent networks with a purely attention-based approach. At its heart lies the self-attention mechanism - a powerful way for models to understand relationships between all words in a sequence simultaneously.&lt;/p&gt;</description>
