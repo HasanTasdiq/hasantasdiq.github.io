@@ -226,9 +226,17 @@
         <li><a href="#what-does-it-mean-to-follow-a-policy">What does it mean to &ldquo;follow a policy&rdquo;?</a></li>
         <li><a href="#the-difference-between-value-based-and-policy-based-methods">The Difference between Value-based and Policy-based methods</a></li>
         <li><a href="#two-types-of-value-functions">Two types of Value Functions</a></li>
-        <li><a href="#bellman-equations">Bellman Equations</a></li>
       </ul>
     </li>
+    <li><a href="#bellman-equations">Bellman Equations</a></li>
+    <li><a href="#monte-carlo-methods">Monte Carlo Methods</a></li>
+    <li><a href="#temporal-difference-td-learning">Temporal Difference (TD) Learning</a>
+      <ul>
+        <li><a href="#summary-of-monte-carlo-vs-td-learning">Summary of Monte Carlo vs TD Learning</a></li>
+      </ul>
+    </li>
+    <li><a href="#on-policy-vs-off-policy-learning">On-policy vs Off-policy Learning</a></li>
+    <li><a href="#q-learning">Q-learning</a></li>
   </ul>
 </nav>
         
@@ -542,8 +550,138 @@ $$Q_\pi(s, a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a]$$
         <section id="bellman-equations">
 
 
-<h3 class="header-anchor-wrapper">Bellman Equations
+<h2 class="header-anchor-wrapper">Bellman Equations
   <a href="#bellman-equations" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>
+<p>Simplifies the computation of value functions ($V_\pi(s)$ and $Q_\pi(s, a)$) by breaking them down into immediate rewards and the value of subsequent states.</p>
+</li>
+<li>
+<p>Instead of calculating the expected return for each state or each state-action pair, we can use the Bellman equation.</p>
+</li>
+<li>
+<p>The Bellman equation expresses a state’s value recursively as the immediate reward plus the discounted value of the next state:
+</p>
+$$V(S_t) = R_{t+1} + \gamma V(S_{t+1})$$<p>
+<img src="/blogs/tutorials/huggingfaceRL/bellman4.jpg" alt="Bellman Equation"></p>
+</li>
+<li>
+<p>In summary, the Bellman equation simplifies value estimation by expressing it as the immediate reward plus the discounted value of the next state.</p>
+</li>
+<li>
+<p>Monte Carlo methods and Temporal Difference (TD) learning are two primary approaches to estimate value functions in reinforcement learning.</p>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="monte-carlo-methods">
+
+
+<h2 class="header-anchor-wrapper">Monte Carlo Methods
+  <a href="#monte-carlo-methods" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>Monte Carlo waits until the end of an episode to calculate the total return ($G_t$) and then updates the value function ($V_\pi(s)$ or $Q_\pi(s, a)$) based on this return.</li>
+<li>It requires complete episodes.
+<img src="/blogs/tutorials/huggingfaceRL/monte-carlo-approach.jpg" alt="Monte Carlo Methods"></li>
+<li>The update rule for the state-value function is:
+$$V(S_t) \leftarrow V(S_t) + \alpha [G_t - V(S_t)]$$</li>
+<li>Where $\alpha$ is the learning rate, and $G_t$ is the total return from time step $t$.</li>
+<li>Then restart the episode and repeat.
+<img src="/blogs/tutorials/huggingfaceRL/MC-3p.jpg" alt="Monte Carlo Update"></li>
+</ul>
+<p><strong>Example of Monte Carlo:</strong></p>
+<ul>
+<li>We initialize the value function $V(s)$ arbitrarily (e.g., all zeros) for all states $s$.</li>
+<li>Our learning rate $\alpha$ is set to 0.1 and discount factor $\gamma$ is 1 (for simplicity).</li>
+<li>We run an episode in the environment, collecting states, actions, and rewards until the episode ends.</li>
+<li>At the end of the episode, we calculate the return $G_t$ for each time step $t$.</li>
+<li>We update the value function for each state visited during the episode using the update rule.</li>
+<li>We repeat this process for many episodes, gradually improving our value function estimates.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="temporal-difference-td-learning">
+
+
+<h2 class="header-anchor-wrapper">Temporal Difference (TD) Learning
+  <a href="#temporal-difference-td-learning" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>TD learning updates the value function ($V_\pi(s)$ or $Q_\pi(s, a)$) at each time step using the immediate reward and the estimated value of the next state.</li>
+<li>It does not require complete episodes and can learn from incomplete sequences.</li>
+<li>Because we didn&rsquo;t wait until the end of the episode, we don&rsquo;t have the full return $G_t$.
+<ul>
+<li>Instead, we use the immediate reward $R_{t+1}$ and the estimated value of the next state $V(S_{t+1})$ to update our value function.</li>
+<li>This is called bootstrapping because we are using our current estimate to improve itself incrementally.
+<img src="/blogs/tutorials/huggingfaceRL/TD-1.jpg" alt="TD Learning"></li>
+</ul>
+</li>
+<li>The update rule for the state-value function is:
+$$V(S_t) \leftarrow V(S_t) + \alpha [R_{t+1} + \gamma V(S_{t+1}) - V(S_t)]$$</li>
+<li>Where $\alpha$ is the learning rate, $R_{t+1}$ is the immediate reward, and $V(S_{t+1})$ is the estimated value of the next state.</li>
+<li>Then move to the next state and repeat.</li>
+<li>This method is known as <strong>TD(0)</strong> because it updates the value function based on a one-step lookahead.</li>
+<li>The estimated return is known as the TD target:
+$$\text{TD Target} = R_{t+1} + \gamma V(S_{t+1})$$</li>
+</ul>
+<p><img src="/blogs/tutorials/huggingfaceRL/TD-1p.jpg" alt="TD(0) Update"></p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="summary-of-monte-carlo-vs-td-learning">
+
+
+<h3 class="header-anchor-wrapper">Summary of Monte Carlo vs TD Learning
+  <a href="#summary-of-monte-carlo-vs-td-learning" class="header-anchor-link">
 <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
@@ -555,20 +693,101 @@ $$Q_\pi(s, a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a]$$
 </a>
 </h3>
 
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th>Aspect</th>
+          <th>Monte Carlo Methods</th>
+          <th>Temporal Difference (TD) Learning</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Update Timing</td>
+          <td>Updates value function at the end of an episode</td>
+          <td>Updates value function at each time step</td>
+      </tr>
+      <tr>
+          <td>Requirement</td>
+          <td>Requires complete episodes</td>
+          <td>Can learn from incomplete sequences</td>
+      </tr>
+      <tr>
+          <td>Return Calculation</td>
+          <td>Uses total return $G_t$</td>
+          <td>Uses immediate reward and estimated next state value</td>
+      </tr>
+      <tr>
+          <td>Bootstrapping</td>
+          <td>No</td>
+          <td>Yes</td>
+      </tr>
+  </tbody>
+</table>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="on-policy-vs-off-policy-learning">
+
+
+<h2 class="header-anchor-wrapper">On-policy vs Off-policy Learning
+  <a href="#on-policy-vs-off-policy-learning" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
 <ul>
-<li>
-<p>Simplifies the computation of value functions ($V_\pi(s)$ and $Q_\pi(s, a)$) by breaking them down into immediate rewards and the value of subsequent states.</p>
+<li><strong>On-policy</strong> methods learn the value of the policy being executed (the same policy used to make decisions).
+<ul>
+<li>Example: SARSA (State-Action-Reward-State-Action)</li>
+</ul>
 </li>
-<li>
-<p>Instead of calculating the expected return for each state or each state-action pair, we can use the Bellman equation.</p>
+<li><strong>Off-policy</strong> methods learn the value of a different policy than the one being executed (the behavior policy).
+<ul>
+<li>Example: Q-learning</li>
+</ul>
 </li>
-<li>
-<p>The Bellman equation expresses a state’s value recursively as the immediate reward plus the discounted value of the next state: $V(S_t) = R_{t+1} + \gamma V(S_{t+1})$
-<img src="/blogs/tutorials/huggingfaceRL/bellman4.jpg" alt="Bellman Equation"></p>
-</li>
-<li>
-<p>In summary, the Bellman equation simplifies value estimation by expressing it as the immediate reward plus the discounted value of the next state.</p>
-</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="q-learning">
+
+
+<h2 class="header-anchor-wrapper">Q-learning
+  <a href="#q-learning" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>Q-Learning is an off-policy value-based method that uses a TD approach to train its action-value function $Q(s, a)$.</li>
+<li>Approximate the optimal action-value function $Q^*(s, a)$, which gives the maximum expected return for taking action $a$ in state $s$ and following the optimal policy thereafter.
+<img src="/blogs/tutorials/huggingfaceRL/Q-function.jpg" alt="Q-Learning"></li>
 </ul>
 </section>
     

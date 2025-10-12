@@ -74,11 +74,70 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
 **Problem**: To calculate the value of a state or state-action pair, we need to know the expected return $G_t$, which depends on future rewards and the policy $\pi$. This can be computationally expensive and complex, especially in environments with many states and actions. Bellman equations provide a recursive way to compute these values efficiently.
 
 
-### Bellman Equations
+## Bellman Equations
 
 - Simplifies the computation of value functions ($V_\pi(s)$ and $Q_\pi(s, a)$) by breaking them down into immediate rewards and the value of subsequent states.
 - Instead of calculating the expected return for each state or each state-action pair, we can use the Bellman equation.
-- The Bellman equation expresses a state’s value recursively as the immediate reward plus the discounted value of the next state: $V(S_t) = R_{t+1} + \gamma V(S_{t+1})$
+- The Bellman equation expresses a state’s value recursively as the immediate reward plus the discounted value of the next state: 
+$$V(S_t) = R_{t+1} + \gamma V(S_{t+1})$$
 ![Bellman Equation](/blogs/tutorials/huggingfaceRL/bellman4.jpg)
 
 - In summary, the Bellman equation simplifies value estimation by expressing it as the immediate reward plus the discounted value of the next state.
+
+- Monte Carlo methods and Temporal Difference (TD) learning are two primary approaches to estimate value functions in reinforcement learning.
+
+
+## Monte Carlo Methods
+- Monte Carlo waits until the end of an episode to calculate the total return ($G_t$) and then updates the value function ($V_\pi(s)$ or $Q_\pi(s, a)$) based on this return.
+- It requires complete episodes.
+![Monte Carlo Methods](/blogs/tutorials/huggingfaceRL/monte-carlo-approach.jpg)
+- The update rule for the state-value function is:
+$$V(S_t) \leftarrow V(S_t) + \alpha [G_t - V(S_t)]$$
+- Where $\alpha$ is the learning rate, and $G_t$ is the total return from time step $t$.
+- Then restart the episode and repeat.
+![Monte Carlo Update](/blogs/tutorials/huggingfaceRL/MC-3p.jpg)
+
+**Example of Monte Carlo:**
+- We initialize the value function $V(s)$ arbitrarily (e.g., all zeros) for all states $s$.
+- Our learning rate $\alpha$ is set to 0.1 and discount factor $\gamma$ is 1 (for simplicity).
+- We run an episode in the environment, collecting states, actions, and rewards until the episode ends.
+- At the end of the episode, we calculate the return $G_t$ for each time step $t$.
+- We update the value function for each state visited during the episode using the update rule.
+- We repeat this process for many episodes, gradually improving our value function estimates.
+
+## Temporal Difference (TD) Learning
+- TD learning updates the value function ($V_\pi(s)$ or $Q_\pi(s, a)$) at each time step using the immediate reward and the estimated value of the next state.
+- It does not require complete episodes and can learn from incomplete sequences.
+- Because we didn't wait until the end of the episode, we don't have the full return $G_t$. 
+    - Instead, we use the immediate reward $R_{t+1}$ and the estimated value of the next state $V(S_{t+1})$ to update our value function.
+    - This is called bootstrapping because we are using our current estimate to improve itself incrementally.
+![TD Learning](/blogs/tutorials/huggingfaceRL/TD-1.jpg)
+- The update rule for the state-value function is:
+$$V(S_t) \leftarrow V(S_t) + \alpha [R_{t+1} + \gamma V(S_{t+1}) - V(S_t)]$$
+- Where $\alpha$ is the learning rate, $R_{t+1}$ is the immediate reward, and $V(S_{t+1})$ is the estimated value of the next state.
+- Then move to the next state and repeat.
+- This method is known as **TD(0)** because it updates the value function based on a one-step lookahead.
+- The estimated return is known as the TD target:
+$$\text{TD Target} = R_{t+1} + \gamma V(S_{t+1})$$
+
+![TD(0) Update](/blogs/tutorials/huggingfaceRL/TD-1p.jpg)
+
+### Summary of Monte Carlo vs TD Learning
+| Aspect               | Monte Carlo Methods                          | Temporal Difference (TD) Learning          |
+|----------------------|----------------------------------------------|--------------------------------------------|
+| Update Timing       | Updates value function at the end of an episode | Updates value function at each time step      |
+| Requirement         | Requires complete episodes                    | Can learn from incomplete sequences         |
+| Return Calculation  | Uses total return $G_t$                       | Uses immediate reward and estimated next state value |
+| Bootstrapping       | No                                           | Yes                                        |
+
+
+## On-policy vs Off-policy Learning
+- **On-policy** methods learn the value of the policy being executed (the same policy used to make decisions).
+    - Example: SARSA (State-Action-Reward-State-Action)
+- **Off-policy** methods learn the value of a different policy than the one being executed (the behavior policy).
+    - Example: Q-learning
+
+## Q-learning
+- Q-Learning is an off-policy value-based method that uses a TD approach to train its action-value function $Q(s, a)$.
+- Approximate the optimal action-value function $Q^*(s, a)$, which gives the maximum expected return for taking action $a$ in state $s$ and following the optimal policy thereafter.
+![Q-Learning](/blogs/tutorials/huggingfaceRL/Q-function.jpg)
