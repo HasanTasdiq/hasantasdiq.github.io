@@ -30,7 +30,7 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
 ## Value-based methods
 * Value-based methods estimate the value of each state (or state-action pair) and derive the policy from these values.
 * We learn a value function that maps a state to the expected value of being at that state.
-![Value Function](/blogs/tutorials/vbm-1.jpg)
+![Value Function](/blogs/tutorials/huggingfaceRL/vbm-1.jpg)
 
 
 * The value of a state is the expected discounted return obtained by following the policy from that state.
@@ -40,18 +40,18 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
     - Policy-based methods $\rightarrow$ directly train the policy to select what action to take given a state $\rightarrow \pi(a|s) \rightarrow$ We do not need to learn a value function.
         - Policy takes the current state as input and outputs an action or a distribution over possible actions.
         - We don't define the policy explicitly; instead, we learn it through interactions with the environment.
-        ![Policy-based](/blogs/tutorials/two-approaches-2.jpg)
+        ![Policy-based](/blogs/tutorials/huggingfaceRL/two-approaches-2.jpg)
     - Value-based methods $\rightarrow$ trains the policy indirectly by learning a value function $\rightarrow V(s) \rightarrow$ We do not need to learn the policy explicitly.
         - The value function takes the current state as input and outputs the expected return (value) of that state.
         - The policy is not trained or learned directly $\rightarrow$ it is derived from the value function given specific rules.
         - For example, a common rule is to select the action that leads to the state with the highest value (greedy policy).
-        ![Value-based](/blogs/tutorials/two-approaches-3.jpg)
+        ![Value-based](/blogs/tutorials/huggingfaceRL/two-approaches-3.jpg)
 ### The Difference between Value-based and Policy-based methods
 - In policy-based methods, the policy is learned directly by training a neural network to output actions based on states.
     - Optimal policy $\pi^*$ is learned directly.
 - In value-based methods, the policy is derived from a learned value function, which estimates the expected return of states.
     - Optimal policy $\pi^*$ is derived from the optimal value function $V^*(s)$ or the action-value function $Q^*(s, a)$.
-    ![Link](/blogs/tutorials/link-value-policy.jpg)
+    ![Link](/blogs/tutorials/huggingfaceRL/link-value-policy.jpg)
 
 
 ### Two types of Value Functions
@@ -60,12 +60,12 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
     - Formula:
     $$V_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s]$$
     - Where $G_t$ is the return (cumulative discounted reward) from time step $t$.
-    ![State-Value Function](/blogs/tutorials/state-value-function-1.jpg)
+    ![State-Value Function](/blogs/tutorials/huggingfaceRL/state-value-function-1.jpg)
 2. **Action-Value Function** $Q_\pi(s, a)$: Estimates the expected return starting from state $s$, taking action $a$, and following policy $\pi$ thereafter.
     - It gives the value of taking a particular action in a particular state.
     - Formula:
     $$Q_\pi(s, a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a]$$
-    ![Action-Value Function](/blogs/tutorials/action-state-value-function-1.jpg)
+    ![Action-Value Function](/blogs/tutorials/huggingfaceRL/action-state-value-function-1.jpg)
 
 **Difference**: The state-value function evaluates the value of being in a state, while the action-value function evaluates the value of taking a specific action in a state.
 
@@ -73,5 +73,12 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
 
 **Problem**: To calculate the value of a state or state-action pair, we need to know the expected return $G_t$, which depends on future rewards and the policy $\pi$. This can be computationally expensive and complex, especially in environments with many states and actions. Bellman equations provide a recursive way to compute these values efficiently.
 
-<!-- 
-### Bellman Equations -->
+
+### Bellman Equations
+
+- Simplifies the computation of value functions ($V_\pi(s)$ and $Q_\pi(s, a)$) by breaking them down into immediate rewards and the value of subsequent states.
+- Instead of calculating the expected return for each state or each state-action pair, we can use the Bellman equation.
+- The Bellman equation expresses a state’s value recursively as the immediate reward plus the discounted value of the next state: $V(S_t) = R_{t+1} + \gamma V(S_{t+1})$
+![Bellman Equation](/blogs/tutorials/huggingfaceRL/bellman4.jpg)
+
+- In summary, the Bellman equation simplifies value estimation by expressing it as the immediate reward plus the discounted value of the next state.

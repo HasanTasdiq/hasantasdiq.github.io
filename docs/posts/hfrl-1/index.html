@@ -226,6 +226,7 @@
         <li><a href="#what-does-it-mean-to-follow-a-policy">What does it mean to &ldquo;follow a policy&rdquo;?</a></li>
         <li><a href="#the-difference-between-value-based-and-policy-based-methods">The Difference between Value-based and Policy-based methods</a></li>
         <li><a href="#two-types-of-value-functions">Two types of Value Functions</a></li>
+        <li><a href="#bellman-equations">Bellman Equations</a></li>
       </ul>
     </li>
   </ul>
@@ -396,7 +397,7 @@
 </li>
 <li>
 <p>We learn a value function that maps a state to the expected value of being at that state.
-<img src="/blogs/tutorials/vbm-1.jpg" alt="Value Function"></p>
+<img src="/blogs/tutorials/huggingfaceRL/vbm-1.jpg" alt="Value Function"></p>
 </li>
 <li>
 <p>The value of a state is the expected discounted return obtained by following the policy from that state.</p>
@@ -433,7 +434,7 @@
 <ul>
 <li>Policy takes the current state as input and outputs an action or a distribution over possible actions.</li>
 <li>We don&rsquo;t define the policy explicitly; instead, we learn it through interactions with the environment.
-<img src="/blogs/tutorials/two-approaches-2.jpg" alt="Policy-based"></li>
+<img src="/blogs/tutorials/huggingfaceRL/two-approaches-2.jpg" alt="Policy-based"></li>
 </ul>
 </li>
 <li>Value-based methods $\rightarrow$ trains the policy indirectly by learning a value function $\rightarrow V(s) \rightarrow$ We do not need to learn the policy explicitly.
@@ -441,7 +442,7 @@
 <li>The value function takes the current state as input and outputs the expected return (value) of that state.</li>
 <li>The policy is not trained or learned directly $\rightarrow$ it is derived from the value function given specific rules.</li>
 <li>For example, a common rule is to select the action that leads to the state with the highest value (greedy policy).
-<img src="/blogs/tutorials/two-approaches-3.jpg" alt="Value-based"></li>
+<img src="/blogs/tutorials/huggingfaceRL/two-approaches-3.jpg" alt="Value-based"></li>
 </ul>
 </li>
 </ul>
@@ -480,7 +481,7 @@
 <li>In value-based methods, the policy is derived from a learned value function, which estimates the expected return of states.
 <ul>
 <li>Optimal policy $\pi^<em>$ is derived from the optimal value function $V^</em>(s)$ or the action-value function $Q^*(s, a)$.
-<img src="/blogs/tutorials/link-value-policy.jpg" alt="Link"></li>
+<img src="/blogs/tutorials/huggingfaceRL/link-value-policy.jpg" alt="Link"></li>
 </ul>
 </li>
 </ul>
@@ -515,7 +516,7 @@
 <li>Formula:
 $$V_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s]$$</li>
 <li>Where $G_t$ is the return (cumulative discounted reward) from time step $t$.
-<img src="/blogs/tutorials/state-value-function-1.jpg" alt="State-Value Function"></li>
+<img src="/blogs/tutorials/huggingfaceRL/state-value-function-1.jpg" alt="State-Value Function"></li>
 </ul>
 </li>
 <li><strong>Action-Value Function</strong> $Q_\pi(s, a)$: Estimates the expected return starting from state $s$, taking action $a$, and following policy $\pi$ thereafter.
@@ -523,13 +524,52 @@ $$V_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s]$$</li>
 <li>It gives the value of taking a particular action in a particular state.</li>
 <li>Formula:
 $$Q_\pi(s, a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a]$$
-<img src="/blogs/tutorials/action-state-value-function-1.jpg" alt="Action-Value Function"></li>
+<img src="/blogs/tutorials/huggingfaceRL/action-state-value-function-1.jpg" alt="Action-Value Function"></li>
 </ul>
 </li>
 </ol>
 <p><strong>Difference</strong>: The state-value function evaluates the value of being in a state, while the action-value function evaluates the value of taking a specific action in a state.</p>
 <p><strong>Both</strong> case are used to derive the optimal policy $\pi^*$ by selecting actions that maximize the expected return.</p>
 <p><strong>Problem</strong>: To calculate the value of a state or state-action pair, we need to know the expected return $G_t$, which depends on future rewards and the policy $\pi$. This can be computationally expensive and complex, especially in environments with many states and actions. Bellman equations provide a recursive way to compute these values efficiently.</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="bellman-equations">
+
+
+<h3 class="header-anchor-wrapper">Bellman Equations
+  <a href="#bellman-equations" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>
+<p>Simplifies the computation of value functions ($V_\pi(s)$ and $Q_\pi(s, a)$) by breaking them down into immediate rewards and the value of subsequent states.</p>
+</li>
+<li>
+<p>Instead of calculating the expected return for each state or each state-action pair, we can use the Bellman equation.</p>
+</li>
+<li>
+<p>The Bellman equation expresses a state’s value recursively as the immediate reward plus the discounted value of the next state: $V(S_t) = R_{t+1} + \gamma V(S_{t+1})$
+<img src="/blogs/tutorials/huggingfaceRL/bellman4.jpg" alt="Bellman Equation"></p>
+</li>
+<li>
+<p>In summary, the Bellman equation simplifies value estimation by expressing it as the immediate reward plus the discounted value of the next state.</p>
+</li>
+</ul>
 </section>
     
 </article>
