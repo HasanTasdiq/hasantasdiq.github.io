@@ -298,3 +298,60 @@ $$\text{TD Target} = R_{t+1} + \gamma Q_{\text{target}}(S_{t+1}, \arg\max_a Q_{\
 | Experience Replay    | Store and reuse experiences                  | Improves sample efficiency and reduces correlation between experiences |
 | Fixed Q-Target       | Use a separate target network for Q-value estimation | Stabilizes training by reducing correlation between current and target Q-values |
 | Double DQN           | Decouple action selection and evaluation | Reduces overestimation bias in Q-value estimates |
+
+## [HFRL Unit-4](https://huggingface.co/learn/deep-rl-course/en/unit4)
+
+### Policy-based Methods
+- RL: find optimal policy $\pi^*$ that maximizes expected return.
+- Reward Hypothesis: all goals can be framed as maximizing expected cumulative reward.
+
+- Two main approaches to find optimal policy:
+    1. Policy-based methods: directly optimize the policy $\pi(a|s)$.
+    2. Value-based methods: learn a value function $V(s)$ or $Q(s, a)$ and derive the policy from it.
+    - Actor-Critic methods: combine both approaches by learning a policy and a value function simultaneously.
+
+- In policy based methods we directly learn to approximate the optimal policy $\pi^*$ by adjusting the parameters of the policy to maximize the expected return.
+    - The idea is to parameterize the policy using a neural network, $\pi_\theta$, which will output a probability distribution over actions given a state.
+    ![Stochastic Policy](/blogs/tutorials/huggingfaceRL/stochastic_policy.png)
+    - We use gradient ascent to update the policy parameters $\theta$ in the direction that increases the expected return.
+    - We control the parameter $\theta$ to make the policy better and better over time.
+    ![Policy Based Methods](/blogs/tutorials/huggingfaceRL/policy_based.png)
+
+    - We can directly optimize our policy $\pi_\theta$ to output a probability distribution over actions $\pi_\theta(a|s)$ that maximizes the expected return.
+    - We define the objective function $J(\theta)$ as the expected return when following the policy $\pi_\theta$:
+    $$J(\theta) = \mathbb{E}_{\pi_\theta}[G_t]$$
+    - Where $G_t$ is the return (cumulative discounted reward) from time step $t$.
+    - The goal is to find the optimal parameters $\theta^*$ that maximize $J(\theta)$:
+    $$\theta^* = \arg\max_\theta J(\theta)$$
+    - We use gradient ascent to update the policy parameters $\theta$:
+    $$\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)$$
+    - Where $\alpha$ is the learning rate, and $\nabla_\theta J(\theta)$ is the gradient of the objective function with respect to the policy parameters $\theta$.
+
+### The difference between Policy-based and policy-gradient methods
+- Policy-based methods refer to a broader category of RL algorithms that directly optimize the policy $\pi(a|s)$ to maximize the expected return.
+- Policy-gradient methods are a specific type of policy-based methods that use gradient ascent to update the policy parameters $\theta$ based on the gradient of the objective function $J(\theta)$.
+- In summary, all policy-gradient methods are policy-based methods, but not all policy-based methods are policy-gradient methods.
+
+**Why use policy-based methods?**
+- The simplicity of integration $\rightarrow$ directly optimize the policy without needing to learn a value function.
+- Learn stochastic policies $\rightarrow$ can learn policies that output a probability distribution over actions, allowing for exploration and handling uncertainty.
+- No perceptual aliasing $\rightarrow$ Perceptual aliasing is when two states seem (or are) the same but need different actions.
+    - Value-based methods can struggle with this because they rely on the value function, which may not distinguish between these states as they are quasi-greedy in nature.
+    - Policy-based methods can learn different actions for these states directly through the policy.
+- More efficient in high-dimensional or continuous action spaces $\rightarrow$ Value-based methods can struggle with large or continuous action spaces because they need to estimate the value for each state-action pair.
+    - Policy-based methods can directly output actions without needing to evaluate all possible actions.
+- Better convergence properties $\rightarrow$ Policy-based methods can have better convergence properties in some scenarios, especially when the policy is stochastic.
+    - Stochastic policy action preferences change smoothly, leading to more stable learning.
+
+
+**Disadvantages of Policy-based methods**
+- Convergence to local optima $\rightarrow$ Policy-gradient methods can converge to local optima, especially in complex environments with many suboptimal policies.
+- High variance in gradient estimates $\rightarrow$ The gradient estimates used in policy-gradient methods can have high variance, leading to unstable learning.
+- Slower learning $\rightarrow$ Policy-based methods can be slower to learn compared to value-based methods, especially in environments with sparse rewards.
+
+
+### Policy Gradient Methods
+
+- Find parameters $\theta$ of a policy $\pi_\theta(a|s)$ that maximizes the expected return $J(\theta)$.
+- Outputs a probability distribution over actions given a state.
+- The probability of taking action $a$ in state $s$ is given by $\pi_\theta(a|s)$ $\rightarrow$ known as *action preference*.

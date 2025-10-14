@@ -242,6 +242,13 @@
         <li><a href="#the-deep-q-learning-algorithm">The Deep Q-Learning Algorithm</a></li>
       </ul>
     </li>
+    <li><a href="#hfrl-unit-4">HFRL Unit-4</a>
+      <ul>
+        <li><a href="#policy-based-methods">Policy-based Methods</a></li>
+        <li><a href="#the-difference-between-policy-based-and-policy-gradient-methods">The difference between Policy-based and policy-gradient methods</a></li>
+        <li><a href="#policy-gradient-methods">Policy Gradient Methods</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
         
@@ -1345,6 +1352,194 @@ $$\text{TD Target} = R_{t+1} + \gamma Q_{\text{target}}(S_{t+1}, \arg\max_a Q_{\
       </tr>
   </tbody>
 </table>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="hfrl-unit-4">
+
+
+<h2 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit4">HFRL Unit-4</a>
+  <a href="#hfrl-unit-4" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="policy-based-methods">
+
+
+<h3 class="header-anchor-wrapper">Policy-based Methods
+  <a href="#policy-based-methods" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>
+<p>RL: find optimal policy $\pi^*$ that maximizes expected return.</p>
+</li>
+<li>
+<p>Reward Hypothesis: all goals can be framed as maximizing expected cumulative reward.</p>
+</li>
+<li>
+<p>Two main approaches to find optimal policy:</p>
+<ol>
+<li>Policy-based methods: directly optimize the policy $\pi(a|s)$.</li>
+<li>Value-based methods: learn a value function $V(s)$ or $Q(s, a)$ and derive the policy from it.</li>
+</ol>
+<ul>
+<li>Actor-Critic methods: combine both approaches by learning a policy and a value function simultaneously.</li>
+</ul>
+</li>
+<li>
+<p>In policy based methods we directly learn to approximate the optimal policy $\pi^*$ by adjusting the parameters of the policy to maximize the expected return.</p>
+<ul>
+<li>
+<p>The idea is to parameterize the policy using a neural network, $\pi_\theta$, which will output a probability distribution over actions given a state.
+<img src="/blogs/tutorials/huggingfaceRL/stochastic_policy.png" alt="Stochastic Policy"></p>
+</li>
+<li>
+<p>We use gradient ascent to update the policy parameters $\theta$ in the direction that increases the expected return.</p>
+</li>
+<li>
+<p>We control the parameter $\theta$ to make the policy better and better over time.
+<img src="/blogs/tutorials/huggingfaceRL/policy_based.png" alt="Policy Based Methods"></p>
+</li>
+<li>
+<p>We can directly optimize our policy $\pi_\theta$ to output a probability distribution over actions $\pi_\theta(a|s)$ that maximizes the expected return.</p>
+</li>
+<li>
+<p>We define the objective function $J(\theta)$ as the expected return when following the policy $\pi_\theta$:
+</p>
+$$J(\theta) = \mathbb{E}_{\pi_\theta}[G_t]$$</li>
+<li>
+<p>Where $G_t$ is the return (cumulative discounted reward) from time step $t$.</p>
+</li>
+<li>
+<p>The goal is to find the optimal parameters $\theta^*$ that maximize $J(\theta)$:
+</p>
+$$\theta^* = \arg\max_\theta J(\theta)$$</li>
+<li>
+<p>We use gradient ascent to update the policy parameters $\theta$:
+</p>
+$$\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)$$</li>
+<li>
+<p>Where $\alpha$ is the learning rate, and $\nabla_\theta J(\theta)$ is the gradient of the objective function with respect to the policy parameters $\theta$.</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-difference-between-policy-based-and-policy-gradient-methods">
+
+
+<h3 class="header-anchor-wrapper">The difference between Policy-based and policy-gradient methods
+  <a href="#the-difference-between-policy-based-and-policy-gradient-methods" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>Policy-based methods refer to a broader category of RL algorithms that directly optimize the policy $\pi(a|s)$ to maximize the expected return.</li>
+<li>Policy-gradient methods are a specific type of policy-based methods that use gradient ascent to update the policy parameters $\theta$ based on the gradient of the objective function $J(\theta)$.</li>
+<li>In summary, all policy-gradient methods are policy-based methods, but not all policy-based methods are policy-gradient methods.</li>
+</ul>
+<p><strong>Why use policy-based methods?</strong></p>
+<ul>
+<li>The simplicity of integration $\rightarrow$ directly optimize the policy without needing to learn a value function.</li>
+<li>Learn stochastic policies $\rightarrow$ can learn policies that output a probability distribution over actions, allowing for exploration and handling uncertainty.</li>
+<li>No perceptual aliasing $\rightarrow$ Perceptual aliasing is when two states seem (or are) the same but need different actions.
+<ul>
+<li>Value-based methods can struggle with this because they rely on the value function, which may not distinguish between these states as they are quasi-greedy in nature.</li>
+<li>Policy-based methods can learn different actions for these states directly through the policy.</li>
+</ul>
+</li>
+<li>More efficient in high-dimensional or continuous action spaces $\rightarrow$ Value-based methods can struggle with large or continuous action spaces because they need to estimate the value for each state-action pair.
+<ul>
+<li>Policy-based methods can directly output actions without needing to evaluate all possible actions.</li>
+</ul>
+</li>
+<li>Better convergence properties $\rightarrow$ Policy-based methods can have better convergence properties in some scenarios, especially when the policy is stochastic.
+<ul>
+<li>Stochastic policy action preferences change smoothly, leading to more stable learning.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Disadvantages of Policy-based methods</strong></p>
+<ul>
+<li>Convergence to local optima $\rightarrow$ Policy-gradient methods can converge to local optima, especially in complex environments with many suboptimal policies.</li>
+<li>High variance in gradient estimates $\rightarrow$ The gradient estimates used in policy-gradient methods can have high variance, leading to unstable learning.</li>
+<li>Slower learning $\rightarrow$ Policy-based methods can be slower to learn compared to value-based methods, especially in environments with sparse rewards.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="policy-gradient-methods">
+
+
+<h3 class="header-anchor-wrapper">Policy Gradient Methods
+  <a href="#policy-gradient-methods" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>Find parameters $\theta$ of a policy $\pi_\theta(a|s)$ that maximizes the expected return $J(\theta)$.</li>
+<li>Outputs a probability distribution over actions given a state.</li>
+<li>The probability of taking action $a$ in state $s$ is given by $\pi_\theta(a|s)$ $\rightarrow$ known as <em>action preference</em>.</li>
+</ul>
 </section>
     
 </article>
