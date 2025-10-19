@@ -250,6 +250,14 @@
       </ul>
     </li>
     <li><a href="#hfrl-unit-5">HFRL Unit-5</a></li>
+    <li><a href="#hfrl-unit-6">HFRL Unit-6</a>
+      <ul>
+        <li><a href="#the-problem-of-high-variance-in-reinforce">The Problem of High Variance in REINFORCE</a></li>
+        <li><a href="#advantage-actor-critic-a2c">Advantage Actor-Critic (A2C)</a></li>
+      </ul>
+    </li>
+    <li><a href="#hfrl-unit-7">HFRL Unit-7</a></li>
+    <li><a href="#hfrl-unit-8">HFRL Unit-8</a></li>
   </ul>
 </nav>
         
@@ -1678,6 +1686,259 @@ $$\theta \leftarrow \theta + \alpha \times G_t \times \nabla_\theta \log \pi_\th
 
 <h2 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit5">HFRL Unit-5</a>
   <a href="#hfrl-unit-5" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>SKIP &ndash; FOR NOW &ndash; NOT NEEDED</p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="hfrl-unit-6">
+
+
+<h2 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit6">HFRL Unit-6</a>
+  <a href="#hfrl-unit-6" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>REINFORCE has high variance in its gradient estimates, leading to unstable learning.</li>
+<li>This high variance arises because we are using Monte Carlo estimates of the return $G_t$, which can vary significantly between episodes.</li>
+<li>Policy gradient estimation is the direction of the steepest ascent in the policy parameter space that maximizes the expected return.</li>
+<li>In Monte Carlo methods like REINFORCE, we estimate the policy gradient using complete episodes, which can lead to high variance in the estimates. We need a lot of samples (episodes) to get a reliable estimate of the gradient.</li>
+<li>Actor-Critic methods combine policy-based and value-based approaches to reduce the variance in policy gradient estimates.</li>
+<li>In this approach, we have two components:
+<ol>
+<li><strong>Actor</strong>: The policy network $\pi_\theta(a|s)$ that outputs a probability distribution over actions given a state.</li>
+<li><strong>Critic</strong>: The value network $V_w(s)$ that estimates the value of a state.</li>
+</ol>
+</li>
+<li>Advantage Actor-Critic is an extension of the Actor-Critic method that uses the advantage function to reduce variance further.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="the-problem-of-high-variance-in-reinforce">
+
+
+<h3 class="header-anchor-wrapper">The Problem of High Variance in REINFORCE
+  <a href="#the-problem-of-high-variance-in-reinforce" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>
+<p>In REINFORCE, we want to increase the probability of actions that lead to high returns and decrease the probability of actions that lead to low returns.
+<img src="/blogs/tutorials/huggingfaceRL/pg.jpg" alt="Policy Gradient"></p>
+</li>
+<li>
+<p>The return $R(\tau)$ is calculated using <em>Monte Carlo</em> sampling.</p>
+</li>
+<li>
+<p>We collect a trajectory $\tau$ by interacting with the environment using the current policy $\pi_\theta$.</p>
+</li>
+<li>
+<p>The return $R(\tau)$ is the cumulative discounted reward obtained by following the trajectory $\tau$.</p>
+</li>
+<li>
+<p>If the return is good, all actions will be &ldquo;reinforced&rdquo; by increasing their likelihood of being chosen in the future.</p>
+</li>
+<li>
+<p>This method is unbiased as we are using the true return $R(\tau)$ to update the policy.</p>
+</li>
+<li>
+<p>However, because of stochasticity in the environment and the policy, the return $R(\tau)$ can vary significantly between episodes, leading to high variance in the policy gradient estimates.</p>
+</li>
+<li>
+<p>High variance in the gradient estimates can lead to unstable learning and slow convergence.</p>
+</li>
+</ul>
+<p><img src="/blogs/tutorials/huggingfaceRL/variance.jpg" alt="Variance"></p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="advantage-actor-critic-a2c">
+
+
+<h3 class="header-anchor-wrapper">Advantage Actor-Critic (A2C)
+  <a href="#advantage-actor-critic-a2c" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h3>
+
+<ul>
+<li>Actor-Critic methods address the high variance problem by introducing a value function (the Critic) to estimate the expected return.</li>
+<li>We have two function approximators:
+<ol>
+<li><strong>Actor</strong>: The policy network $\pi_\theta(a|s)$ that outputs a probability distribution over actions given a state.</li>
+<li><strong>Critic</strong>: The value network $V_w(s)$ that estimates how good the action taken in a state is.</li>
+</ol>
+</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="actor-critic-process">
+
+
+<h4 class="header-anchor-wrapper">Actor Critic Process
+  <a href="#actor-critic-process" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<ul>
+<li>Actor: a policy function parameterized by $\theta$: $\pi_\theta(s)$</li>
+<li>Critic: a value function parameterized by $w$: $\hat{q}_w(s, a)$</li>
+<li>At each timestep $t$, we get the current state $S_t$ from the environment and pass it to the Actor and Critic networks.
+<img src="/blogs/tutorials/huggingfaceRL/step1.jpg" alt="Step-1"></li>
+<li>Our policy takes the state and outputs an action $A_t$.</li>
+<li>The critic takes that action also as an input and using the state $S_t$ along with the action $A_t$ outputs an estimate of the value of taking that action in that state: $\hat{q}_w(S_t, A_t) \rightarrow Q$ estimate.
+<img src="/blogs/tutorials/huggingfaceRL/step2.jpg" alt="Step-2"></li>
+<li>We take that action $A_t$ and pass it to the environment, which returns the next state $S_{t+1}$ and the reward $R_{t+1}$.
+<img src="/blogs/tutorials/huggingfaceRL/step3.jpg" alt="Step-3"></li>
+<li>The Actor updates its policy parameters $\theta$ using the Q-value estimate from the Critic.
+<img src="/blogs/tutorials/huggingfaceRL/step4.jpg" alt="Step-4"></li>
+<li>The Actor produces the next action $A_{t+1}$ based on the next state $S_{t+1}$.
+<img src="/blogs/tutorials/huggingfaceRL/step5.jpg" alt="Step-5"></li>
+<li>The Critic updates its value function parameters $w$ using the TD error.</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="adding-advantage-in-actor-critic">
+
+
+<h4 class="header-anchor-wrapper">Adding Advantage in Actor-Critic
+  <a href="#adding-advantage-in-actor-critic" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h4>
+
+<ul>
+<li>Instead of using the Q-value estimate $\hat{q}_w(S_t, A_t)$ directly, we can use the advantage function to reduce variance further.</li>
+<li>The advantage function $A(s, a)$ measures how much better taking action $a$ in state $s$ is compared to the average action in that state.</li>
+<li>The advantage function is defined as:
+$$A(s, a) = Q(s, a) - V(s)$$</li>
+<li>Where $Q(s, a)$ is the action-value function, and $V(s)$ is the state-value function.</li>
+<li>In Advantage Actor-Critic, we use the advantage function to update the policy parameters $\theta$:
+$$\theta \leftarrow \theta + \alpha \times A(S_t, A_t) \times \nabla_\theta \log \pi_\theta(A_t | S_t)$$</li>
+<li>Where $A(S_t, A_t)$ is the advantage estimate for the action taken at time step $t$.</li>
+<li>The advantage estimate can be computed using the TD error:
+$$A(S_t, A_t) = R_{t+1} + \gamma V_w(S_{t+1}) - V_w(S_t)$$</li>
+<li>Where $R_{t+1}$ is the immediate reward, $\gamma$ is the discount factor, and $V_w(S_{t+1})$ and $V_w(S_t)$ are the value estimates from the Critic network.</li>
+</ul>
+<p><img src="/blogs/tutorials/huggingfaceRL/advantage2.jpg" alt="Advantage"></p>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="hfrl-unit-7">
+
+
+<h2 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit7">HFRL Unit-7</a>
+  <a href="#hfrl-unit-7" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li>SKIP &ndash; FOR NOW &ndash; NOT NEEDED</li>
+</ul>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="hfrl-unit-8">
+
+
+<h2 class="header-anchor-wrapper"><a href="https://huggingface.co/learn/deep-rl-course/en/unit8">HFRL Unit-8</a>
+  <a href="#hfrl-unit-8" class="header-anchor-link">
 <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"

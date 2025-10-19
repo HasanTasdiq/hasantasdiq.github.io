@@ -431,3 +431,73 @@ $$\theta \leftarrow \theta + \alpha \times G_t \times \nabla_\theta \log \pi_\th
 
 
 ## [HFRL Unit-5](https://huggingface.co/learn/deep-rl-course/en/unit5)
+
+SKIP -- FOR NOW -- NOT NEEDED
+
+## [HFRL Unit-6](https://huggingface.co/learn/deep-rl-course/en/unit6)
+- REINFORCE has high variance in its gradient estimates, leading to unstable learning.
+- This high variance arises because we are using Monte Carlo estimates of the return $G_t$, which can vary significantly between episodes.
+- Policy gradient estimation is the direction of the steepest ascent in the policy parameter space that maximizes the expected return.
+- In Monte Carlo methods like REINFORCE, we estimate the policy gradient using complete episodes, which can lead to high variance in the estimates. We need a lot of samples (episodes) to get a reliable estimate of the gradient.
+- Actor-Critic methods combine policy-based and value-based approaches to reduce the variance in policy gradient estimates.
+- In this approach, we have two components:
+    1. **Actor**: The policy network $\pi_\theta(a|s)$ that outputs a probability distribution over actions given a state.
+    2. **Critic**: The value network $V_w(s)$ that estimates the value of a state.
+- Advantage Actor-Critic is an extension of the Actor-Critic method that uses the advantage function to reduce variance further.
+
+### The Problem of High Variance in REINFORCE
+- In REINFORCE, we want to increase the probability of actions that lead to high returns and decrease the probability of actions that lead to low returns.
+![Policy Gradient](/blogs/tutorials/huggingfaceRL/pg.jpg)
+
+- The return $R(\tau)$ is calculated using *Monte Carlo* sampling.
+- We collect a trajectory $\tau$ by interacting with the environment using the current policy $\pi_\theta$.
+- The return $R(\tau)$ is the cumulative discounted reward obtained by following the trajectory $\tau$.
+- If the return is good, all actions will be "reinforced" by increasing their likelihood of being chosen in the future.
+- This method is unbiased as we are using the true return $R(\tau)$ to update the policy.
+- However, because of stochasticity in the environment and the policy, the return $R(\tau)$ can vary significantly between episodes, leading to high variance in the policy gradient estimates.
+- High variance in the gradient estimates can lead to unstable learning and slow convergence.
+
+![Variance](/blogs/tutorials/huggingfaceRL/variance.jpg)
+
+### Advantage Actor-Critic (A2C)
+- Actor-Critic methods address the high variance problem by introducing a value function (the Critic) to estimate the expected return.
+- We have two function approximators:
+    1. **Actor**: The policy network $\pi_\theta(a|s)$ that outputs a probability distribution over actions given a state.
+    2. **Critic**: The value network $V_w(s)$ that estimates how good the action taken in a state is.
+
+#### Actor Critic Process
+
+- Actor: a policy function parameterized by $\theta$: $\pi_\theta(s)$
+- Critic: a value function parameterized by $w$: $\hat{q}_w(s, a)$
+- At each timestep $t$, we get the current state $S_t$ from the environment and pass it to the Actor and Critic networks.
+![Step-1](/blogs/tutorials/huggingfaceRL/step1.jpg)
+- Our policy takes the state and outputs an action $A_t$.
+- The critic takes that action also as an input and using the state $S_t$ along with the action $A_t$ outputs an estimate of the value of taking that action in that state: $\hat{q}_w(S_t, A_t) \rightarrow Q$ estimate.
+![Step-2](/blogs/tutorials/huggingfaceRL/step2.jpg)
+- We take that action $A_t$ and pass it to the environment, which returns the next state $S_{t+1}$ and the reward $R_{t+1}$.
+![Step-3](/blogs/tutorials/huggingfaceRL/step3.jpg)
+- The Actor updates its policy parameters $\theta$ using the Q-value estimate from the Critic.
+![Step-4](/blogs/tutorials/huggingfaceRL/step4.jpg)
+- The Actor produces the next action $A_{t+1}$ based on the next state $S_{t+1}$.
+![Step-5](/blogs/tutorials/huggingfaceRL/step5.jpg)
+- The Critic updates its value function parameters $w$ using the TD error.
+
+#### Adding Advantage in Actor-Critic
+- Instead of using the Q-value estimate $\hat{q}_w(S_t, A_t)$ directly, we can use the advantage function to reduce variance further.
+- The advantage function $A(s, a)$ measures how much better taking action $a$ in state $s$ is compared to the average action in that state.
+- The advantage function is defined as:
+$$A(s, a) = Q(s, a) - V(s)$$
+- Where $Q(s, a)$ is the action-value function, and $V(s)$ is the state-value function.
+- In Advantage Actor-Critic, we use the advantage function to update the policy parameters $\theta$:
+$$\theta \leftarrow \theta + \alpha \times A(S_t, A_t) \times \nabla_\theta \log \pi_\theta(A_t | S_t)$$
+- Where $A(S_t, A_t)$ is the advantage estimate for the action taken at time step $t$.
+- The advantage estimate can be computed using the TD error:
+$$A(S_t, A_t) = R_{t+1} + \gamma V_w(S_{t+1}) - V_w(S_t)$$
+- Where $R_{t+1}$ is the immediate reward, $\gamma$ is the discount factor, and $V_w(S_{t+1})$ and $V_w(S_t)$ are the value estimates from the Critic network.
+
+![Advantage](/blogs/tutorials/huggingfaceRL/advantage2.jpg)
+
+## [HFRL Unit-7](https://huggingface.co/learn/deep-rl-course/en/unit7)
+- SKIP -- FOR NOW -- NOT NEEDED
+
+## [HFRL Unit-8](https://huggingface.co/learn/deep-rl-course/en/unit8)
