@@ -501,3 +501,75 @@ $$A(S_t, A_t) = R_{t+1} + \gamma V_w(S_{t+1}) - V_w(S_t)$$
 - SKIP -- FOR NOW -- NOT NEEDED
 
 ## [HFRL Unit-8](https://huggingface.co/learn/deep-rl-course/en/unit8)
+
+- Proximal Policy Optimization is an architecture that improves the RL agent's training stability by avoiding policy updates that are too large.
+- To do that we use a ratio that indicates the difference between our current policy and old policy and clip this ratio to a range of $[1 - \epsilon, 1 + \epsilon]$.
+
+### The Intuition Behind PPO
+- We want to stablize the training of the policy by avoiding large updates that can lead to instability.
+- Reasons:
+    - Smaller updates lead to more stable learning and more likely convergence to a good policy.
+    - Large updates can lead to divergence, falling off the cliff, and unstable learning, leading to poor performance and too long to converge.
+
+- To update policy conservatively, we measure how much the current policy changed compared to the former one using a ratio calculation between the current policy and the old policy.
+- We clip this ratio to a range of $[1 - \epsilon, 1 + \epsilon]$ to limit the change in the policy.
+- This is why it's called Proximal Policy Optimization $\rightarrow$ we are optimizing the policy while keeping it close to the old policy (proximal).
+
+### The PPO Objective Function -- Clipped Surrogate Objective
+![Policy Objective](/blogs/tutorials/huggingfaceRL/lpg.jpg)
+
+- The objective function for PPO is called the clipped surrogate objective.
+- This constrain the policy change in small range using a clipping mechanism.
+![Surrogate Objective](/blogs/tutorials/huggingfaceRL/ppo-surrogate.jpg)
+
+#### The Ratio Function
+
+- $r_t(\theta) = \frac{\pi_\theta(a_t | s_t)}{\pi_{\theta_{old}}(a_t | s_t)}$
+- The ratio function $r_t(\theta)$ measures how much the current policy $\pi_\theta(a_t | s_t)$ differs from the old policy $\pi_{\theta_{old}}(a_t | s_t)$ for the action $a_t$ taken in state $s_t$
+- If the ratio is close to 1, it means the current policy is similar to the old policy for that action.
+
+![Ratio Function](/blogs/tutorials/huggingfaceRL/ratio1.jpg)
+
+- If the ratio is greater than 1, it means the current policy is more likely to take that action compared to the old policy.
+- If the ratio is less than 1, it means the current policy is less likely to take that action compared to the old policy.
+- The ratio function is used to measure the change in the policy for the action taken at time step $t$.
+
+![Ratio Function 2](/blogs/tutorials/huggingfaceRL/ratio2.jpg)
+
+#### The Unclipped Objective
+- The ratio function, $r_t(\theta)$, is multiplied by the advantage estimate, $A_t$, to form the unclipped objective.
+- Here the ratio function takes the place of the log-probability used in REINFORCE and Advantage Actor-Critic.
+![Unclipped Objective](/blogs/tutorials/huggingfaceRL/unclipped1.jpg)
+
+![Unclipped Objective 2](/blogs/tutorials/huggingfaceRL/unclipped2.jpg)
+
+#### The Clipped Objective
+- If the ratio $r_t(\theta)$ deviates too much from 1, it indicates a significant change in the policy.
+- To prevent this, we clip the ratio: we ensure that we do not have a too large policy update.
+- Two solutions:
+    1. TRPO: Trust Region Policy Optimization $\rightarrow$ constrains the policy update using a KL-divergence constraint. Complicated to implement.
+    2. PPO: Proximal Policy Optimization $\rightarrow$ simpler to implement and computationally efficient. We use Clipped surrogate Objective function.
+![Clipped Objective](/blogs/tutorials/huggingfaceRL/clipped.jpg)
+
+- The clipped objective limits the change in the policy by clipping the ratio $r_t(\theta)$ to the range $[1 - \epsilon, 1 + \epsilon]$.
+- This prevents the policy from changing too much in a single update, leading to more stable learning.
+
+![CASES](/blogs/tutorials/huggingfaceRL/recap.jpg)
+- Case 1 & 2, the clipping does not affect the objective because the ratio is within the clipping range.
+- Case 3 & 4, the ratio is below the clipping range $1 - \epsilon$.
+    - Case 3: if the advantage is positive, we want to increase the probability of taking that action, we still update the policy and do not clip it.
+    - Case 4: if the advantage is negative, we don't want to decrease the probability of taking that action too much, so we clip the ratio to $1 - \epsilon$. The gradient will be zero in this case and we won't update the policy for that action.
+- Case 5 & 6, the ratio is above the clipping range $1 + \epsilon$.
+    - Case 5: if the advantage is positive, we don't want to increase the probability of taking that action too much, so we clip the ratio to $1 + \epsilon$. The gradient will be zero in this case and we won't update the policy for that action.
+    - Case 6: if the advantage is negative, we want to decrease the probability of taking that action, we still update the policy and do not clip it.
+
+- We only update the policy with the unclipped objective part. When the minimum is the clipped part, the gradient will be zero and we won't update the policy for that action.
+- So update policy only if:
+    - The ratio is within the clipping range.
+    - The ratio is outside the clipping range but the advantage leads to getting closer to the range:
+        - Ratio < $1 - \epsilon$ and advantage > 0
+        - Ratio > $1 + \epsilon$ and advantage < 0
+
+- The final Clipped Surrogate Objective function for PPO Actor -Critic is: combination of Clipped Surrogate Objective, Value Loss Function, and Entropy Bonus.
+
+![PPO Objective](/blogs/tutorials/huggingfaceRL/ppo-objective.jpg)
