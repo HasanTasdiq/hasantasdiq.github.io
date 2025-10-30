@@ -20,4 +20,6 @@ pagination: false
 ---
 
 ## Preprints
-- **Hasan, S. Mahmudul**, Polina Kozyreva, and Endadul Hoque. "FuzzEval: Assessing Fuzzers on Generating Context-Sensitive Inputs." arXiv preprint arXiv:2409.12331 (2024).
+- **Hasan, S.M.**, Kozyreva, P. and Hoque, E., 2024. FuzzEval: Assessing Fuzzers on Generating Context-Sensitive Inputs. arXiv preprint arXiv:2409.12331.
+
+- Nafis, A.J., **Hasan, S.M.**, Chowdhury, O. and Hoque, E., 2023. VetIoT: On Vetting IoT Defenses Enforcing Policies at Runtime. arXiv preprint arXiv:2308.12417.
