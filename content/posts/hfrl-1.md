@@ -50,7 +50,7 @@ Deep RL is "Deep" because it uses deep neural networks to estimate the action to
 - In policy-based methods, the policy is learned directly by training a neural network to output actions based on states.
     - Optimal policy $\pi^*$ is learned directly.
 - In value-based methods, the policy is derived from a learned value function, which estimates the expected return of states.
-    - Optimal policy $\pi^*$ is derived from the optimal value function $V^*(s)$ or the action-value function $Q^*(s, a)$.
+    - Optimal policy $ \pi^* $ is derived from the optimal value function $ V^* $$(s)$ or the action-value function $ Q^*(s, a) $.
     ![Link](/blogs/tutorials/huggingfaceRL/link-value-policy.jpg)
 
 
