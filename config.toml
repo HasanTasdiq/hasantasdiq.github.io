@@ -1,0 +1,56 @@
+baseURL = 'https://hasantasdiq.github.io/'
+languageCode = 'en-us'
+title = 'Tasdiqul Islam'
+theme = "hugo-theme-monochrome"
+publishDir = "docs"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
+
+[params]
+  author = "Your Name"
+  description = "A brief description of your site"
+  showReadingTime = true
+  dateFormat = "January 2, 2006"
+  enableComments = true
+  enable_site_search = false
+  math = true  
+
+[menu]
+  [[menu.navbar]]
+    name = "About Me"
+    url = "/about/"
+    weight = 10
+
+  [[menu.navbar]]
+    name = "Research"
+    url = "/research/"
+    weight = 20
+
+  [[menu.navbar]]
+    name = "Publications"
+    url = "/publications/"
+    weight = 30
+
+  [[menu.navbar]]
+    name = "Bits, Bytes & Life"
+    url = "/posts/"
+    weight = 40
+
+  # [[menu.navbar]]
+  #   name = "Teaching"
+  #   url = "/teaching/"
+  #   weight = 50
+
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+
