@@ -1,32 +1,32 @@
 ---
 title: "Home"
 type: 'custom-home'
-balloon_img_src: 'headshot.jpg'
-balloon_img_src_dark: 'headshot.jpg'
+balloon_img_src: 'headshot.png'
+balloon_img_src_dark: 'headshot.png'
 balloon_circle: true
 draft: false
-imgTitle: 'S Mahmudul Hasan'
+imgTitle: 'Tasdiqul Islam'
 imgSubtitle: 'HELLO WORLD'
 ---
-# S Mahmudul Hasan
-_Ph.D. Student in Computer Science, Tulane University, LA_
+# Tasdiqul Islam
+_Ph.D. Student in Computer Science, University of Texas at Arlington_
 
-**Research focus:** AI and Edge Computing
+**Research focus:** Quantum Networks
 
-**Advisor:** [Prof. Lu Peng](https://www.cs.tulane.edu/~lpeng3/)
+**Advisor:** [Prof. Hao Che](https://www.uta.edu/academics/faculty/profile?user=hche)
 
-**Email:** shasan1 [at] tulane [dot] edu
+**Email:** txi7184 [at] mavs [dot] uta [dot] edu
 
 ---
 
 ## News
-- 📄 *Sep 2025*: Paper accepted in *The Egyptian Journal of Internal Medicine*  
-- 🎓 *May 2025*: Started Ph.D. in Computer Science at Tulane University  
-- 🏆 *May 2025*: SBFT 2025 paper received Best Paper Award  
-- 📄 *Mar 2025*: Paper accepted at *CHI 2025*  
-- 📄 *Feb 2025*: Paper accepted at *SBFT 2025 Workshop* (co-located with *ICSE 2025*)  
-- 🎓 *May 2024*: Earned M.S. in Computer Science, *Syracuse University*  
-- 📄 *Jun 2022*: Paper published in *ACM COMPASS 2022*
+- 📄 *Oct 2025*: Paper accepted at *IEEE Consumer Communications & Networking Conference (CCNC) 2026*  
+- 📄 *July 2024*: One full paper and one poster published in *2024 International Conference on Quantum Communications, Networking, and Computing (QCNC)*  
+- 📄 *Oct 2023*: Paper published in *2023 IEEE 48th Conference on Local Computer Networks (LCN)*
+- 🎓 *Aug 2022*: Started Ph.D. in Computer Science at *University of Texas at Arlington* 
+- 💼 *April 2021*: Promoted to Senior Software Engineer in Reve Systems Ltd., Dhaka, Bangladesh 
+- 💼 *October 2020*: Joined as Software Engineer in Reve Systems Ltd., Dhaka, Bangladesh 
+- 💼 *Jan 2019*: Joined as Software Developer in Cokreates Ltd., Dhaka, Bangladesh
 - 🎓 *Oct 2018*: Earned B.Sc. in Computer Science & Engineering, *Bangladesh University of Engineering & Technology* 
 
 ---
@@ -34,11 +34,10 @@ _Ph.D. Student in Computer Science, Tulane University, LA_
 ## Quick Links
 - [About](/about/)  
 - [Research](/research/)  
-- [Publications](/publications/)  
-- [Blog](/posts/)  
+- [Publications](/publications/) 
 ---
 
 ## Find Me Online
-- [LinkedIn](https://www.linkedin.com/in/numan947/)  
-- [GitHub](https://github.com/numan947)  
-- [Google Scholar](https://scholar.google.com/citations?user=vatHm4QAAAAJ) 
+- [LinkedIn](https://www.linkedin.com/in/tasdiqul-islam-07b41b16a/)  
+- [GitHub](https://github.com/HasanTasdiq)  
+- [Google Scholar](https://scholar.google.com/citations?user=SuBVU04AAAAJ&hl=en) 
