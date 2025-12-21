@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Transformer on Tasdiqul Islam</title>
-    <link>https://hasantasdiq.github.io/tags/transformer/</link>
+    <link>http://localhost:1313/tags/transformer/</link>
     <description>Recent content in Transformer on Tasdiqul Islam</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/tags/transformer/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/transformer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Attention-Free Transformer: Escaping the Quadratic Bottleneck</title>
-      <link>https://hasantasdiq.github.io/posts/aft-1/</link>
+      <link>http://localhost:1313/posts/aft-1/</link>
       <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/posts/aft-1/</guid>
+      <guid>http://localhost:1313/posts/aft-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;attention-free-transformer-escaping-the-quadratic-bottleneck&#34; --&gt;
 

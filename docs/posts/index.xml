@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bits, Bytes &amp; Life on Tasdiqul Islam</title>
-    <link>https://hasantasdiq.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Bits, Bytes &amp; Life on Tasdiqul Islam</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>RL Notes: Huggin Face RL Course</title>
-      <link>https://hasantasdiq.github.io/posts/hfrl-1/</link>
+      <link>http://localhost:1313/posts/hfrl-1/</link>
       <pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/posts/hfrl-1/</guid>
+      <guid>http://localhost:1313/posts/hfrl-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;hfrl-unit-1&#34; --&gt;
 
@@ -52,10 +52,10 @@
     
     <item>
       <title>Attention-Free Transformer: Escaping the Quadratic Bottleneck</title>
-      <link>https://hasantasdiq.github.io/posts/aft-1/</link>
+      <link>http://localhost:1313/posts/aft-1/</link>
       <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/posts/aft-1/</guid>
+      <guid>http://localhost:1313/posts/aft-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;attention-free-transformer-escaping-the-quadratic-bottleneck&#34; --&gt;
 
@@ -78,10 +78,10 @@
     
     <item>
       <title>Demystifying Transformers: Attention, Multi-Head Magic, and the Math Behind the Revolution</title>
-      <link>https://hasantasdiq.github.io/posts/transformers-1/</link>
+      <link>http://localhost:1313/posts/transformers-1/</link>
       <pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/posts/transformers-1/</guid>
+      <guid>http://localhost:1313/posts/transformers-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;demystifying-transformers-attention-multi-head-magic-and-the-math-behind-the-revolution&#34; --&gt;
 
@@ -104,10 +104,10 @@
     
     <item>
       <title>Demystifying RNNs: A Deep Dive into Dimensions and Parameters</title>
-      <link>https://hasantasdiq.github.io/posts/rnn-1/</link>
+      <link>http://localhost:1313/posts/rnn-1/</link>
       <pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/posts/rnn-1/</guid>
+      <guid>http://localhost:1313/posts/rnn-1/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;demystifying-rnns-a-deep-dive-into-dimensions-and-parameters&#34; --&gt;
 

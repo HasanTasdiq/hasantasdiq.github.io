@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LLM on Tasdiqul Islam</title>
-    <link>https://hasantasdiq.github.io/tags/llm/</link>
+    <link>http://localhost:1313/tags/llm/</link>
     <description>Recent content in LLM on Tasdiqul Islam</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/tags/llm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/llm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Efficient Multilingual Feature Extraction for Edge NLP</title>
-      <link>https://hasantasdiq.github.io/projects/effe/</link>
+      <link>http://localhost:1313/projects/effe/</link>
       <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/projects/effe/</guid>
+      <guid>http://localhost:1313/projects/effe/</guid>
       <description>&lt;!-- end-chunk --&gt;
 &lt;!-- begin-chunk data-anchor=&#34;llm-powered-feature-extraction-for-edge&#34; --&gt;
 
@@ -30,7 +30,7 @@
 &lt;/h1&gt;
 
 &lt;p&gt;&lt;em&gt;Paper under review&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://hasantasdiq.github.io/projects/effe/eval_effe.png&#34; alt=&#34;Pareto Frontier&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/projects/effe/eval_effe.png&#34; alt=&#34;Pareto Frontier&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This research introduces a novel approach for deploying multilingual NLP on edge devices by rethinking the role of large language models. Instead of running full LLM inference, the framework leverages them as static feature repositories, bypassing the computationally expensive transformer stack.&lt;/p&gt;</description>
     </item>
     

@@ -3,7 +3,7 @@ title: "Contact"
 weight: 40
 ---
 
-- **Email**: shasan1 [at] tulane.edu  
-- **Office**: Stanley Thomson Hall 411, Tulane University (Uptown Campus)  
-- **LinkedIn**: [linkedin.com/in/numan947](https://www.linkedin.com/in/numan947)  
-- **GitHub**: [github.com/numan947](https://github.com/numan947)
+- **Email**: txi7184 [at] mavs.uta.edu  
+- **Office**:  900 S Center St, Arlington, TX 76010
+- **LinkedIn**: [linkedin.com/in/tasdiqul-islam-07b41b16a](https://www.linkedin.com/in/tasdiqul-islam-07b41b16a/)  
+- **GitHub**: [github.com/HasanTasdiq](https://github.com/HasanTasdiq)

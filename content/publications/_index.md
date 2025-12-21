@@ -6,20 +6,19 @@ group_by_year: true
 show_date: false
 pagination: false
 ---
-**Get Full Publication List:** [Google Scholar](https://scholar.google.com/citations?user=vatHm4QAAAAJ)
+**Get Full Publication List:** [Google Scholar](https://scholar.google.com/citations?user=SuBVU04AAAAJ&hl=enJ)
 
 ## Peer-Reviewed Publications
-- **Hasan, S.M.**, Tu, C.W., Hoque, E., Chowdhury, O. and Chau, S.Y., 2025, April. SeQR: A User-Friendly and Secure-by-Design Configurator for Enterprise Wi-Fi. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (pp. 1-19).
 
-- **Hasan, S.M.**, Kozyreva, P. and Hoque, E., 2025, April. On Evaluating Fuzzers with Context-Sensitive Fuzzed Inputs: A Case Study on PKCS# 1-v1.5. In Proceedings of the 18th Intl. Workshop on Search-Based and Fuzz Testing, co-located with ICSE 2025.
+- **Tasdiqul Islam**, Engin Arslan, and Md Arifuzzaman. "QuRA: Reinforcement Learning Based Routing for Quantum Networks". In Proceedings of the IEEE Consumer Communications and Networking Conference (CCNC’26). IEEE, Las Vegas, NV, USA. (Accepted for publication).
 
-- Rahman, M.T., Ibrahim, M., Farjana, N., Akkas, N., Nahar, N.U., Khan, A.J.H., Resma, S.S., Zubery, H., Hasan, M.M., **Hasan, S.M.** and Molla, M.M.A., 2025. Biochemical and ultrasound predictors of ICU admission among hospitalized dengue patients in Bangladesh. The Egyptian Journal of Internal Medicine, 37(1), p.138.
+- **Tasdiqul Islam**, M. Arifuzzaman and E. Arslan, "Reinforcement Learning Based Proactive Entanglement Swapping for Quantum Networks," 2024 International Conference on Quantum Communications, Networking, and Computing (QCNC), Kanazawa, Japan, 2024, pp. 135-142
 
-- **Hasan, S.M.**, Anisha, A.M., Adnin, R., Eliza, I.J., Tarin, I., Afroz, S. and Islam, A.A.A., 2022, June. Revealing influences of socioeconomic factors over disease outbreaks. In Proceedings of the 5th ACM SIGCAS/SIGCHI Conference on Computing and Sustainable Societies (pp. 490-512).
+- **Tasdiqul Islam**, and E. Arslan, "Quantum Key Distribution with Single Qubit Transmission," 2024 International Conference on Quantum Communications, Networking, and Computing (QCNC), Kanazawa, Japan,
+
+- **Tasdiqul Islam** and E. Arslan, "A Heuristic Approach for Scalable Quantum Repeater Deployment Modeling," 2023 IEEE 48th Conference on Local Computer Networks (LCN), Daytona Beach, FL, USA, 2023, pp. 1-9
 
 ---
 
 ## Preprints
-- **Hasan, S.M.**, Kozyreva, P. and Hoque, E., 2024. FuzzEval: Assessing Fuzzers on Generating Context-Sensitive Inputs. arXiv preprint arXiv:2409.12331.
-
-- Nafis, A.J., **Hasan, S.M.**, Chowdhury, O. and Hoque, E., 2023. VetIoT: On Vetting IoT Defenses Enforcing Policies at Runtime. arXiv preprint arXiv:2308.12417.
+-  **Tasdiqul Islam**, M. Arifuzzaman and E. Arslan, 2025. Adaptive Entanglement Generation for Quantum Routing. arXiv preprint arXiv:2505.08958 (Submitted to ICC'2026)

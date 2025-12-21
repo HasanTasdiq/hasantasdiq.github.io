@@ -2,54 +2,42 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About on Tasdiqul Islam</title>
-    <link>https://hasantasdiq.github.io/about/</link>
+    <link>http://localhost:1313/about/</link>
     <description>Recent content in About on Tasdiqul Islam</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://hasantasdiq.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://localhost:1313/about/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About Me</title>
-      <link>https://hasantasdiq.github.io/about/bio/</link>
+      <link>http://localhost:1313/about/bio/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/about/bio/</guid>
-      <description>&lt;p&gt;I am S. Mahmudul Hasan, a first-year Ph.D. student in Computer Science at Tulane University, working with Prof. Lu Peng on AI, systems, and edge devices. I hold an M.S. from Syracuse University (2024), with research in security, privacy, and usable security, and a B.Sc. from BUET (2018). Prior to my Ph.D., I taught as a Lecturer at the Canadian University of Bangladesh and Eastern University.&lt;/p&gt;</description>
+      <guid>http://localhost:1313/about/bio/</guid>
+      <description>&lt;p&gt;I bridge the gap between quantum theory and scalable systems. Currently pursuing my Ph.D. at UT Arlington (Expecting to graduate in May&#39;2026), I use Deep Reinforcement Learning to solve routing bottlenecks in quantum networks. My research creates adaptive, fidelity-aware algorithms that prioritize real-world throughput, backed by my 3+ years of industry engineering experience&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Education</title>
-      <link>https://hasantasdiq.github.io/about/education/</link>
+      <link>http://localhost:1313/about/education/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/about/education/</guid>
+      <guid>http://localhost:1313/about/education/</guid>
       <description>&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Ph.D. in Computer Science&lt;/strong&gt;, Tulane University, expected 2029&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;M.Sc. in Computer Science&lt;/strong&gt;, Syracuse University, 2024&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;B.Sc. in Software Engineering&lt;/strong&gt;, Bangladesh University of Engineering and Technology, 2018&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Awards &amp; Honors</title>
-      <link>https://hasantasdiq.github.io/about/awards/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://hasantasdiq.github.io/about/awards/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://hasantasdiq.github.io/projects/fuzzeval/sbft2025-award.pdf&#34;&gt;&lt;strong&gt;Best Paper Award&lt;/strong&gt;&lt;/a&gt;, 18th Intl. Workshop on Search-Based and Fuzz Testing (SBFT 2025), co-located with IEEE/ACM ICSE 2025&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ph.D. in Computer Science and Engineering&lt;/strong&gt;, University of Texas at Arlington, Texas, USA, Expected 2026&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B.Sc. in Computer Science and Engineering&lt;/strong&gt;, Bangladesh University of Engineering and Technology, Dhaka, Bangladesh, 2019&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
     <item>
       <title>Contact</title>
-      <link>https://hasantasdiq.github.io/about/contact/</link>
+      <link>http://localhost:1313/about/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hasantasdiq.github.io/about/contact/</guid>
+      <guid>http://localhost:1313/about/contact/</guid>
       <description>&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: shasan1 [at] tulane.edu&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Office&lt;/strong&gt;: Stanley Thomson Hall 411, Tulane University (Uptown Campus)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;LinkedIn&lt;/strong&gt;: &lt;a href=&#34;https://www.linkedin.com/in/numan947&#34;&gt;linkedin.com/in/numan947&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a href=&#34;https://github.com/numan947&#34;&gt;github.com/numan947&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: txi7184 [at] mavs.uta.edu&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Office&lt;/strong&gt;:  900 S Center St, Arlington, TX 76010&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LinkedIn&lt;/strong&gt;: &lt;a href=&#34;https://www.linkedin.com/in/tasdiqul-islam-07b41b16a/&#34;&gt;linkedin.com/in/tasdiqul-islam-07b41b16a&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a href=&#34;https://github.com/HasanTasdiq&#34;&gt;github.com/HasanTasdiq&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
