@@ -38,10 +38,6 @@ publishDir = "docs"
     url = "/publications/"
     weight = 30
 
-  [[menu.navbar]]
-    name = "Bits, Bytes & Life"
-    url = "/posts/"
-    weight = 40
 
   # [[menu.navbar]]
   #   name = "Teaching"

@@ -2,135 +2,126 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/landing/welcome/</loc>
+    <loc>https://hasantasdiq.github.io/landing/welcome/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/bio/</loc>
+    <loc>https://hasantasdiq.github.io/about/bio/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/education/</loc>
+    <loc>https://hasantasdiq.github.io/about/education/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/news/</loc>
+    <loc>https://hasantasdiq.github.io/landing/news/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/awards/</loc>
+    <loc>https://hasantasdiq.github.io/landing/quicklinks/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/quicklinks/</loc>
+    <loc>https://hasantasdiq.github.io/about/contact/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/contact/</loc>
+    <loc>https://hasantasdiq.github.io/landing/social/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/social/</loc>
-  </url><url>
-    <loc>http://localhost:1313/tags/ai/</loc>
+    <loc>https://hasantasdiq.github.io/tags/ai/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://hasantasdiq.github.io/posts/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://hasantasdiq.github.io/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/hugging-face/</loc>
+    <loc>https://hasantasdiq.github.io/tags/hugging-face/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/machine-learning/</loc>
+    <loc>https://hasantasdiq.github.io/tags/machine-learning/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/neural-network/</loc>
+    <loc>https://hasantasdiq.github.io/tags/neural-network/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rl/</loc>
+    <loc>https://hasantasdiq.github.io/tags/rl/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/hfrl-1/</loc>
+    <loc>https://hasantasdiq.github.io/posts/hfrl-1/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://hasantasdiq.github.io/tags/</loc>
     <lastmod>2025-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/aft-1/</loc>
+    <loc>https://hasantasdiq.github.io/posts/aft-1/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/nlp/</loc>
+    <loc>https://hasantasdiq.github.io/tags/nlp/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/transformer/</loc>
+    <loc>https://hasantasdiq.github.io/tags/transformer/</loc>
     <lastmod>2025-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/attention/</loc>
+    <loc>https://hasantasdiq.github.io/tags/attention/</loc>
     <lastmod>2025-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/transformers-1/</loc>
+    <loc>https://hasantasdiq.github.io/posts/transformers-1/</loc>
     <lastmod>2025-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/transformers/</loc>
+    <loc>https://hasantasdiq.github.io/tags/transformers/</loc>
     <lastmod>2025-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/rnn-1/</loc>
+    <loc>https://hasantasdiq.github.io/posts/rnn-1/</loc>
     <lastmod>2025-09-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rnn/</loc>
+    <loc>https://hasantasdiq.github.io/tags/rnn/</loc>
     <lastmod>2025-09-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/android/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/aeg/</loc>
+    <lastmod>2024-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/correlation-study/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/</loc>
+    <lastmod>2024-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/cryptography/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/quantum-networks/</loc>
+    <lastmod>2024-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/data-analysis/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/quantum-routing/</loc>
+    <lastmod>2024-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/edgeai/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/reinforcement-learning/</loc>
+    <lastmod>2024-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/effe/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/entanglement-swapping/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/fuzzeval/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/ghz-states/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/fuzzer/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/pes/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/jetson/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/qkd/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/llm/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/quantum-cryptography/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/ghz/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/public-health/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/qura/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/qr-codes/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/heuristic/</loc>
+    <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/security/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/heuristic-optimization/</loc>
+    <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/seqr/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/tags/quantum-repeaters/</loc>
+    <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/diseaseoutbreaks/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/projects/parqura/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/socioeconomics/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/wi-fi/</loc>
-    <lastmod>2025-09-25T00:00:00+00:00</lastmod>
+    <loc>https://hasantasdiq.github.io/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://hasantasdiq.github.io/landing/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://hasantasdiq.github.io/publications/</loc>
   </url><url>
-    <loc>http://localhost:1313/landing/</loc>
-  </url><url>
-    <loc>http://localhost:1313/publications/</loc>
-  </url><url>
-    <loc>http://localhost:1313/research/</loc>
+    <loc>https://hasantasdiq.github.io/research/</loc>
   </url>
 </urlset>
