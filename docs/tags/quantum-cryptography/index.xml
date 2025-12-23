@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Quantum Cryptography on Tasdiqul Islam</title>
+    <link>https://hasantasdiq.github.io/tags/quantum-cryptography/</link>
+    <description>Recent content in Quantum Cryptography on Tasdiqul Islam</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/tags/quantum-cryptography/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quantum Key Distribution with Single-Qubit Transmission</title>
+      <link>https://hasantasdiq.github.io/projects/ghz/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hasantasdiq.github.io/projects/ghz/</guid>
+      <description>A GHZ-state–based quantum key distribution protocol that transmits multiple key bits using a single qubit and quantum nondemolition measurements.</description>
+    </item>
+    
+  </channel>
+</rss>

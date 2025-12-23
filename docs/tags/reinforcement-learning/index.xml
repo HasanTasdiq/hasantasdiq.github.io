@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reinforcement Learning on Tasdiqul Islam</title>
+    <link>https://hasantasdiq.github.io/tags/reinforcement-learning/</link>
+    <description>Recent content in Reinforcement Learning on Tasdiqul Islam</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/tags/reinforcement-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Adaptive Entanglement Generation for Quantum Routing</title>
+      <link>https://hasantasdiq.github.io/projects/aeg/</link>
+      <pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hasantasdiq.github.io/projects/aeg/</guid>
+      <description>A deep reinforcement learning framework for fast and scalable entanglement generation in quantum networks.</description>
+    </item>
+    
+    <item>
+      <title>Proactive Entanglement Swapping for Quantum Networks</title>
+      <link>https://hasantasdiq.github.io/projects/pes/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hasantasdiq.github.io/projects/pes/</guid>
+      <description>A reinforcement learning framework that proactively performs entanglement swapping to improve throughput and reduce routing overhead in quantum networks.</description>
+    </item>
+    
+    <item>
+      <title>QuRA: Reinforcement Learning–Based Routing for Quantum Networks</title>
+      <link>https://hasantasdiq.github.io/projects/qura/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hasantasdiq.github.io/projects/qura/</guid>
+      <description>A deep reinforcement learning–based routing framework that enables scalable, fidelity-aware quantum routing under dynamic traffic.</description>
+    </item>
+    
+  </channel>
+</rss>

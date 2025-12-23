@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Entanglement Swapping on Tasdiqul Islam</title>
+    <link>https://hasantasdiq.github.io/tags/entanglement-swapping/</link>
+    <description>Recent content in Entanglement Swapping on Tasdiqul Islam</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/tags/entanglement-swapping/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Proactive Entanglement Swapping for Quantum Networks</title>
+      <link>https://hasantasdiq.github.io/projects/pes/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hasantasdiq.github.io/projects/pes/</guid>
+      <description>A reinforcement learning framework that proactively performs entanglement swapping to improve throughput and reduce routing overhead in quantum networks.</description>
+    </item>
+    
+  </channel>
+</rss>

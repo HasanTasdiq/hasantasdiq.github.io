@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Heuristic Optimization on Tasdiqul Islam</title>
+    <link>https://hasantasdiq.github.io/tags/heuristic-optimization/</link>
+    <description>Recent content in Heuristic Optimization on Tasdiqul Islam</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hasantasdiq.github.io/tags/heuristic-optimization/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Heuristic Approach for Scalable Quantum Repeater Deployment Modeling</title>
+      <link>https://hasantasdiq.github.io/projects/heuristic/</link>
+      <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://hasantasdiq.github.io/projects/heuristic/</guid>
+      <description>Scalable heuristic algorithms for near-optimal quantum repeater placement with orders-of-magnitude speedup over ILP.</description>
+    </item>
+    
+  </channel>
+</rss>

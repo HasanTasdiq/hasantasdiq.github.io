@@ -1,0 +1,411 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://hasantasdiq.github.io/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Heuristic Approach for Scalable Quantum Repeater Deployment Modeling - Tasdiqul Islam</title>
+
+    
+
+    
+
+    
+    <meta name="author" content="Your Name" />
+    
+
+    
+        <meta property="og:url" content="https://hasantasdiq.github.io/projects/heuristic/">
+  <meta property="og:site_name" content="Tasdiqul Islam">
+  <meta property="og:title" content="A Heuristic Approach for Scalable Quantum Repeater Deployment Modeling">
+  <meta property="og:description" content="Scalable heuristic algorithms for near-optimal quantum repeater placement with orders-of-magnitude speedup over ILP.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="article:published_time" content="2023-10-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-10-01T00:00:00+00:00">
+    <meta property="article:tag" content="Quantum Networks">
+    <meta property="article:tag" content="Quantum Repeaters">
+    <meta property="article:tag" content="Heuristic Optimization">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="A Heuristic Approach for Scalable Quantum Repeater Deployment Modeling">
+  <meta name="twitter:description" content="Scalable heuristic algorithms for near-optimal quantum repeater placement with orders-of-magnitude speedup over ILP.">
+
+    <link rel="stylesheet" href="/style.min.75a70fdd4c8502cf61b8e7faea82276e016de6c2be066b92fa16bdae1c1f873d.css" integrity="sha256-dacP3UyFAs9huOf66oInbgFt5sK&#43;BmuS&#43;ha9rhwfhz0=">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/theme-switch.7c57075675400a1a12bc3fcfc744dd74e1e417b8db11fdef378d7a7ef1cc9e3f.js" integrity="sha256-fFcHVnVAChoSvD/Px0TddOHkF7jbEf3vN416fvHMnj8="></script>
+
+
+
+    <script defer src="/js/hide-navbar-on-scroll.b5f3414715b82a9bc2c9086fc860ad5d0a63f67251e4dd4fa61e9dfce91ebdb6.js" integrity="sha256-tfNBRxW4KpvCyQhvyGCtXQpj9nJR5N1Pph6d/OkevbY="></script>
+
+
+
+
+
+    <script defer src="/js/zooming.10d718ecdb4a98eab370ed60963ea87f1c612ac225609eadc52f0e536bc1517c.js" integrity="sha256-ENcY7NtKmOqzcO1glj6ofxxhKsIlYJ6txS8OU2vBUXw="></script>
+
+
+
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.a89c7b4e13df953403c75897ad4b6db68fad6534043bb234d29a80015f1ec9d1.js" integrity="sha256-qJx7ThPflTQDx1iXrUttto&#43;tZTQEO7I00pqAAV8eydE="></script>
+        
+    
+
+
+
+
+
+
+
+
+    
+</head>
+<body><header>
+    <div id="header_content">
+        <div id="header_left">
+            <div id="sidebar_btn">
+                <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+                <label id="sidebar_btn_label" for="sidebar_btn_input">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</label>
+                <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                    <div id="sidebar_canvas_overlay"></div>
+                </label>
+                <div id="sidebar">
+                    <ul><li>
+                                <a href="/about/">About Me</a></li><li>
+                                <a href="/research/">Research</a></li><li>
+                                <a href="/publications/">Publications</a></li></ul>
+                </div>
+            </div>
+        
+            <div class="brand">
+                <div>
+                    <a href="/">Tasdiqul Islam</a>
+                </div>
+            </div><nav id="header_navbar" class="pure-menu header-menu">
+    <ul class="pure-menu-list"><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About Me</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/research/" class="pure-menu-link">Research</a>
+                    
+                </li><li class="header-menu-item pure-menu-item ">
+                    
+                        <a href="/publications/" class="pure-menu-link">Publications</a>
+                    
+                </li></ul>
+</nav>
+</div>
+
+        <div id="header_right">
+            
+
+            <div id="theme_tool">
+                <button id="dark_mode_btn" class="header-menu-btn outline-button" title='Switch to dark mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</button>
+                <button id="light_mode_btn" class="header-menu-btn outline-button" title='Switch to light mode' type="button">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</button>
+            </div>
+
+            
+        </div>
+    </div>
+</header><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+<main>
+            <div id="content" class="content-margin">
+                
+    
+    
+        
+        <div class="collapsible-menu-wrapper"><div class="collapsible-menu-type"><span>Table of contents</span></div><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#project-overview">Project Overview</a></li>
+    <li><a href="#key-ideas">Key Ideas</a></li>
+    <li><a href="#heuristic-approaches">Heuristic Approaches</a></li>
+    <li><a href="#performance-highlights">Performance Highlights</a></li>
+    <li><a href="#publication">Publication</a></li>
+  </ul>
+</nav>
+        
+    </div></div>
+    
+
+
+
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+
+    
+    
+        
+        
+        
+    
+        
+        
+            
+            
+            
+        
+        <section id="project-overview">
+
+
+<h2 class="header-anchor-wrapper">Project Overview
+  <a href="#project-overview" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p>This project proposes <strong>fast heuristic methods</strong> for deploying quantum repeaters in large-scale quantum networks.<br>
+While Integer Linear Programming (ILP) can find optimal placements, it does not scale. The proposed heuristics achieve <strong>near-optimal solutions</strong> while reducing computation time from <strong>days to seconds</strong>.</p>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="key-ideas">
+
+
+<h2 class="header-anchor-wrapper">Key Ideas
+  <a href="#key-ideas" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<ul>
+<li><strong>Coverage-driven placement</strong> using a maximum entanglement distance \( L_{max} \)</li>
+<li><strong>Heuristic optimization</strong> instead of exponential-time ILP</li>
+<li><strong>Scalable and failure-aware</strong> deployment for real-world networks</li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="heuristic-approaches">
+
+
+<h2 class="header-anchor-wrapper">Heuristic Approaches
+  <a href="#heuristic-approaches" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p><img src="/projects/heuristic/fig1.png" alt="Quantum repeater deployment overview"></p>
+<p>Two complementary strategies are introduced:</p>
+<ul>
+<li><strong>Multi-Center Approach (MCA):</strong> Selects multiple coverage centers and adds intermediate repeaters only when needed</li>
+<li><strong>Single Center Approach (SCA):</strong> Gradually expands coverage from one center, jointly ensuring coverage and connectivity</li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="performance-highlights">
+
+
+<h2 class="header-anchor-wrapper">Performance Highlights
+  <a href="#performance-highlights" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p><img src="/projects/heuristic/fig2.png" alt="Heuristic vs ILP comparison"></p>
+<ul>
+<li>Near-optimal repeater count (often matching ILP)</li>
+<li>Execution time reduced by <strong>several orders of magnitude</strong></li>
+<li>Validated on <strong>SURFnet</strong> and <strong>ESnet</strong> topologies</li>
+<li>Extended to tolerate <strong>node and link failures</strong></li>
+</ul>
+<hr>
+</section>
+    
+        
+        
+            
+            
+            
+        
+        <section id="publication">
+
+
+<h2 class="header-anchor-wrapper">Publication
+  <a href="#publication" class="header-anchor-link">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</a>
+</h2>
+
+<p><strong>Tasdiqul Islam</strong>, Engin Arslan<br>
+<a href="https://ieeexplore.ieee.org/abstract/document/10223375">A Heuristic Approach for Scalable Quantum Repeater Deployment Modeling</a>
+IEEE Conference on Local Computer Networks (LCN), 2023</p>
+<p><strong>BibTeX:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bibtex" data-lang="bibtex"><span style="display:flex;"><span><span style="color:#a6e22e">@inproceedings</span>{islam2023heuristic,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span>=<span style="color:#e6db74">{A heuristic approach for scalable quantum repeater deployment modeling}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">author</span>=<span style="color:#e6db74">{Islam, Tasdiqul and Arslan, Engin}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">booktitle</span>=<span style="color:#e6db74">{2023 IEEE 48th Conference on Local Computer Networks (LCN)}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">pages</span>=<span style="color:#e6db74">{1--9}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">year</span>=<span style="color:#e6db74">{2023}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">organization</span>=<span style="color:#e6db74">{IEEE}</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section>
+    
+</article>
+</div>
+
+
+                
+                    
+                
+
+                
+            </div>
+        </main>
+</body>
+</html>
